@@ -8,6 +8,7 @@ mod 'puppetlabs-stdlib'
 mod 'hardening-ssh_hardening'
 mod 'puppetlabs-ntp'
 mod 'camptocamp-postfix'
+mod 'puppet-zabbix'
 
 
 #mod 'test_repo',

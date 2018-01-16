@@ -61,4 +61,7 @@ class hosting_basesetup(
 
   ## SOFTWARE ############################################################################
   class { '::hosting_basesetup::packages': }
+
+  ## MONITORIN ###########################################################################
+  class { 'hosting_basesetup::monitoring': }
 }
