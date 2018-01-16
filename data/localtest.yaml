@@ -1,0 +1,48 @@
+---
+hosting_basesetup::mail_root_recipient: admin@foobar.de
+hosting_basesetup::mail_domain: foobar.de
+hosting_basesetup::rootpwhash: '$1$Etg2ExUZ$F9NTP7omafhKIlqaBMqng1'
+hosting_basesetup::mosh: true
+hosting_basesetup::kernel::sysctl_enable_fastnetworking_defaults: true
+hosting_basesetup::groups:
+  devteam:
+    gid: 8000
+    sudo_template: 'hosting_basesetup/sudo_root.erb'
+    ensure: present
+  productmanagers:
+    gid: 8001
+    ensure: present
+  webdevhipsters:
+    gid: 8002
+    ensure: absent
+
+hosting_basesetup::users:
+  user1:
+    uid: 5000
+    fullname: Karl Napf
+    mail: karl@napf.foobar.de
+    host_regexes_include:
+      - ".*"
+    host_regexes_exclude:
+      - "fooobar"
+    ssh_keys: 
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCf8jizyqebUQ2hXJF5tWUz3eev+uE1liHZ7bMK4pp5nlaxkNq81dOLA9TZDbF6b+LFKKPxHUME5QypcDltaan83dN5tM+VJKz5K8qam9j8RpOm7gpKkomjXSTAMmhelZMLpOwhap77QVJo4EaKLqlkdRGh4o/dBnCOgkrZVjZ0TVG+u7BtGuQtbYvTBEL/Uu3HwWh4bGt5eFqyREgs6PE7u4bSnkyp6N/lrRqArefI0g2soNzOboxW2ONkAP6epNCRDDPp0erWJ1TU1VPLG72r2nupb7bdtTcDklGQMOWMWFvLzCkpD+LJDqh344gux1R45ikQqaL61ZqoV3Pt6t3xJ foo@bar.de"
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCf8jizyqebUQ2hXJF5tWUz3eev+uE1liHZ7bMK4pp5nlaxkNq81dOLA9TZDbF6b+LFKKPxHUME5QypcDltaan83dN5tM+VJKz5K8qam9j8RpOm7gpKkomjXSTAMmhelZMLpOwhap77QVJo4EaKLqlkdRGh4o/dBnCOgkrZVjZ0TVG+u7BtGuQtbYvTBEL/Uu3HwWh4bGt5eFqyREgs6PE7u4bSnkyp6N/lrRqArefI0g2soNzOboxW2ONkAP6epNCRDDPp0erWJ1TU1VPLG72r2nupb7bdtTcDklGQMOWMWFvLzCkpD+LJDqh344gux1R45ikQqaL61ZqoV3Pt6t3xJ foo2@bar.de"
+    group_primary: 'devteam'
+    groups: 
+      - 'devteam'
+    dotfile_sourcedir: 'puppet:///modules/hosting_basesetup/dotfiles_default/'
+    ensure: present
+  user2:
+    uid: 5001
+    fullname: Karl Napf2
+    mail: karl2l@napf.foobar.de
+    host_regexes_include:
+      - ".*"
+    host_regexes_exclude:
+      - ".*basesetup.*"
+    ssh_keys: 
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCf8jizyqebUQ2hXJF5tWUz3eev+uE1liHZ7bMK4pp5nlaxkNq81dOLA9TZDbF6b+LFKKPxHUME5QypcDltaan83dN5tM+VJKz5K8qam9j8RpOm7gpKkomjXSTAMmhelZMLpOwhap77QVJo4EaKLqlkdRGh4o/dBnCOgkrZVjZ0TVG+u7BtGuQtbYvTBEL/Uu3HwWh4bGt5eFqyREgs6PE7u4bSnkyp6N/lrRqArefI0g2soNzOboxW2ONkAP6epNCRDDPp0erWJ1TU1VPLG72r2nupb7bdtTcDklGQMOWMWFvLzCkpD+LJDqh344gux1R45ikQqaL61ZqoV3Pt6t3xJ foo@bar.de"
+    group_primary: 'devteam'
+    ensure: present
+

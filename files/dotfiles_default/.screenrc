@@ -1,0 +1,52 @@
+####################################################################################
+###
+### ATTENTION: THIS FILE IS MANAGED BY PUPPET
+###
+### ANY CHANGE WILL BE REVERTED AUTOMATICALLY ON NEXT PUPPET RUN
+###
+### If you want to run your own dotfiles, specify another configuration directory
+### source for hosting_basesetup::usermanagement::user => dotfile_sourcedir
+
+
+#remove some stupid / dangerous key bindings
+bind k
+bind ^k
+bind .
+bind ^\
+bind \\
+bind ^h
+bind h
+
+# Keep 10000 lines of history
+defscrollback 10000
+
+# Multiuser mode
+multiuser on
+
+# Default encoding
+defutf8 on
+
+# Disable welcome message
+startup_message off
+
+# Den CommandKey von STRG+a auf STRG+y verlegen
+# (wegen STRG+a und STRG+e in der Bash)
+escape ^yy
+
+
+# smart caption line
+caption always "%3n %t%? @%u%?%? [%h]%?"
+caption string "%{.ck} %n %t %{.gk}"
+hardstatus alwayslastline
+hardstatus string "%{.rw}%c:%s [%l] %{.bw} %n %t %{.wk} %W %{.wk}"
+
+# Alerts
+activity  "activity in %n (%t) [%w:%s]~" # NOTE: beep included!
+vbell_msg " *beep* "
+
+
+###
+### ATTENTION: THIS FILE IS MANAGED BY PUPPET
+###
+### ANY CHANGE WILL BE REVERTED AUTOMATICALLY ON NEXT PUPPET RUN
+###################################################################################
