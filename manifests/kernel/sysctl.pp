@@ -1,8 +1,4 @@
-define hosting_basesetup::kernel::sysctl(
-  String $ensure = 'present',
-  $value
-) {
-
+define hosting_basesetup::kernel::sysctl (String $ensure = 'present', $value) {
   $context = '/files/etc/sysctl.conf'
 
   if $ensure == 'present' {
@@ -11,7 +7,7 @@ define hosting_basesetup::kernel::sysctl(
       onlyif  => "get ${title} != '${value}'",
       changes => "set ${title} '${value}'",
     }
-  }else{
+  } else {
     augeas { "sysctl_conf/${title}":
       context => $context,
       changes => "rm ${title}",
