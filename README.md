@@ -47,10 +47,14 @@ Things implemented with this setup
 Currently not implemented
 -------------------------
 
-* unattended configurable os updates
-* ulimits
+by priority:
+
+* install and configure puppet final agent config
 * apt source management
+* add additional zabbix-agent-extenion packages
+* unattended configurable os updates
 * lvm management via hiera
+* ulimits
 * logshipping to syslog
 * logstash/graylog support
 * at/cron setup
