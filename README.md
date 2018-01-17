@@ -9,7 +9,7 @@ This project implements a basic system setup for the following platforms:
 
 This setup can be used as a base for server systems.
 The setup ist tested by using test-kitchen and serverspec tests.
-(for Details, review the (README_Test_Environment.mf)[Documentation of the test setup])
+(for Details, review the [Documentation of the test setup](README_Test_Environment.mf))
 
 Things implemented with this setup
 ----------------------------------
