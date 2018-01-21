@@ -45,12 +45,14 @@ Things implemented with this setup
   * set vim as standard editor
 
 
-Currently not implemented
--------------------------
+Currently not implemented/TODOs
+--------------------------------
 
 by priority:
 
-* install and configure puppet final agent config
+* Increase memory of vms, reduce memory consumption (32bit vms)
+* install and configure puppet final agent config<BR>
+  (provide capability to switch environment)
 * apt source management
 * unattended configurable os updates
 * lvm management via hiera
