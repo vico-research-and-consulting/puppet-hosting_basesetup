@@ -4,6 +4,9 @@ hosting_basesetup::mail_domain: foobar.de
 hosting_basesetup::rootpwhash: '$1$Etg2ExUZ$F9NTP7omafhKIlqaBMqng1'
 hosting_basesetup::mosh: true
 hosting_basesetup::kernel::sysctl_enable_fastnetworking_defaults: true
+hosting_basesetup::monitoring::additional_agent_packages: 
+  - 'curl'
+
 hosting_basesetup::groups:
   devteam:
     gid: 8000

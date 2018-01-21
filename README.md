@@ -39,6 +39,7 @@ Things implemented with this setup
   * distribution of standard dotfiles
   * distribution of user specific dotfiles from a specifyable location
 * installation of zabbix agent
+  * add additional zabbix-agent-extenion packages
 * package installtion via hiera
   * numerous useful packages
   * set vim as standard editor
@@ -51,7 +52,6 @@ by priority:
 
 * install and configure puppet final agent config
 * apt source management
-* add additional zabbix-agent-extenion packages
 * unattended configurable os updates
 * lvm management via hiera
 * ulimits

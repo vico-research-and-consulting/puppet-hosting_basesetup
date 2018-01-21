@@ -1,6 +1,6 @@
 class hosting_basesetup::packages () {
   case $::operatingsystem {
-    'ubuntu' : {
+    'ubuntu', 'debian' : {
       $packages = [
         'bash-completion',
         'curl',
@@ -34,8 +34,34 @@ class hosting_basesetup::packages () {
         require => Package['vim'],
       }
     }
+    'Centos' : {
+      $packages = [
+        'curl',
+        'wget',
+        #'htop',
+        #'iftop',
+        'iptraf-ng',
+        #'pv',
+        'lsscsi',
+        #'ncdu',
+        #'scsitools',
+        'sysstat',
+        'xfsdump',
+        'xfsprogs',
+        'zip',
+        'git-all',
+        #'tig',
+        'vim-enhanced',
+        'finger',
+        #'mailutils',
+        'traceroute',
+        'net-tools',
+        'lvm2',
+        'sysfsutils']
+      ensure_packages($packages)
+    }
     default  : {
-      fail("unsupported os: ${::osfamily}/${::operatingsystem}/${::operatingsystemrelease}")
+      fail("unsupported os: ${::operatingsystem}")
     }
   }
 }

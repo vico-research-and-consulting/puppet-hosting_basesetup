@@ -9,6 +9,7 @@ mod 'hardening-ssh_hardening'
 mod 'puppetlabs-ntp'
 mod 'camptocamp-postfix'
 mod 'puppet-zabbix'
+mod 'puppetlabs-puppet_agent'
 
 
 #mod 'test_repo',

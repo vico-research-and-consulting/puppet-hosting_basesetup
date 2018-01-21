@@ -11,14 +11,14 @@ class hosting_basesetup (
   String $mail_domain,
   String $motd_template    = "hosting_basesetup/motd.erb",
   String $motd_description = "<no description>",) {
-  # # RESSOURCE ORDERING ##################################################################
+  ## RESSOURCE ORDERING ##################################################################
   class { '::ssh_hardening::client': } ->
   class { '::ssh_hardening::server': }
 
-  # # KERNEL ##############################################################################
+  ## KERNEL ##############################################################################
   include ::hosting_basesetup::kernel
 
-  # # MOTD ################################################################################
+  ## MOTD ################################################################################
   file { '/etc/motd':
     ensure  => file,
     content => template($motd_template),
@@ -27,7 +27,7 @@ class hosting_basesetup (
     mode    => '0644',
   }
 
-  # # SSH #################################################################################
+  ## SSH #################################################################################
   include ::ssh_hardening::server
   include ::ssh_hardening::client
 
@@ -38,12 +38,12 @@ class hosting_basesetup (
     )
   }
 
-  # # TIME ################################################################################
+  ## TIME ################################################################################
   class { '::hosting_basesetup::time':
     ntp_servers => $ntp_servers,
   }
 
-  # # POSTFIX #############################################################################
+  ## POSTFIX #############################################################################
   class { 'postfix':
     inet_interfaces     => '127.0.0.1',
     smtp_listen         => '127.0.0.1',
@@ -54,18 +54,23 @@ class hosting_basesetup (
     relayhost           => $mail_relayhost,
   }
 
-  # # USERMANAGEMENT #########################################################################
+  ## USERMANAGEMENT ######################################################################
   class { '::hosting_basesetup::usermanagement':
     groups     => $groups,
     users      => $users,
     rootpwhash => $rootpwhash,
   }
 
-  # # SOFTWARE ############################################################################
+  ## SOFTWARE ############################################################################
   class { '::hosting_basesetup::packages':
   }
 
-  # # MONITORIN ###########################################################################
-  class { 'hosting_basesetup::monitoring':
+  ## MONITORING ##########################################################################
+  class { '::hosting_basesetup::monitoring':
+  }
+  ## PUPPET AGENT ########################################################################
+  if $manage_puppet {
+     class { '::puppet_agent':
+     }
   }
 }
