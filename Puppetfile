@@ -10,6 +10,10 @@ mod 'puppetlabs-ntp'
 mod 'camptocamp-postfix'
 mod 'puppet-zabbix'
 mod 'puppetlabs-puppet_agent'
+mod 'puppetlabs-apt'
+mod 'puppetlabs-lvm'
+mod 'puppet-unattended_upgrades'
+
 
 
 #mod 'test_repo',

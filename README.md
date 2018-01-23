@@ -43,23 +43,25 @@ Things implemented with this setup
 * package installtion via hiera
   * numerous useful packages
   * set vim as standard editor
-
-
+* lvm management via hiera<BR>
+  (review https://github.com/puppetlabs/puppetlabs-lvm)
+* apt source management<BR>
+  https://forge.puppet.com/puppetlabs/apt
+* unattended configurable os updates<BR>
+  https://forge.puppet.com/puppet/unattended_upgrades
+  
 Currently not implemented/TODOs
 --------------------------------
 
 by priority:
 
+* at/cron setup
 * Increase memory of vms, reduce memory consumption (32bit vms)
 * install and configure puppet final agent config<BR>
   (provide capability to switch environment)
-* apt source management
-* unattended configurable os updates
-* lvm management via hiera
 * ulimits
 * logshipping to syslog
 * logstash/graylog support
-* at/cron setup
 * aide intrusion detection
 
 Contribution
