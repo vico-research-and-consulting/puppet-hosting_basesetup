@@ -49,14 +49,14 @@ Things implemented with this setup
   https://forge.puppet.com/puppetlabs/apt
 * unattended configurable os updates<BR>
   https://forge.puppet.com/puppet/unattended_upgrades
+* at/cron setup
   
 Currently not implemented/TODOs
 --------------------------------
 
 by priority:
 
-* at/cron setup
-* Increase memory of vms, reduce memory consumption (32bit vms)
+* Increase memory of vagrant/kitchen vms, reduce memory consumption (32bit vms)
 * install and configure puppet final agent config<BR>
   (provide capability to switch environment)
 * ulimits

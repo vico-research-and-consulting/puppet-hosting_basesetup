@@ -1,6 +1,7 @@
 # == Class: hosting_basesetup::init
 #
 class hosting_basesetup (
+  Boolean $manage_puppet = true,
   Hash $users            = {},
   Hash $groups           = {},
   Array[String] $ntp_servers = ['ptbtime1.ptb.de', 'ptbtime2.ptb.de', 'ptbtime3.ptb.de',],
@@ -96,4 +97,6 @@ class hosting_basesetup (
      random_sleep => $unattended_upgrades_random_sleep,
     }
   }
+  ## CRON AND AT #########################################################################
+  include hosting_basesetup::cron_at
 }
