@@ -21,8 +21,8 @@ class hosting_basesetup (
   #fail("OOOPS ${hosting_basesetup::test}")
 
   ## RESSOURCE ORDERING ##################################################################
-  class { '::ssh_hardening::client': } ->
-  class { '::ssh_hardening::server': }
+  #class { '::ssh_hardening::client': } ->
+  #class { '::ssh_hardening::server': }
 
   ## KERNEL ##############################################################################
   include ::hosting_basesetup::kernel
@@ -37,7 +37,9 @@ class hosting_basesetup (
   }
 
   ## SSH #################################################################################
-  include ::ssh_hardening::server
+  class{'::ssh_hardening::server':
+    use_pam => true,
+  }
   include ::ssh_hardening::client
 
   if $mosh {

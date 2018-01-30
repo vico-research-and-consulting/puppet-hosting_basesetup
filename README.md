@@ -50,6 +50,7 @@ Things implemented with this setup
 * unattended configurable os updates<BR>
   https://forge.puppet.com/puppet/unattended_upgrades
 * at/cron setup
+* ulimits
   
 Currently not implemented/TODOs
 --------------------------------
@@ -59,7 +60,6 @@ by priority:
 * Increase memory of vagrant/kitchen vms, reduce memory consumption (32bit vms)
 * install and configure puppet final agent config<BR>
   (provide capability to switch environment)
-* ulimits
 * logshipping to syslog
 * logstash/graylog support
 * aide intrusion detection
