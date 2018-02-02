@@ -57,7 +57,7 @@ describe command('ntpq -c peers') do
   its(:stdout) { should match(/^\+/) }
 end
 
-describe command('rngtest -c 1000 </dev/urandom') do
+describe command('rngtest -c 100 </dev/urandom') do
   its(:exit_status) { should eq 0 }
 end
 
