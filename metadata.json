@@ -7,7 +7,15 @@
   "source": "https://github.com/scoopex/puppet-hosting_basesetup",
   "project_page": null,
   "dependencies": [
-     { "name":"puppetlabs/stdlib" }
+     { "name":"puppetlabs/stdlib" },
+     { "name":"hardening-ssh_hardening" },
+     { "name":"puppetlabs-ntp" },
+     { "name":"camptocamp-postfix" },
+     { "name":"puppet-zabbix" },
+     { "name":"puppetlabs-puppet_agent" },
+     { "name":"puppetlabs-apt" },
+     { "name":"puppetlabs-lvm" },
+     { "name":"puppet-unattended_upgrades"}
   ],
   "issues_url": "https://github.com/scoopex/puppet-hosting_basesetup/issues"
 }
