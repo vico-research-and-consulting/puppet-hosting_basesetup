@@ -23,7 +23,8 @@ Things implemented with this setup
   * no password login
   * ciphers
   * ...
-* installation of mosh shell
+* installation of mosh shell<BR>
+  (disabled by default)
 * time setup
   * secure ntp setup
   * rngd, improvement of random number generator for virtual systems
