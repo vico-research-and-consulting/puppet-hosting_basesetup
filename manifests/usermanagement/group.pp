@@ -3,6 +3,7 @@ define hosting_basesetup::usermanagement::group (
   Integer $gid,
   String $sudo_template = "",
   String $ensure        = present,) {
+
   group { $groupname:
     ensure => $ensure,
     gid    => $gid,
@@ -10,7 +11,7 @@ define hosting_basesetup::usermanagement::group (
 
   if $sudo_template != "" {
     file { "/etc/sudoers.d/hosting_basesetup_usermanagement_group_${groupname}":
-      ensure  => present,
+      ensure  => $ensure,
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
