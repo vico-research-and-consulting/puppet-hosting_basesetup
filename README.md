@@ -57,7 +57,17 @@ Currently not implemented/TODOs
 
 by priority:
 
-* Increase memory of vagrant/kitchen vms, reduce memory consumption (32bit vms)
+* Fix error messages on test execution
+	kitchen verify default-ubuntu-1604-virtualbox-puppet5-hosting-basesetup 
+	Ignoring executable-hooks-1.3.2 because its extensions are not built.  Try: gem pristine executable-hooks --version 1.3.2
+	Ignoring gem-wrappers-1.3.2 because its extensions are not built.  Try: gem pristine gem-wrappers --version 1.3.2
+	Error loading RubyGems plugin "/home/schoecmc/.rvm/gems/ruby-2.4.1@global/gems/executable-hooks-1.3.2/lib/rubygems_plugin.rb": cannot load such file -- executable-hooks/wrapper (LoadError)
+	Error loading RubyGems plugin "/home/schoecmc/.rvm/gems/ruby-2.4.1@global/gems/gem-wrappers-1.3.2/lib/rubygems_plugin.rb": cannot load such file -- gem-wrappers (LoadError)
+* reduce dprecation warnings of used modules
+* use hiera data in module for distibution specific parameters
+* use testinfra as testing framework
+  https://testinfra.readthedocs.io/en/latest/
+* Increase memory of vagrant/kitchen vms or reduce memory consumption (32bit vms) for complexer setups
 * install and configure puppet final agent config<BR>
   (provide capability to switch environment)
 * logshipping to syslog
