@@ -14,8 +14,6 @@ mod 'puppetlabs-apt'
 mod 'puppetlabs-lvm'
 mod 'puppet-unattended_upgrades'
 
-
-
 #mod 'test_repo',
 #  :git => 'git@foobar.de/foobar_foo.git'
 #

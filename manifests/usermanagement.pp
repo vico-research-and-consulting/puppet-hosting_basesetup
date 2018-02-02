@@ -5,7 +5,10 @@ class hosting_basesetup::usermanagement (
   Hash $groups                 = {},
   String $rootpwhash,
   Array[String] $ssh_keys_root          = [],
-  String $root_dotfile_sourcedir = 'puppet:///modules/hosting_basesetup/dotfiles_default/',) {
+  String $root_dotfile_sourcedir = 'puppet:///modules/hosting_basesetup/dotfiles_default/',)
+  {
+
+
   # Drop all files which are not managed by puppet
   file { '/etc/sudoers.d/':
     ensure  => 'directory',

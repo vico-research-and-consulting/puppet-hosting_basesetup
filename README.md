@@ -19,7 +19,7 @@ Things implemented with this setup
   * 10g networking
   * oops-behavior, swappiness, ...
   * custom systctl settings via hiera
-* hardening of spenssh server/client
+* hardening of openssh server/client
   * no password login
   * ciphers
   * ...

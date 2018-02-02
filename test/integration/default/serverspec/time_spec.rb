@@ -40,11 +40,11 @@ describe package('rng-tools') do
   it { should be_installed }
 end
 
-describe service('rngd') do
+describe service('rng-tools') do
   it { should be_enabled }
 end
 
-describe service('rngd') do
+describe service('rng-tools') do
   it { should be_running }
 end
 

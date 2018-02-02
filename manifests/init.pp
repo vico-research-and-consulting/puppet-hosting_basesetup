@@ -1,13 +1,44 @@
 # == Class: hosting_basesetup::init
 #
+# Installs a a basic hosting quality setup
+#
+# === Parameters
+#
+# [manage_puppet]
+#   Decide to manage puppet by puppet (true/false)
+#
+# [users]
+#   A hashmap which defines a collection of users, check hosting_basesetup::usermanagement::user
+#   for details
+#
+# [groups]
+#   A hashmap which defines a collection of users, check hosting_basesetup::usermanagement::group
+#   for details
+#
+# [ntp_server]
+#   A array of ntp servers, soecify at least 3 server
+#   (if you have two watches, which one displays the correct time :-))
+# 
+# [mosh]
+#   decide to install the mosh shell or not (true/false)
+# 
+# [mail_relayhost]
+#   a relayhost for the local postfix installation.
+#   locally queued mail will be deliver to this host, if this variable is not specified
+#   delivery will be perfomed directly
+#
+# 
+
+
+
 class hosting_basesetup (
   Boolean $manage_puppet = true,
+  String $rootpwhash,
   Hash $users            = {},
   Hash $groups           = {},
   Array[String] $ntp_servers = ['ptbtime1.ptb.de', 'ptbtime2.ptb.de', 'ptbtime3.ptb.de',],
   Boolean $mosh = false,
   String $mail_relayhost = '',
-  String $rootpwhash,
   String $mail_root_recipient,
   String $mail_domain,
   Boolean $unattended_upgrades = true,
