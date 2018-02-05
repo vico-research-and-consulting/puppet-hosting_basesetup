@@ -1,6 +1,7 @@
 class hosting_basesetup::kernel (
   String $sysctl_filename       = '/etc/sysctl.conf',
   String $ulimits_filename      = '/etc/security/limits.d/hosting_basesetup.conf',
+  String $boot_options          = '',
   Hash $sysctl_config           = {},
   Array[String] $ulimit_config  = [],
   Boolean $sysctl_enable_fastnetworking_defaults = false,
@@ -111,5 +112,9 @@ class hosting_basesetup::kernel (
     mode => '0644',
     content => template("hosting_basesetup/limits.conf.erb"),
   }
+
+  ############################################################################################################
+
+  include hosting_basesetup::kernel::parameters
 
 }
