@@ -16,7 +16,11 @@ class hosting_basesetup::monitoring (
       hostmetadata => $zabbix_hostmetadata,
     }
     include ::zabbix::sender
-    ensure_packages(["zabbix-get"])
+    ensure_packages(["zabbix-get"],
+     {
+          'require' => Class['zabbix::agent'],
+     }
+    )
     ensure_packages(
         $additional_agent_packages,
         {
