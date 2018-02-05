@@ -71,7 +71,7 @@ class hosting_basesetup (
   class{'::ssh_hardening::server':
     use_pam => true,
     allow_root_with_key => true,
-    allow_agent_forwarding = true,
+    allow_agent_forwarding => true,
   }
   include ::ssh_hardening::client
 
