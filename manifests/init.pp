@@ -70,6 +70,8 @@ class hosting_basesetup (
   ## SSH #################################################################################
   class{'::ssh_hardening::server':
     use_pam => true,
+    allow_root_with_key => true,
+    allow_agent_forwarding = true,
   }
   include ::ssh_hardening::client
 
