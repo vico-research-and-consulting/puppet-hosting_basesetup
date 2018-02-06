@@ -61,7 +61,6 @@ Currently not implemented/TODOs
 
 by priority:
 
-* Port SSH setup from ssh_hardening::server/ssh_hardening::client to https://forge.puppet.com/ghoneycutt/ssh
 * SMART Daemon on non virtualized hardware systems
 * systemd journal configuration (housekeeping, permissions)
   https://www.freedesktop.org/software/systemd/man/journald.conf.html
