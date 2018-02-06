@@ -71,7 +71,7 @@ by priority:
   https://unix.stackexchange.com/questions/71364/persistent-blockdev-setra-read-ahead-setting
 * virtual serial consoles for server systems
   => to support connect by virtual serial console by IPMI
-* IPTables base setup for ipv4/ipv6
+* IPTables base setup for ipv4/ipv6, https://github.com/puppetlabs/puppetlabs-firewall
   * restrict for inbound everything except ssh
   * restrict outbound except essential os parameters
   * use groups of systems

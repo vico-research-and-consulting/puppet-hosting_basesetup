@@ -68,6 +68,7 @@ class hosting_basesetup (
   }
 
   ## SSH #################################################################################
+  # TODO: create secure client settings
   class{'::ssh':
     ssh_config_forward_agent => 'no',
     sshd_config_permitemptypasswords => 'no',
