@@ -90,6 +90,7 @@ class hosting_basesetup (
     sshd_config_maxstartups => '10:30:100',
     sshd_config_strictmodes => 'yes',
     sshd_config_use_privilege_separation => 'sandbox',
+    sshd_config_print_motd => false,
     permit_root_login => 'without-password',
   }
 
