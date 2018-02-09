@@ -56,8 +56,8 @@ class hosting_basesetup::kernel (
       'net.ipv4.tcp_rmem'           => {'value' => '4096 87380 16777216'},
       'net.ipv4.tcp_wmem'           => {'value' => '4096 65536 16777216'},
       'net.core.netdev_max_backlog' => {'value' => '30000'},
-      'net.ipv4.tcp_mtu_probing'    => {'value' => '1'}
-      'net.core.optmem_max'         => {'value' => '40960'}
+      'net.ipv4.tcp_mtu_probing'    => {'value' => '1'},
+      'net.core.optmem_max'         => {'value' => '40960'},
       ,
     }
   } else {
