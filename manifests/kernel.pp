@@ -48,16 +48,16 @@ class hosting_basesetup::kernel (
   if $sysctl_enable_fastnetworking_defaults {
     notice("Enabling networking settings for 10g equipment")
     $sysctl_fastnetworking_defaults = {
-      'net.ipv4.tcp_syncookies'     => { 'value' => '1'},
-      'net.core.rmem_default'       => { 'value' => '16777216'},
-      'net.core.wmem_default'       => { 'value' => '16777216'},
-      'net.core.rmem_max'           => { 'value' => 16777216},
-      'net.core.wmem_max'           => { 'value' => 16777216 },
-      'net.ipv4.tcp_rmem'           => { 'value' => '4096 87380 16777216'},
-      'net.ipv4.tcp_wmem'           => { 'value' => '4096 65536 16777216'},
-      'net.core.netdev_max_backlog' => { 'value' => '30000'},
-      'net.ipv4.tcp_mtu_probing'    => { 'value' => '1'}
-      'net.core.optmem_max'         => { 'value' => '40960' }
+      'net.ipv4.tcp_syncookies'     => {'value' => '1'},
+      'net.core.rmem_default'       => {'value' => '16777216'},
+      'net.core.wmem_default'       => {'value' => '16777216'},
+      'net.core.rmem_max'           => {'value' => '16777216'},
+      'net.core.wmem_max'           => {'value' => '16777216'},
+      'net.ipv4.tcp_rmem'           => {'value' => '4096 87380 16777216'},
+      'net.ipv4.tcp_wmem'           => {'value' => '4096 65536 16777216'},
+      'net.core.netdev_max_backlog' => {'value' => '30000'},
+      'net.ipv4.tcp_mtu_probing'    => {'value' => '1'}
+      'net.core.optmem_max'         => {'value' => '40960'}
       ,
     }
   } else {
