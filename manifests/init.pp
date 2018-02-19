@@ -66,6 +66,11 @@ class hosting_basesetup (
     group   => 'root',
     mode    => '0644',
   }
+  if $facts['os']['name'] == "Ubuntu" {
+    file { [ '/etc/update-motd.d/10-help-text', '/etc/update-motd.d/51-cloudguest', '/etc/update-motd.d/00-header' ]:
+      ensure  => absent,
+    }
+  }
 
   ## SSH #################################################################################
   # TODO: create secure client settings
@@ -84,7 +89,7 @@ class hosting_basesetup (
     sshd_config_kexalgorithms => [ 'diffie-hellman-group-exchange-sha256' ],
     sshd_config_loglevel => 'VERBOSE', 
     sshd_config_login_grace_time => '30s',
-    sshd_config_macs => [ 'hmac-sha2-512', 'hmac-sha2-256', 'hmac-ripemd160'],
+     sshd_config_macs => [ 'hmac-sha2-512', 'hmac-sha2-256', 'hmac-ripemd160'],
     sshd_config_maxauthtries => 2,
     sshd_config_maxsessions => 10,
     sshd_config_maxstartups => '10:30:100',
