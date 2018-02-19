@@ -1,4 +1,20 @@
 class hosting_basesetup::packages () {
+  if ($facts['os']['family'] == 'Debian' and $facts['os']['release']['major'] == "8") {
+    apt::source { 'jessie_backports':
+      comment  => 'Jessie Backports',
+      location => 'http://ftp.debian.org/debian',
+      release  => 'jessie-backports',
+      repos    => 'main',
+      # key      => {
+      #   'id'     => 'A1BD8E9D78F7FE5C3E65D8AF8B48AD6246925553',
+      #   'server' => 'subkeys.pgp.net',
+      # },
+      include  => {
+        # 'src' => true,
+        'deb' => true,
+      },
+    }
+  }
   case $::operatingsystem {
     'ubuntu', 'debian' : {
       $packages = [
