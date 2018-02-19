@@ -2,6 +2,7 @@ class hosting_basesetup::packages () {
   case $::operatingsystem {
     'ubuntu', 'debian' : {
       $packages = [
+        'apt-transport-https',
         'bash-completion',
         'curl',
         'wget',
