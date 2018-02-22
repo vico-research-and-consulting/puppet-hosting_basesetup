@@ -61,28 +61,29 @@ Currently not implemented/TODOs
 
 by priority:
 
-* Disk Device Settings
+* Disk Device Settings (Cassandra)
   * Configure readahead for ssds/disks
     ```
     echo 8 > /sys/class/block/sda/queue/read_ahead_kb
     blockdev --setra 128
     ```
-  * Configure Scheduler
+  * Configure Scheduler (Cassandra)
     ```
     echo deadline > /sys/block/sda/queue/scheduler
     ```
-  * Rotational
+  * Rotational (Cassandra)
     ```
     echo 0 > /sys/class/block/sda/queue/rotational
     ```
-* zone_reclaim_mode on NUMA systems
+* zone_reclaim_mode on NUMA systems (Cassandra)
   ```
     echo 0 > /proc/sys/vm/zone_reclaim_mode
   ```
-* Hugepage defrag
+* Hugepage defrag (Cassandra)
   ```
   echo never | sudo tee /sys/kernel/mm/transparent_hugepage/defrag
   ```
+
 * SMART Daemon on non virtualized hardware systems
 * systemd journal configuration (housekeeping, permissions)
   https://www.freedesktop.org/software/systemd/man/journald.conf.html
