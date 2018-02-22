@@ -1,6 +1,6 @@
 class hosting_basesetup::packages () {
   case $::operatingsystem {
-    'ubuntu', 'debian' : {
+    'ubuntu', 'debian': {
       $packages = [
         'apt-transport-https',
         'bash-completion',
@@ -35,7 +35,7 @@ class hosting_basesetup::packages () {
         require => Package['vim'],
       }
     }
-    'Centos' : {
+    'Centos': {
       $packages = [
         'curl',
         'wget',
@@ -61,7 +61,7 @@ class hosting_basesetup::packages () {
         'sysfsutils']
       ensure_packages($packages)
     }
-    default  : {
+    default: {
       fail("unsupported os: ${::operatingsystem}")
     }
   }
