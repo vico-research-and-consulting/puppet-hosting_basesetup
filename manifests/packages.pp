@@ -26,6 +26,7 @@ class hosting_basesetup::packages () {
         'traceroute',
         'net-tools',
         'lvm2',
+        'strace'
         'sysfsutils']
       ensure_packages($packages)
 
@@ -58,6 +59,7 @@ class hosting_basesetup::packages () {
         'traceroute',
         'net-tools',
         'lvm2',
+        'strace'
         'sysfsutils']
       ensure_packages($packages)
     }
