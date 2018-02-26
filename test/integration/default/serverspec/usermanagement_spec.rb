@@ -37,6 +37,9 @@ end
 describe command('id user2') do
    its(:stdout) { should match(/uid=5001\(user2\) gid=8000\(devteam\) groups=8000\(devteam\)/)}
 end
+describe command('id user3') do
+   its(:exit_status) { should eq 1 }
+end
 describe command('id root') do
    its(:stdout) { should match(/uid=0\(root\) gid=0\(root\) groups=0\(root\)/)}
 end
