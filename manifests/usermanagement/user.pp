@@ -35,7 +35,7 @@ define hosting_basesetup::usermanagement::user (
       shell      => '/bin/bash',
       managehome => true,
       home       => "${homedir_base}/${username}",
-      require    => Group[$group_primary],
+      require    => [Group[$group_primary], File_Line['min_uid']],
       password   => $passwordhash,
       comment    => "${username}, ${fullname}",
     } ->

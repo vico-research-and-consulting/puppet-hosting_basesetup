@@ -7,6 +7,8 @@ class hosting_basesetup::usermanagement (
   Array[String] $ssh_keys_root   = [],
   String $restriction_tag         = '',
   String $root_dotfile_sourcedir = 'puppet:///modules/hosting_basesetup/dotfiles_default/',
+  Integer $minimal_gid           = 12000,
+  Integer $minimal_uid           = 12000,
 )
   {
 
@@ -21,7 +23,25 @@ class hosting_basesetup::usermanagement (
       purge   => true,
     }
 
-    hosting_basesetup::usermanagement::group { "root": gid => 0, }
+    group { "root":
+      ensure => present,
+      gid    => 0,
+    }
+
+    file_line { 'min_gid':
+      ensure => present,
+      path   => '/etc/login.defs',
+      line   => "GID_MIN                 ${minimal_gid}",
+      match  => '^GID_MIN.*',
+    }
+
+    file_line { 'min_uid':
+      ensure => present,
+      path   => '/etc/login.defs',
+      line   => "UID_MIN                 ${minimal_uid}",
+      match  => '^UID_MIN.*',
+    }
+
     hosting_basesetup::usermanagement::user { "root":
       group_primary     => 'root',
       groups            => ['root'],

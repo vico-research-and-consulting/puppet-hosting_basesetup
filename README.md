@@ -39,6 +39,7 @@ Things implemented with this setup
   * distribution of ssh keys
   * distribution of standard dotfiles
   * distribution of user specific dotfiles from a specifyable location
+  * minimal numeric uids/gids at 12000 to reduce collections with groups and users id without numeric id specification
 * installation of zabbix agent
   * add additional zabbix-agent-extenion packages
 * package installtion via hiera
