@@ -16,8 +16,8 @@
 #   for details
 #
 # [ntp_server]
-#   A array of ntp servers, soecify at least 3 server
-#   (if you have two watches, which one displays the correct time :-))
+#   A array of ntp servers, specify at least 3 servers
+#   (if you have two watches, which one displays the correct time ? :-))
 # 
 # [mosh]
 #   decide to install the mosh shell or not (true/false)
@@ -38,7 +38,7 @@ class hosting_basesetup (
   String $mail_relayhost                                       = '',
   String $mail_root_recipient,
   String $mail_domain,
-  Boolean $unattended_upgrades                                 = true,
+  Boolean $unattended_upgrades                                 = false,
   Boolean $unattended_upgrades_reboot                          = false,
   String $unattended_upgrades_reboot_time                      = 'now',
   Array[String] $unattended_upgrades_blacklist                 = [],
@@ -51,8 +51,7 @@ class hosting_basesetup (
   #fail("OOOPS ${hosting_basesetup::test}")
 
   ## RESSOURCE ORDERING ##################################################################
-  #class { '::ssh_hardening::client': } ->
-  #class { '::ssh_hardening::server': }
+
 
   ## KERNEL ##############################################################################
   include ::hosting_basesetup::kernel
@@ -138,6 +137,7 @@ class hosting_basesetup (
   ## PUPPET AGENT ########################################################################
   if $manage_puppet {
     class { '::puppet_agent':
+
     }
   }
   ## LVM #################################################################################
@@ -145,6 +145,7 @@ class hosting_basesetup (
 
   ## APT #################################################################################
   include apt
+
 
   ## UNATTENDED UPGRADES #################################################################
   if $unattended_upgrades {
@@ -154,6 +155,8 @@ class hosting_basesetup (
       blacklist    => $unattended_upgrades_blacklist,
       random_sleep => $unattended_upgrades_random_sleep,
     }
+  }else{
+        notice("Unattended upgrades are disabled for this system, consider to activate it to improve system security ;-)")
   }
   ## CRON AND AT #########################################################################
   include hosting_basesetup::cron_at
