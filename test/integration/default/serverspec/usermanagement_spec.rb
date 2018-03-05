@@ -40,6 +40,11 @@ end
 describe command('id user3') do
    its(:exit_status) { should eq 1 }
 end
+
+describe command('/usr/bin/test -f /home/user4/.vimrc') do
+   its(:exit_status) { should eq 1 }
+end
+
 describe command('id root') do
    its(:stdout) { should match(/uid=0\(root\) gid=0\(root\) groups=0\(root\)/)}
 end

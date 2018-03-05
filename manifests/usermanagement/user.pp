@@ -9,7 +9,7 @@ define hosting_basesetup::usermanagement::user (
   Array[String] $restriction_tags = [],
   String $ensure                  = 'present',
   String $passwordhash            = '*',
-  String $mail                    = 'Unknown mailadress',
+  String $mail                    = 'Mailadress not specified',
   String $shell                   = '/bin/bash',
   String $dotfile_sourcedir       = 'puppet:///modules/hosting_basesetup/dotfiles_default/',
 ) {
@@ -53,15 +53,18 @@ define hosting_basesetup::usermanagement::user (
       backup  => false,
       content => template("hosting_basesetup/authorized_keys.erb"),
     }
-    file { "/home/${username}/":
-      path    => "${homedir_base}/${username}/",
-      ensure  => 'directory',
-      owner   => $username,
-      group   => $group_primary,
-      source  => $dotfile_sourcedir,
-      backup  => false,
-      require => User[$username],
-      recurse => true,
+
+    if $dotfile_sourcedir != "no" {
+      file { "/home/${username}/":
+        path    => "${homedir_base}/${username}/",
+        ensure  => 'directory',
+        owner   => $username,
+        group   => $group_primary,
+        source  => $dotfile_sourcedir,
+        backup  => false,
+        require => User[$username],
+        recurse => true,
+      }
     }
   }else{
     file { "${homedir_base}/${username}/.ssh/authorized_keys":
