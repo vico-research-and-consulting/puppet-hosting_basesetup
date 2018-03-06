@@ -19,6 +19,8 @@ Things implemented with this setup
   * 10g networking
   * oops-behavior, swappiness, ...
   * custom systctl settings via hiera
+  * maximum number of processes and file descriptors
+  * zone_reclaim_mode on NUMA systems
 * hardening of openssh server/client
   * no password login
   * ciphers
@@ -62,6 +64,17 @@ Currently not implemented/TODOs
 
 by priority:
 
+
+* Disable Hugepages
+  ```
+  echo never > /sys/kernel/mm/transparent_hugepage/enabled
+  ```
+* Hugepage defrag (Cassandra)
+  ```
+  echo never | sudo tee /sys/kernel/mm/transparent_hugepage/defrag
+  ```
+* Timed FStrim for Non-Rotational devices   
+
 * Disk Device Settings (Cassandra)
   * Configure readahead for ssds/disks
     ```
@@ -76,15 +89,6 @@ by priority:
     ```
     echo 0 > /sys/class/block/sda/queue/rotational
     ```
-* zone_reclaim_mode on NUMA systems (Cassandra)
-  ```
-    echo 0 > /proc/sys/vm/zone_reclaim_mode
-  ```
-* Hugepage defrag (Cassandra)
-  ```
-  echo never | sudo tee /sys/kernel/mm/transparent_hugepage/defrag
-  ```
-
 * SMART Daemon on non virtualized hardware systems
 * systemd journal configuration (housekeeping, permissions)
   https://www.freedesktop.org/software/systemd/man/journald.conf.html
