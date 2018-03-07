@@ -8,7 +8,12 @@ class hosting_basesetup::kernel (
   Boolean $sysctl_enable_tcp_timeout_optimzation = false,
   Boolean $sysctl_ignore_defaults                = false,
   Boolean $ulimit_ignore_defaults                = false,
+  Hash $sysfs_config                             = {},
+  Boolean $sysfs_ignore_defaults                 = false,
 ) {
+  # Sysfs settings
+  include hosting_basesetup::kernel::sysfs
+
   # Sysctl reload
   file { 'sysctl_conf': name => $sysctl_filename, }
 

@@ -21,6 +21,8 @@ Things implemented with this setup
   * custom systctl settings via hiera
   * maximum number of processes and file descriptors
   * zone_reclaim_mode on NUMA systems
+  * disable transparent hugepages/hugepage defrag
+* sysfs settings
 * hardening of openssh server/client
   * no password login
   * ciphers
@@ -65,14 +67,7 @@ Currently not implemented/TODOs
 by priority:
 
 
-* Disable Hugepages
-  ```
-  echo never > /sys/kernel/mm/transparent_hugepage/enabled
-  ```
-* Hugepage defrag (Cassandra)
-  ```
-  echo never | sudo tee /sys/kernel/mm/transparent_hugepage/defrag
-  ```
+
 * Timed FStrim for Non-Rotational devices   
 
 * Disk Device Settings (Cassandra)
