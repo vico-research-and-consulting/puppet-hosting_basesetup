@@ -5,7 +5,7 @@ hosting_basesetup::rootpwhash: '$1$Etg2ExUZ$F9NTP7omafhKIlqaBMqng1'
 hosting_basesetup::mosh: true
 hosting_basesetup::kernel::sysctl_enable_fastnetworking_defaults: true
 
-# Useful for ssd devices
+# Per device settings, especially useful for ssd devices
 hosting_basesetup::kernel::sysfs::items:
   sda:
     base: "class/block/sda/"

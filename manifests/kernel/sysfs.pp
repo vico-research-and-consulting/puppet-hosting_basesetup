@@ -1,26 +1,26 @@
 class hosting_basesetup::kernel::sysfs (
   Boolean $transparent_hugepages_off = true,
-  Hash $sysfs_config                 = $::hosting_basesetup::kernel::sysfs_config,
-  Boolean $sysfs_ignore_defaults     = $::hosting_basesetup::kernel::sysfs_ignore_defaults,
-  Hash $items                        = {}
+  Hash $config                       = $::hosting_basesetup::kernel::sysfs_config,
+  Boolean $ignore_defaults           = $::hosting_basesetup::kernel::sysfs_ignore_defaults,
+  Hash $items                        = $::hosting_basesetup::kernel::sysfs_items,
 ) {
 
 
   if $transparent_hugepages_off {
-    $sysfs_transparent_hugepages_off = {
+    $config_transparent_hugepages_off = {
       'kernel/mm/transparent_hugepage/defrag'  => 'never',
       'kernel/mm/transparent_hugepage/enabled' => 'never',
     }
   }else {
-    $transparent_hugepages_off = {}
+    $config_transparent_hugepages_off = {}
   }
 
-  if $sysfs_ignore_defaults {
-    $sysfs_config_final = $sysfs_config
+  if $ignore_defaults {
+    $config_final = $sysfs_config
   } else {
-    $sysfs_config_final = deep_merge(
-      $sysfs_transparent_hugepages_off,
-      $sysfs_config,
+    $config_final = deep_merge(
+      $config_transparent_hugepages_off,
+      $config,
     )
   }
 
