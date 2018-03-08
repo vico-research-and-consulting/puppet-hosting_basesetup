@@ -6,6 +6,8 @@ class hosting_basesetup::monitoring (
   String $zabbix_hostmetadata              = 'Linux',
   Array[String] $additional_agent_packages = [],
   String $additional_agent_packages_ensure = 'installed',
+  Boolean $use_zabbix_agent_extensions     = false,
+  String  $use_zabbix_agent_extensions_release        = 'present',
 ) {
   if $zabbix_agent {
     class { 'zabbix::agent':
@@ -16,6 +18,7 @@ class hosting_basesetup::monitoring (
       hostmetadata => $zabbix_hostmetadata,
     }
     include ::zabbix::sender
+
     ensure_packages(["zabbix-get"],
       {
         'require' => Class['zabbix::agent'],
@@ -28,6 +31,29 @@ class hosting_basesetup::monitoring (
         'require' => Class['zabbix::agent'],
       }
     )
+    }
   }
+
+  if $use_zabbix_agent_extensions {
+    ensure_packages(['zabbix-agent-extensions'],
+      {
+        'ensure'  => $use_zabbix_agent_extensions_release,
+        'require' => Class['zabbix::agent'],
+      }
+    )
+    file { '/etc/sudoers.d/zabbix':
+        ensure => present,
+              mode => '0440',
+
+    }
+    file { '/etc/zabbix/zabbix_agentd.d/zabbix-agent-extensions':
+        owner => 'root',
+        group => 'root',
+        mode => '0644',
+        content => 'Include=/usr/share/zabbix-agent-extensions/include.d/
+        ',
+        notify => Service['zabbix-agent'],
+    }
+
 }
 

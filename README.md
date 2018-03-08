@@ -66,8 +66,6 @@ Currently not implemented/TODOs
 
 by priority:
 
-
-
 * Timed FStrim for Non-Rotational devices   
 * SMART Daemon on non virtualized hardware systems
 * systemd journal configuration (housekeeping, permissions)
