@@ -32,31 +32,30 @@ class hosting_basesetup::monitoring (
       }
     )
   }
-}
 
-if $use_zabbix_agent_extensions and $zabbix_agent {
-  # ensure that this package is part of the package repos
-  fail("WOOOOOOOOOOOOOOO")
-  ensure_packages(['zabbix-agent-extensions'],
-    {
-      'ensure'  => $use_zabbix_agent_extensions_release,
-      'require' => Class['zabbix::agent'],
+  if $use_zabbix_agent_extensions and $zabbix_agent {
+    # ensure that this package is part of the package repos
+    fail("WOOOOOOOOOOOOOOO")
+    ensure_packages(['zabbix-agent-extensions'],
+      {
+        'ensure'  => $use_zabbix_agent_extensions_release,
+        'require' => Class['zabbix::agent'],
+      }
+    )
+    file { '/etc/sudoers.d/zabbix':
+      ensure => present,
+      mode   => '044',
+      owner  => 'root',
+      group   => 'root',
     }
-  )
-  file { '/etc/sudoers.d/zabbix':
-    ensure => present,
-    mode   => '044',
-    owner  => 'root',
-    group   => 'root',
-  }
-  file { '/etc/zabbix/zabbix_agentd.d/zabbix-agent-extensions':
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    content => '# Maintained by puppet
+    file { '/etc/zabbix/zabbix_agentd.d/zabbix-agent-extensions':
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      content => '# Maintained by puppet
 Include=/usr/share/zabbix-agent-extensions/include.d/
-        ',
-    notify  => Service['zabbix-agent'],
+          ',
+      notify  => Service['zabbix-agent'],
+    }
   }
 }
-
