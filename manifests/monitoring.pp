@@ -35,7 +35,6 @@ class hosting_basesetup::monitoring (
 
   if $use_zabbix_agent_extensions and $zabbix_agent {
     # ensure that this package is part of the package repos
-    fail("WOOOOOOOOOOOOOOO")
     ensure_packages(['zabbix-agent-extensions'],
       {
         'ensure'  => $use_zabbix_agent_extensions_release,
