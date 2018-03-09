@@ -5,7 +5,7 @@ class hosting_basesetup::kernel (
   Boolean $sysctl_enable_fastnetworking_defaults = false,
   Boolean $sysctl_enable_tcp_timeout_optimzation = false,
   Boolean $sysctl_ignore_defaults                = false,
-  Hash    $sysfs_config                          = {},
+  Hash    $sysfs_items                           = {},
   Boolean $sysfs_ignore_defaults                 = false,
   Boolean       $ulimit_ignore_defaults          = false,
   Array[String] $ulimit_config                   = [],
