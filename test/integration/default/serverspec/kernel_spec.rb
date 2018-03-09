@@ -38,5 +38,9 @@ end
 describe command('cat /sys/kernel/mm/transparent_hugepage/defrag') do
    its(:stdout) { should match(/\[never\]/) }
 end
+
+describe command('cat /etc/default/grub') do
+   its(:stdout) { should match(/foobarbaz/) }
+end
 #----------------------------------------------------------------------
 

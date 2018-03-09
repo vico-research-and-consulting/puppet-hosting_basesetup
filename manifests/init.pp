@@ -29,26 +29,25 @@
 #
 
 class hosting_basesetup (
-  Boolean $manage_puppet                                       = true,
+  Boolean $manage_puppet                       = true,
   String $rootpwhash,
-  Hash $users                                                  = {},
-  Hash $groups                                                 = {},
-  Array[String] $ntp_servers                                   = ['ptbtime1.ptb.de', 'ptbtime2.ptb.de', 'ptbtime3.ptb.de', ],
-  Boolean $mosh                                                = false,
-  String $mail_relayhost                                       = '',
+  Hash $users                                  = {},
+  Hash $groups                                 = {},
+  Array[String] $ntp_servers                   = ['ptbtime1.ptb.de', 'ptbtime2.ptb.de', 'ptbtime3.ptb.de', ],
+  Boolean $mosh                                = false,
+  String $mail_relayhost                       = '',
   String $mail_root_recipient,
   String $mail_domain,
-  Boolean $unattended_upgrades                                 = false,
-  Boolean $unattended_upgrades_reboot                          = false,
-  String $unattended_upgrades_reboot_time                      = 'now',
-  Array[String] $unattended_upgrades_blacklist                 = [],
-  Integer $unattended_upgrades_random_sleep                    = 1800,
-  String $motd_template                                        = "hosting_basesetup/motd.erb",
-  String $motd_description                                     = "<no description>",
-  Variant[String, Enum['no', 'yes']] $ssh_password_auth_string = 'no',
+  Boolean $unattended_upgrades                 = false,
+  Boolean $unattended_upgrades_reboot          = false,
+  String $unattended_upgrades_reboot_time      = 'now',
+  Array[String] $unattended_upgrades_blacklist = [],
+  Integer $unattended_upgrades_random_sleep    = 1800,
+  String $motd_template                        = "hosting_basesetup/motd.erb",
+  String $motd_description                     = "<no description>",
+  Variant[String, Enum['no', 'yes']]
+  $ssh_password_auth_string                    = 'no',
 ) {
-
-  #fail("OOOPS ${hosting_basesetup::test}")
 
   ## RESSOURCE ORDERING ##################################################################
 
@@ -155,8 +154,8 @@ class hosting_basesetup (
       blacklist    => $unattended_upgrades_blacklist,
       random_sleep => $unattended_upgrades_random_sleep,
     }
-  }else{
-        notice("Unattended upgrades are disabled for this system, consider to activate it to improve system security ;-)")
+  }else {
+    notice("Unattended upgrades are disabled for this system, consider to activate it to improve system security ;-)")
   }
   ## CRON AND AT #########################################################################
   include hosting_basesetup::cron_at

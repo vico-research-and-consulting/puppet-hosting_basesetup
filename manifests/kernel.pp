@@ -1,6 +1,6 @@
 class hosting_basesetup::kernel (
   String  $ulimits_filename                      = '/etc/security/limits.d/hosting_basesetup.conf',
-  String  $boot_options                          = '',
+  String  $grub_options                          = '',
   Hash    $sysctl_config                         = {},
   Boolean $sysctl_enable_fastnetworking_defaults = false,
   Boolean $sysctl_enable_tcp_timeout_optimzation = false,
