@@ -29,7 +29,7 @@ class hosting_basesetup::time (
       enable     => true,
       pattern    => 'rngd',
       hasstatus  => false,
-      hasrestart => true;
+      hasrestart => true,
     }
   }
 }

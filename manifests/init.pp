@@ -69,6 +69,31 @@ class hosting_basesetup (
     }
   }
 
+  ## DNS RESOLVING #######################################################################
+
+  if $facts['os']['name'] == "Ubuntu"  {
+    file { '/etc/resolvconf/resolv.conf.d/base':
+      ensure  => file,
+      content => "# see man resolv.conf
+options timeout:1 attempts:1 rotate
+        ",
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+    }
+    service { 'resolvconf':
+      ensure     => running,
+      enable     => true,
+      hasstatus  => true,
+      hasrestart => true,
+      subscribe => File['/etc/resolvconf/resolv.conf.d/base'],
+    }
+
+  }else {
+    notice("dns resolving configuration not implemented")
+  }
+
+
   ## SSH #################################################################################
   # TODO: create secure client settings
   class { '::ssh':
