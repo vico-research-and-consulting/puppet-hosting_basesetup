@@ -8,8 +8,10 @@ hosting_basesetup::kernel::grub_options: "foobarbaz=111"
 
 # Per device settings, especially useful for ssd devices
 hosting_basesetup::kernel::sysfs::config_items:
-  sda:
-    base: "class/block/sda/"
+  ssds:
+    base:
+      - "class/block/sda/"
+      - "class/block/sdb/"
     config:
       "queue/read_ahead_kb": "8"
       "queue/scheduler": "deadline"
