@@ -7,10 +7,10 @@ hosting_basesetup::kernel::sysctl_enable_fastnetworking_defaults: true
 hosting_basesetup::kernel::grub_options: "foobarbaz=111"
 
 # Per device settings, especially useful for ssd devices
-hosting_basesetup::kernel::sysfs::items:
+hosting_basesetup::kernel::sysfs::config_items:
   sda:
     base: "class/block/sda/"
-    sysfs_config:
+    config:
       "queue/read_ahead_kb": "8"
       "queue/scheduler": "deadline"
       "queue/rotational": "0"

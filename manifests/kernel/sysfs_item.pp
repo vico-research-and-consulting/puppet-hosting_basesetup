@@ -2,7 +2,7 @@
 define hosting_basesetup::kernel::sysfs_item(
   String $type = "",
   String $base,
-  Hash $sysfs_config,
+  Hash $config,
 ) {
 
 

@@ -3,7 +3,7 @@
 #### FILE CREATED BY PUPPET, DO NOT EDIT
 
 
-<% @sysfs_config.each do |key, value| -%>
+<% @config.each do |key, value| -%>
 <%= @prefix_final %><%= @base %>/<%= key %> = <%= value %>
 <% end -%>
 

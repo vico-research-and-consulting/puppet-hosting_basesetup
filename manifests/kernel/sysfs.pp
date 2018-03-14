@@ -1,6 +1,7 @@
 class hosting_basesetup::kernel::sysfs (
   Boolean $transparent_hugepages_off = true,
   Hash $config                       = $::hosting_basesetup::kernel::sysfs_config,
+  Hash $config_items                 = {},
   Boolean $ignore_defaults           = $::hosting_basesetup::kernel::sysfs_ignore_defaults,
 ) {
 
@@ -72,7 +73,7 @@ class hosting_basesetup::kernel::sysfs (
         recurse => true,
         purge   => true,
       }
-      create_resources("hosting_basesetup::kernel::sysfs_item", $config)
+      create_resources("hosting_basesetup::kernel::sysfs_item", $config_items)
     }
 
     'Centos': {
