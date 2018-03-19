@@ -43,7 +43,7 @@ class hosting_basesetup::monitoring (
     )
     file { '/etc/sudoers.d/zabbix':
       ensure => present,
-      mode   => '044',
+      mode   => '0440',
       owner  => 'root',
       group   => 'root',
     }
