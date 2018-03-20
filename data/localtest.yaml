@@ -6,6 +6,11 @@ hosting_basesetup::mosh: true
 hosting_basesetup::kernel::sysctl_enable_fastnetworking_defaults: true
 hosting_basesetup::kernel::grub_options: "foobarbaz=111"
 
+hosting_basesetup::proxy_http_host: "8.8.8.8"
+hosting_basesetup::proxy_http_port: "8888"
+hosting_basesetup::proxy_https: true
+
+
 # Per device settings, especially useful for ssd devices
 hosting_basesetup::kernel::sysfs::config_items:
   ssds:
