@@ -22,7 +22,7 @@ export http_proxy
             mode => '0755',
             content => "
     https_proxy=http://${http_host}:${http_port}
-    export http_proxys
+    export https_proxy
             "
          }
      }
