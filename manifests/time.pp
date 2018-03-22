@@ -1,5 +1,6 @@
 class hosting_basesetup::time (
   Array[String] $ntp_servers,
+  Boolean $install_rng = true
 ) {
   $ntp_restrict = $ntp_servers.map |$server| {
     "${server} nomodify notrap nopeer noquery"
@@ -11,7 +12,7 @@ class hosting_basesetup::time (
   }
 
   # rng-tools (entropy gatherer)
-  if $::is_virtual {
+  if $::is_virtual and $install_rng {
     ensure_packages(['rng-tools'], { ensure => present })
 
     file { '/etc/default/rng-tools':
