@@ -28,7 +28,7 @@ define hosting_basesetup::usermanagement::group (
       ensure  => $ensure_final,
       owner   => 'root',
       group   => 'root',
-      mode    => '0644',
+      mode    => '0640',
       content => template($sudo_template),
     }
   }
