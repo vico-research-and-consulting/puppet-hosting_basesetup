@@ -13,7 +13,7 @@ class hosting_basesetup::time (
 
   class { 'ntp':
     servers  => $ntp_servers,
-    restrict => flatten(['default ignore', '-6 default ignore', '-4 default ignore', '127.0.0.1', '-6 ::1',
+    restrict => flatten(['default ignore', '-6 default ignore', '127.0.0.1', '-6 ::1',
       $ntp_restrict_final, ])
   }
 
