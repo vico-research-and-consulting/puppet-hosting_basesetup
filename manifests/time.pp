@@ -1,9 +1,10 @@
 class hosting_basesetup::time (
   Array[String] $ntp_servers,
-  Boolean $install_rng = true,
+  Boolean $install_rng                = true,
   Array[String] $ntp_client_restricts = [],
 ) {
 
+  # TODO: https://support.ntp.org/bin/view/Support/AccessRestrictions
   $ntp_server_restricts = $ntp_servers.map |$server| {
     "${server} nomodify notrap nopeer noquery"
   }
@@ -12,7 +13,8 @@ class hosting_basesetup::time (
 
   class { 'ntp':
     servers  => $ntp_servers,
-    restrict => flatten(['default ignore', '-6 default ignore', '127.0.0.1', '-6 ::1', $ntp_restrict_final, ])
+    restrict => flatten(['default ignore', '-6 default ignore', '-4 default ignore', '127.0.0.1', '-6 ::1',
+      $ntp_restrict_final, ])
   }
 
   # rng-tools (entropy gatherer)
