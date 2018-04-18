@@ -36,7 +36,7 @@ iface bond0 inet manual
    bond-mode 802.3ad
    bond-slaves none
    # fast lacp rate, every second
-   bond-lacp-rate 1
+   bond-lacp-rate 0
    # Calculate Link by: ((SRCportport XOR DSTport) XOR (IPsrc XOR IPdst)) DIV links
    bond-xmit_hash_policy layer3+4
    # check every 100ms link-status
