@@ -66,6 +66,9 @@ Currently not implemented/TODOs
 
 by priority:
 
+* MOTD Details
+  * Blinking MOTD Disclaimer
+  * Documentation Link
 * SMART Daemon on non virtualized hardware systems
 * systemd journal configuration (housekeeping, permissions)
   https://www.freedesktop.org/software/systemd/man/journald.conf.html
