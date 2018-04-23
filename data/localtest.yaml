@@ -6,6 +6,27 @@ hosting_basesetup::mosh: true
 hosting_basesetup::kernel::sysctl_enable_fastnetworking_defaults: true
 hosting_basesetup::kernel::grub_options: "foobarbaz=111"
 
+hosting_basesetup::proxy_http_host: "8.8.8.8"
+hosting_basesetup::proxy_http_port: "8888"
+hosting_basesetup::proxy_https: true
+
+hosting_basesetup::time::ntp_client_restricts:
+  - 'restrict 10.10.10.0 mask 255.255.255.0 nomodify notrap'
+
+hosting_basesetup::simple_files:
+  "/etc/interfaces.foo":
+    config:
+      interface_associations:
+        eth0: bondo0
+        eth1: bondo0
+      ip: 10.1.1.2
+      netmask: 255.255.252.0
+      gateway: 10.1.1.1
+      dns_servers:
+        - 9.9.9.9
+        - 8.8.8.8
+    template: "hosting_basesetup/simple_files/interfaces.erb"
+
 # Per device settings, especially useful for ssd devices
 hosting_basesetup::kernel::sysfs::config_items:
   ssds:

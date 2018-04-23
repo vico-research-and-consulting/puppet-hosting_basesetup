@@ -47,10 +47,14 @@ class hosting_basesetup (
   String $motd_description                     = "<no description>",
   Variant[String, Enum['no', 'yes']]
   $ssh_password_auth_string                    = 'no',
+  String $proxy_http_host                      = "",
+  String $proxy_http_port                      = "",
+  Boolean $proxy_https                         = true,
+  Hash $simple_files = {},
 ) {
 
-  ## RESSOURCE ORDERING ##################################################################
-
+  ## FILE RESSOURCES   ##################################################################
+  create_resources("hosting_basesetup::simple_file", $simple_files)
 
   ## KERNEL ##############################################################################
   include ::hosting_basesetup::kernel
@@ -167,21 +171,24 @@ options timeout:1 attempts:1 rotate
   ## LVM #################################################################################
   include ::lvm
 
+  ## PROXY ###############################################################################
+  include ::hosting_basesetup::proxy
+
   ## APT #################################################################################
   include apt
 
-
   ## UNATTENDED UPGRADES #################################################################
-  if $unattended_upgrades {
-    class { '::hosting_basesetup::unattended_upgrades':
+  if (!$unattended_upgrades) {
+    notice("Unattended upgrades are disabled for this system, consider to activate it to improve system security ;-)")
+  }
+  class { '::hosting_basesetup::unattended_upgrades':
+      enable       => $unattended_upgrades,
       reboot       => $unattended_upgrades_reboot,
       reboot_time  => $unattended_upgrades_reboot_time,
       blacklist    => $unattended_upgrades_blacklist,
       random_sleep => $unattended_upgrades_random_sleep,
-    }
-  }else {
-    notice("Unattended upgrades are disabled for this system, consider to activate it to improve system security ;-)")
   }
+
   ## CRON AND AT #########################################################################
   include hosting_basesetup::cron_at
 }
