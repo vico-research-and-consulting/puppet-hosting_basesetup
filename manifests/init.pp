@@ -47,10 +47,11 @@ class hosting_basesetup (
   String $motd_description                     = "<no description>",
   Variant[String, Enum['no', 'yes']]
   $ssh_password_auth_string                    = 'no',
+  String $sshd_listen_address                  = '22',
   String $proxy_http_host                      = "",
   String $proxy_http_port                      = "",
   Boolean $proxy_https                         = true,
-  Hash $simple_files = {},
+  Hash $simple_files                           = {},
 ) {
 
   ## FILE RESSOURCES   ##################################################################
@@ -75,7 +76,7 @@ class hosting_basesetup (
 
   ## DNS RESOLVING #######################################################################
 
-  if $facts['os']['name'] == "Ubuntu"  {
+  if $facts['os']['name'] == "Ubuntu" {
     file { '/etc/resolvconf/resolv.conf.d/base':
       ensure  => file,
       content => "# see man resolv.conf
@@ -90,7 +91,7 @@ options timeout:1 attempts:1 rotate
       enable     => true,
       hasstatus  => true,
       hasrestart => true,
-      subscribe => File['/etc/resolvconf/resolv.conf.d/base'],
+      subscribe  => File['/etc/resolvconf/resolv.conf.d/base'],
     }
 
   }else {
@@ -104,6 +105,7 @@ options timeout:1 attempts:1 rotate
     ssh_config_forward_agent             => 'no',
     sshd_config_permitemptypasswords     => 'no',
     sshd_password_authentication         => $ssh_password_auth_string,
+    sshd_listen_address                  => $sshd_listen_address,
     sshd_allow_tcp_forwarding            => 'no',
     sshd_x11_forwarding                  => 'no',
     sshd_config_use_dns                  => 'no',
@@ -122,7 +124,7 @@ options timeout:1 attempts:1 rotate
     sshd_config_strictmodes              => 'yes',
     sshd_config_use_privilege_separation => 'sandbox',
     sshd_config_print_motd               => 'no',
-    permit_root_login                    => 'without-password',
+    permit_root_login => 'without-password',
   }
 
   if $mosh {
@@ -182,11 +184,11 @@ options timeout:1 attempts:1 rotate
     notice("Unattended upgrades are disabled for this system, consider to activate it to improve system security ;-)")
   }
   class { '::hosting_basesetup::unattended_upgrades':
-      enable       => $unattended_upgrades,
-      reboot       => $unattended_upgrades_reboot,
-      reboot_time  => $unattended_upgrades_reboot_time,
-      blacklist    => $unattended_upgrades_blacklist,
-      random_sleep => $unattended_upgrades_random_sleep,
+    enable       => $unattended_upgrades,
+    reboot       => $unattended_upgrades_reboot,
+    reboot_time  => $unattended_upgrades_reboot_time,
+    blacklist    => $unattended_upgrades_blacklist,
+    random_sleep => $unattended_upgrades_random_sleep,
   }
 
   ## CRON AND AT #########################################################################
