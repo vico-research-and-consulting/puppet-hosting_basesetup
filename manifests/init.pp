@@ -47,7 +47,7 @@ class hosting_basesetup (
   String $motd_description                     = "<no description>",
   Variant[String, Enum['no', 'yes']]
   $ssh_password_auth_string                    = 'no',
-  String $sshd_listen_address                  = '22',
+  String $sshd_config_port                     = '22',
   String $proxy_http_host                      = "",
   String $proxy_http_port                      = "",
   Boolean $proxy_https                         = true,
@@ -105,7 +105,7 @@ options timeout:1 attempts:1 rotate
     ssh_config_forward_agent             => 'no',
     sshd_config_permitemptypasswords     => 'no',
     sshd_password_authentication         => $ssh_password_auth_string,
-    sshd_listen_address                  => $sshd_listen_address,
+    sshd_config_port                     => $sshd_config_port,
     sshd_allow_tcp_forwarding            => 'no',
     sshd_x11_forwarding                  => 'no',
     sshd_config_use_dns                  => 'no',
@@ -124,7 +124,7 @@ options timeout:1 attempts:1 rotate
     sshd_config_strictmodes              => 'yes',
     sshd_config_use_privilege_separation => 'sandbox',
     sshd_config_print_motd               => 'no',
-    permit_root_login => 'without-password',
+    permit_root_login                    => 'without-password',
   }
 
   if $mosh {
