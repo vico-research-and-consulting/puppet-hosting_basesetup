@@ -73,8 +73,6 @@ by priority:
 * systemd journal configuration (housekeeping, permissions)
   https://www.freedesktop.org/software/systemd/man/journald.conf.html
   /etc/systemd/journald.conf
-* virtual serial consoles for server systems
-  => to support connect by virtual serial console by LOM management software
 * IPTables base setup for ipv4/ipv6, https://github.com/puppetlabs/puppetlabs-firewall
   * restrict for inbound everything except ssh
   * restrict outbound except essential os parameters
@@ -92,6 +90,9 @@ by priority:
 * Increase memory of vagrant/kitchen vms or reduce memory consumption (32bit vms) for complexer setups
 * install and configure puppet final agent config<BR>
   (provide capability to switch environment)
+* uniq userids, do not reuse old users and groups</BR>
+  * implement a pool of outdated userids, uid, gids - remove them automatically
+  * remove user directories after a specified amount of days
 * logshipping to syslog
 * logstash/graylog support
 * aide intrusion detection
