@@ -1,4 +1,13 @@
 ---
+hosting_basesetup::motd_description: "Basesetup Testhost"
+hosting_basesetup::motd_announcement: |
+  Wow, the Hosting Basesetup seems to work!
+
+  The world and the universe are far more wonderful if there's not a puppet master.
+  Dave Matthews
+
+hosting_basesetup::motd_documentation: https://github.com/scoopex/puppet-hosting_basesetup/
+
 hosting_basesetup::mail_root_recipient: admin@foobar.de
 hosting_basesetup::mail_domain: foobar.de
 hosting_basesetup::rootpwhash: '$1$Etg2ExUZ$F9NTP7omafhKIlqaBMqng1'

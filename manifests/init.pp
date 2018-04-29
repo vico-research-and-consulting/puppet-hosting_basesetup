@@ -45,6 +45,8 @@ class hosting_basesetup (
   Integer $unattended_upgrades_random_sleep    = 1800,
   String $motd_template                        = "hosting_basesetup/motd.erb",
   String $motd_description                     = "<no description>",
+  String $motd_announcement                    = "",
+  String $motd_documentation                   = "",
   Variant[String, Enum['no', 'yes']]
   $ssh_password_auth_string                    = 'no',
   String $proxy_http_host                      = "",
@@ -97,7 +99,6 @@ options timeout:1 attempts:1 rotate
     notice("dns resolving configuration not implemented")
   }
 
-
   ## SSH #################################################################################
   # TODO: create secure client settings
   class { '::ssh':
@@ -115,7 +116,8 @@ options timeout:1 attempts:1 rotate
     sshd_config_kexalgorithms            => [ 'diffie-hellman-group-exchange-sha256' ],
     sshd_config_loglevel                 => 'VERBOSE',
     sshd_config_login_grace_time         => '30s',
-    sshd_config_macs                     => [ 'hmac-sha2-512', 'hmac-sha2-256', 'hmac-ripemd160'],
+    sshd_config_macs                     => [ 'hmac-sha2-512', 'hmac-sha2-256',
+                                              'hmac-sha2-256-etm@openssh.com', 'hmac-sha2-512-etm@openssh.com'],
     sshd_config_maxauthtries             => 2,
     sshd_config_maxsessions              => 10,
     sshd_config_maxstartups              => '10:30:100',
