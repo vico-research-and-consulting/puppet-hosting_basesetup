@@ -40,7 +40,7 @@ end
 
 describe command('cat /etc/fstab|mail -s "TEST" devnull@256bit.org') do
    its(:stderr) { should_not match(/..*/) }
-   # check exitcode
+   its(:exit_status) { should eq 0 }
 end
 
 #----------------------------------------------------------------------
