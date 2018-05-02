@@ -85,7 +85,6 @@ by priority:
 * use hiera data in module for distibution specific parameters
 * use testinfra as testing framework
   https://testinfra.readthedocs.io/en/latest/
-* Increase memory of vagrant/kitchen vms or reduce memory consumption (32bit vms) for complexer setups
 * install and configure puppet final agent config<BR>
   (provide capability to switch environment)
 * uniq userids, do not reuse old users and groups</BR>
