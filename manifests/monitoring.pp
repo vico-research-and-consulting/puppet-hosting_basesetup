@@ -40,6 +40,7 @@ class hosting_basesetup::monitoring (
       {
         'ensure'  => $use_zabbix_agent_extensions_release,
         'require' => Class['zabbix::agent'],
+        'before'  => [ File['/etc/zabbix/zabbix_agentd.conf'], Service['zabbix-agent'], ]
       }
     )
     file { '/etc/sudoers.d/zabbix':
