@@ -4,8 +4,9 @@ Overview
 This project implements a basic system setup for the following platforms:
 
 * Ubuntu 16.04 LTS (tested by spectests)
+* Ubuntu 18.04 LTS (tested by spectests)
 * Debian Strech (tested by spectests)
-* Centos 7 (uncomplete)
+* Centos 7 (implementation is not complete)
 
 This setup can be used as a base for server systems.
 The setup ist tested by using test-kitchen and serverspec tests.
@@ -44,6 +45,8 @@ Things implemented with this setup
   * distribution of standard dotfiles
   * distribution of user specific dotfiles from a specifyable location
   * minimal numeric uids/gids at 12000 to reduce collections with groups and users id without numeric id specification
+  * restrict distribution of users/groups by restriction tag 
+  * override user/group details for dedicated nodes
 * installation of zabbix agent
   * add additional zabbix-agent-extenion packages
 * package installtion via hiera

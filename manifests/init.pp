@@ -11,7 +11,7 @@
 #   A hashmap which defines a collection of users, check hosting_basesetup::usermanagement::user
 #   for details
 #
-# [groups]
+# [glroups]
 #   A hashmap which defines a collection of users, check hosting_basesetup::usermanagement::group
 #   for details
 #
@@ -32,7 +32,9 @@ class hosting_basesetup (
   Boolean $manage_puppet                       = true,
   String $rootpwhash,
   Hash $users                                  = {},
+  Hash $users_override                         = {},
   Hash $groups                                 = {},
+  Hash $groups_override                        = {},
   Array[String] $ntp_servers                   = ['ptbtime1.ptb.de', 'ptbtime2.ptb.de', 'ptbtime3.ptb.de', ],
   Boolean $mosh                                = false,
   String $mail_relayhost                       = '',
@@ -129,9 +131,11 @@ class hosting_basesetup (
 
   ## USERMANAGEMENT ######################################################################
   class { '::hosting_basesetup::usermanagement':
-    groups     => $groups,
-    users      => $users,
-    rootpwhash => $rootpwhash,
+    users           => $users,
+    users_override  => $users_override,
+    groups          => $groups,
+    groups_override => $groups_override,
+    rootpwhash      => $rootpwhash,
   }
 
   ## SOFTWARE ############################################################################
