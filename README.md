@@ -6,7 +6,14 @@ This project implements a basic system setup for the following platforms:
 * Ubuntu 16.04 LTS (tested by spectests)
 * Ubuntu 18.04 LTS (tested by spectests)
 * Debian Strech (tested by spectests)
-* Centos 7 (implementation is not complete)
+* Centos 7
+  * implementation not complete
+  * contributions are very welcome<br>
+    (just fix the code/tests and submit pull requests)
+  * needs to be implemented:
+     * sysfs settings
+     * unattended os updates
+     * kernel parameters
 
 This setup can be used as a base for server systems.
 The setup ist tested by using test-kitchen and serverspec tests.
