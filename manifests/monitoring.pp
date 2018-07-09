@@ -58,5 +58,12 @@ Include=/usr/share/zabbix-agent-extensions/include.d/
           ',
       notify  => Service['zabbix-agent'],
     }
+    file_line { '/etc/zabbix/zabbix_agentd.conf':
+      ensure            => absent,
+      path              => '/etc/zabbix/zabbix_agentd.conf',
+      match             => '^Include=/usr/share/zabbix-agent-extensions/include.d/.*',
+      match_for_absence => true,
+      notify            => Service['zabbix-agent'],
+    }
   }
 }
