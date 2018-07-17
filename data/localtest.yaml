@@ -22,9 +22,19 @@ hosting_basesetup::proxy_https: true
 hosting_basesetup::time::ntp_client_restricts:
   - 'restrict 10.10.10.0 mask 255.255.255.0 nomodify notrap'
 
+hosting_basesetup::mounts:
+  '/nfs1':
+    device: 8.8.8.8:/srv/nfs/test1
+    fstype: nfs
+    ensure: unmounted
+    options: defaults
+    pass: 2
+    atboot: false
+
+
 hosting_basesetup::mounts_override:
-  '/nfs':
-    device: 10.23.22.89:/srv/nfs/datastax
+  '/nfs2':
+    device: 8.8.8.8:/srv/nfs/test2
     fstype: nfs
     ensure: unmounted
     options: defaults

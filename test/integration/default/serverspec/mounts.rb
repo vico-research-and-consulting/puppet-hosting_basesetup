@@ -24,12 +24,14 @@ end
 #----------------------------------------------------------------------
 
 describe command('cat /etc/fstab') do
-   its(:stdout) { should match(/^10.23.22.89:/srv/nfs/datastax   /nfs    nfs     defaults        0       2$/) }
+   its(:stdout) { should match(/^8.8.8.8:/srv/nfs/test1   /nfs1    nfs     defaults        0       2$/) }
+   its(:stdout) { should match(/^8.8.8.8:/srv/nfs/test2   /nfs2    nfs     defaults        0       2$/) }
 end
 
 
-describe command('ls -ld /nfs') do
-   its(:stdout) { should match(/^drwxr-xr-x 2 root root 4096 Jul 17 14:57 \/nfs$) }
+describe command('ls -ld /nfs*') do
+   its(:stdout) { should match(/^drwxr-xr-x 2 root root .* \/nfs1$/) }
+   its(:stdout) { should match(/^drwxr-xr-x 2 root root .* \/nfs2$/) }
 end
 
 #----------------------------------------------------------------------
