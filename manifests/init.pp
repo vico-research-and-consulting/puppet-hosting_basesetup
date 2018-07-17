@@ -143,7 +143,7 @@ class hosting_basesetup (
   ## MOUNTPOINTS #########################################################################
   class {'::hosting_basesetup::mountpoints':
     mountpoints => $mountpoints,
-    mountpoins_override => $mountpoints_override,
+    mountpoints_override => $mountpoints_override,
   }
 
   ## SOFTWARE ############################################################################

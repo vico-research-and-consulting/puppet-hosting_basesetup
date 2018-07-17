@@ -6,6 +6,7 @@ class hosting_basesetup::mountpoints (
 )
   {
     $mountpoints = deep_merge($mountpoints, $mountpoints_override)
+
     $mountpoints.each | Hash $mountpoint | {
       mount { "${mountpoint['path']}":
         device => "${mountpoint['device']}",
