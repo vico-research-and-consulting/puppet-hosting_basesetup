@@ -141,8 +141,9 @@ class hosting_basesetup (
   }
 
   ## MOUNTPOINTS #########################################################################
+
   $mountpoints_final = deep_merge($mounts, $mounts_override)
-  create_resources("mount", $mountpoints_final)
+  create_resources("::hosting_basesetup::mount", $mountpoints_final)
 
   ## SOFTWARE ############################################################################
   class { '::hosting_basesetup::packages':
