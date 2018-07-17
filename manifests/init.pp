@@ -35,6 +35,8 @@ class hosting_basesetup (
   Hash $users_override                         = {},
   Hash $groups                                 = {},
   Hash $groups_override                        = {},
+  Hash $mountpoints                            = {},
+  Hash $mountpoints_override                   = {},
   Array[String] $ntp_servers                   = ['ptbtime1.ptb.de', 'ptbtime2.ptb.de', 'ptbtime3.ptb.de', ],
   Boolean $mosh                                = false,
   String $mail_relayhost                       = '',
@@ -136,6 +138,12 @@ class hosting_basesetup (
     groups          => $groups,
     groups_override => $groups_override,
     rootpwhash      => $rootpwhash,
+  }
+
+  ## MOUNTPOINTS #########################################################################
+  class {'::hosting_basesetup::mountpoints':
+    mountpoints => $mountpoints,
+    mountpoins_override => $mountpoints_override,
   }
 
   ## SOFTWARE ############################################################################
