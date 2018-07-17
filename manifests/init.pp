@@ -35,8 +35,8 @@ class hosting_basesetup (
   Hash $users_override                         = {},
   Hash $groups                                 = {},
   Hash $groups_override                        = {},
-  Hash $mountpoints                            = {},
-  Hash $mountpoints_override                   = {},
+  Hash $mounts                                 = {},
+  Hash $mounts_override                        = {},
   Array[String] $ntp_servers                   = ['ptbtime1.ptb.de', 'ptbtime2.ptb.de', 'ptbtime3.ptb.de', ],
   Boolean $mosh                                = false,
   String $mail_relayhost                       = '',
@@ -141,10 +141,8 @@ class hosting_basesetup (
   }
 
   ## MOUNTPOINTS #########################################################################
-  class {'::hosting_basesetup::mountpoints':
-    mountpoints => $mountpoints,
-    mountpoints_override => $mountpoints_override,
-  }
+  $mountpoints_final = deep_merge($mounts, $mounts_override)
+  create_resources("mount", $mountpoints_final)
 
   ## SOFTWARE ############################################################################
   class { '::hosting_basesetup::packages':
