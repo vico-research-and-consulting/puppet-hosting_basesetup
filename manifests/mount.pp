@@ -17,8 +17,9 @@ define hosting_basesetup::mount (
   }
 
   exec { 'create_folder':
+    path    => '/usr/bin:/usr/sbin:/bin',
     command => "mkdir $name && chmod $mode $name && chown $owner:$group $name",
-    onlyif  => "test -d $name",
+    onlyif  => "test ! -d $name",
     before  => Mount[$name],
   }
 
