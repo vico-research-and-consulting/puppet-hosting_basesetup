@@ -2,7 +2,7 @@ define hosting_basesetup::mount (
   String $ensure,
   String $owner = "root",
   String $group = "root",
-  String $mode = "0755",
+  String $mode  = "0755",
   Boolean $atboot,
   String $device,
   String $fstype,
@@ -11,17 +11,17 @@ define hosting_basesetup::mount (
   Integer $pass = 1,
 ) {
 
-  if ($fstype == "nfs"){
+  if ($fstype == "nfs") {
     # TODO: Implement IDMAP Settings
-    ensure_packages(["nfs-common"], { ensure => 'present', before => Mount[$name]})
+    ensure_packages(["nfs-common"], { ensure => 'present', before => Mount[$name] })
   }
 
-  file { $name:
-    ensure => 'directory',
-    owner  => $owner,
-    group  => $group,
-    mode   => $mode,
+  exec { 'create_folder':
+    command => "mkdir $name && chmod $mode $name && chown $owner:$group $name",
+    unless  => "test -d $name",
+    before  => Mount[$name],
   }
+
   mount { $name:
     ensure  => $ensure,
     atboot  => $atboot,
