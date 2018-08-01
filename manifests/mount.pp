@@ -30,6 +30,5 @@ define hosting_basesetup::mount (
     options => $options,
     dump    => $dump,
     pass    => $pass,
-    require => File[$name],
   }
 }
