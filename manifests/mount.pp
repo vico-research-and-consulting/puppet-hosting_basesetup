@@ -16,7 +16,7 @@ define hosting_basesetup::mount (
     ensure_packages(["nfs-common"], { ensure => 'present', before => Mount[$name] })
   }
 
-  exec { 'create_folder':
+  exec { "create_folder_${name}":
     path    => '/usr/bin:/usr/sbin:/bin',
     command => "mkdir $name && chmod $mode $name && chown $owner:$group $name",
     onlyif  => "test ! -d $name",
