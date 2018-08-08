@@ -23,15 +23,12 @@ end
 # testing basic function
 #----------------------------------------------------------------------
 
-describe command('cat /etc/fstab') do
-   its(:stdout) { should match(/^8.8.8.8:/srv/nfs/test1   /nfs1    nfs     defaults        0       2$/) }
-   its(:stdout) { should match(/^8.8.8.8:/srv/nfs/test2   /nfs2    nfs     defaults        0       2$/) }
+describe command('sed "~s,^0 3 \* \* \* ,,;~s,2>&1.*,," /etc/cron.d/lvm_snapshot__dev_vg0_lv-bar|grep -v "#"|bash') do
+   its(:stderr) { should match(/ERROR: this is not a logical volume/) }
 end
 
-
-describe command('ls -ld /nfs*') do
-   its(:stdout) { should match(/^drwxr-xr-x 2 root root .* \/nfs1$/) }
-   its(:stdout) { should match(/^drwxr-xr-x 2 root root .* \/nfs2$/) }
+describe command('sed "~s,^0 3 \* \* \* ,,;~s,2>&1.*,," /etc/cron.d/lvm_snapshot__dev_vg0_lv-foo|grep -v "#"|bash') do
+   its(:stderr) { should match(/ERROR: this is not a logical volume/) }
 end
 
 #----------------------------------------------------------------------

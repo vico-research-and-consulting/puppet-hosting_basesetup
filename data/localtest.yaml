@@ -144,3 +144,15 @@ hosting_basesetup::users:
     group_primary: 'devteam'
     ensure: present
     dotfile_sourcedir: "no"
+
+
+hosting_basesetup::lvm_snapshots:
+  "/dev/vg0/lv-foo":
+    ensure: present
+  "/dev/vg0/lv-bar":
+    ensure: present
+    cron_timespec: "0 3 * * *"
+    snap_create: true
+    snap_size:  "10G"
+    snap_delete: true
+    zabbix_notify: true
