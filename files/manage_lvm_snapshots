@@ -127,7 +127,7 @@ def delete_snaps(lv, snap_match, max_snaps):
     current_number_of_snaps = len(sorted_snaps)
     info("==> CURRENT NUMBER OF SNAPSHOTS : %s" % current_number_of_snaps)
     snaps_to_delete = 0
-    if args.max_snaps < current_number_of_snaps:
+    if max_snaps < current_number_of_snaps:
         snaps_to_delete = current_number_of_snaps - args.max_snaps
 
     snaps_deleted = 0
@@ -208,7 +208,7 @@ parser.add_argument(
 parser.add_argument('--max_snaps',
                     type=int,
                     nargs='?',
-                    help='maximum number of snapshots, oldes snapshots will be deleted',
+                    help='maximum number of snapshots, older snapshots will be deleted',
                     default=3
                     )
 
