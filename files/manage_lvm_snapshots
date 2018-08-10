@@ -228,7 +228,6 @@ if file_is_locked(lockfile):
 
 stat = {}
 stat["lvm.autosnapshot.status"] = ""
-stat["lvm.autosnapshot.images_matched"] = 0
 stat["lvm.autosnapshot.snaps_total"] = 0
 stat["lvm.autosnapshot.snaps_created"] = 0
 stat["lvm.autosnapshot.snaps_deleted"] = 0
