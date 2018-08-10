@@ -149,10 +149,12 @@ hosting_basesetup::users:
 hosting_basesetup::lvm_snapshots:
   "/dev/vg0/lv-foo":
     ensure: present
-  "/dev/vg0/lv-bar":
+  "the_job":
     ensure: present
     cron_timespec: "0 3 * * *"
     snap_create: true
     snap_size:  "10G"
     snap_delete: true
     zabbix_notify: true
+    lvs:
+      - /dev/vg0/lv-bar

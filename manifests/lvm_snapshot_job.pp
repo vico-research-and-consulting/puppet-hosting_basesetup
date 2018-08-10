@@ -1,5 +1,5 @@
-define hosting_basesetup::lvm_snapshot (
-  String $lv_name           = $title,
+define hosting_basesetup::lvm_snapshot_job (
+  String $lvm_snapshot_job  = $title,
   String $cron_timespec     = "0 3 * * *",
   Boolean $snap_create      = true,
   String  $snap_size        = "10%",
@@ -7,8 +7,16 @@ define hosting_basesetup::lvm_snapshot (
   Integer $snap_generations = 3,
   Boolean $zabbix_notify    = false,
   String $ensure            = present,
+  Array[String] $lvs        = [],
 ) {
+
   $title_simple = regsubst($title, '/', '_', 'G')
+
+  if length($lvs) == 0 {
+    $lvs_real = $title
+  }else {
+    $lvs_real = join($lvs, ' ')
+  }
 
   if $zabbix_notify {
     $zabbix = "--zabbix_notify"
@@ -34,7 +42,7 @@ define hosting_basesetup::lvm_snapshot (
     group   => 'root',
     mode    => '0644',
     content => "# created by puppet
-${cron_timespec} /usr/local/sbin/manage_lvm_snapshots ${snap} ${purge} ${zabbix} ${lv_name} 2>&1|logger -t lvm_snapshot
+${cron_timespec} /usr/local/sbin/manage_lvm_snapshots ${snap} ${purge} ${zabbix} ${lvs_real} 2>&1|logger -t lvm_snapshot
 ",
   }
 }

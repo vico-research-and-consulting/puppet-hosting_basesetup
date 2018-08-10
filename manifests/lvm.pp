@@ -16,5 +16,5 @@ class hosting_basesetup::lvm (
     matches => [ 'lvm_snapshot_*' ],
     recurse => true,
   }
-  create_resources("::hosting_basesetup::lvm_snapshot", $snapshots)
+  create_resources("::hosting_basesetup::lvm_snapshot_job", $snapshots)
 }
