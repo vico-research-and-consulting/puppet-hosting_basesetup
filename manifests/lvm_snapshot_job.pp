@@ -30,7 +30,7 @@ define hosting_basesetup::lvm_snapshot_job (
     $snap = ""
   }
 
-  if $snap_purge {
+  if $snap_delete {
     $purge = "--delete_snaps --max_snaps $snap_generations "
   }else {
     $purge = ""
