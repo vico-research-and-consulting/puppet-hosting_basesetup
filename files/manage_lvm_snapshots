@@ -78,7 +78,7 @@ def extract_lv_details(lv):
     return (lv_path, lv_name)
 
 
-def create_snapshot(lv, snap_match, lv_size):
+def create_snapshot(lv, lv_size):
     info("==> CREATING SNAPSHOT")
     (lv_path, lv_name) = extract_lv_details(lv)
 
@@ -86,7 +86,7 @@ def create_snapshot(lv, snap_match, lv_size):
 
     found = False
     for line in out_lvdisplay.splitlines():
-        m = re.match(("\s+LV Path\s+(.+%s$)" % snap_match), line)
+        m = re.match(("\s+LV Path\s+(.+%s$)" % lv), line)
         if m:
             found = True
             break
@@ -238,26 +238,31 @@ for lv in lvs:
 
     lvs = []
     (lv_path, lv_name) = extract_lv_details(lv)
-    snap_match = "%s%s_\d{4}-\d{2}-\d{2}T\d{2}_\d{2}_\d{2}.\d+" % (args.snapshot_prefix, lv_name)
 
     (exitcode_lspool, out_lvdisplay, err_lspool) = execute_cmd("lvdisplay")
 
     if args.snap:
-        if not create_snapshot(lv, snap_match, args.lv_size):
-            stat["lvm.autosnapshot.status"] = "ERROR"
+        if not create_snapshot(lv, args.lv_size):
+            stat["lvm.autosnapshot.status"].append("unable to create snapshot for %s" % lv)
             continue
         stat["lvm.autosnapshot.snaps_created"] += 1
 
 
 
+    snap_match = "%s%s_\d{4}-\d{2}-\d{2}T\d{2}_\d{2}_\d{2}.\d+" % (args.snapshot_prefix, lv_name)
     if args.delete_snaps:
         (ret, snaps_total, snaps_deleted) = delete_snaps(lv, snap_match, args.max_snaps)
         if not ret:
-            stat["lvm.autosnapshot.status"] = "ERROR"
+            stat["lvm.autosnapshot.status"].append("unable to delete snapshot for %s" % lv)
         stat["lvm.autosnapshot.snaps_total"] += snaps_total
         stat["lvm.autosnapshot.snaps_deleted"] += snaps_deleted
 
 if args.zabbix_notify:
+
+    if len(stat["lvm.autosnapshot.status"]) == 0:
+        stat["lvm.autosnapshot.status"] = "OK"
+    else:
+        stat["lvm.autosnapshot.status"] = "ERROR:"+ (stat["lvm.autosnapshot.status"].join(" "))
 
     for key, value in stat.items():
         (exitcode_send_status, out_send_status, err_send_status) = \
