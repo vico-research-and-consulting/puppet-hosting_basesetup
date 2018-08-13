@@ -42,7 +42,7 @@ define hosting_basesetup::lvm_snapshot_job (
     group   => 'root',
     mode    => '0644',
     content => "# created by puppet
-${cron_timespec} /usr/local/sbin/manage_lvm_snapshots ${snap} ${purge} ${zabbix} ${lvs_real} 2>&1|logger -t lvm_snapshot
+${cron_timespec} root /usr/local/sbin/manage_lvm_snapshots ${snap} ${purge} ${zabbix} ${lvs_real} 2>&1|logger -t lvm_snapshot
 ",
   }
 }
