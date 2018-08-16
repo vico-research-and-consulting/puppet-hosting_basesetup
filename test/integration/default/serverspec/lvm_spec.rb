@@ -18,29 +18,17 @@ end
 
 #  http://serverspec.org/resource_types.html
 
-#----------------------------------------------------------------------
-# testing basic service
-#----------------------------------------------------------------------
-describe package('postfix') do
-  it { should be_installed }
-end
-
-describe service('postfix') do
-  it { should be_enabled }
-end
-
-describe service('postfix') do
-  it { should be_running }
-end
-
 
 #----------------------------------------------------------------------
 # testing basic function
 #----------------------------------------------------------------------
 
-describe command('cat /etc/fstab|mail -s "TEST" devnull@256bit.org') do
-   its(:stderr) { should_not match(/..*/) }
-   its(:exit_status) { should eq 0 }
+describe command('sed "~s,^0 3 \* \* \* ,,;~s,2>&1.*,," /etc/cron.d/lvm_snapshot__dev_vg0_lv-foo|grep -v "#"|bash') do
+   its(:stderr) { should match(/ERROR: this is not a logical volume/) }
+end
+
+describe command('sed "~s,^0 3 \* \* \* ,,;~s,2>&1.*,," /etc/cron.d/lvm_snapshot_the_job|grep -v "#"|bash') do
+   its(:stderr) { should match(/ERROR: this is not a logical volume/) }
 end
 
 #----------------------------------------------------------------------

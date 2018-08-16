@@ -1,4 +1,13 @@
 ---
+hosting_basesetup::motd_description: "Basesetup Testhost"
+hosting_basesetup::motd_announcement: |
+  Wow, the Hosting Basesetup seems to work!
+
+  The world and the universe are far more wonderful if there's not a puppet master.
+  Dave Matthews
+
+hosting_basesetup::motd_documentation: https://github.com/scoopex/puppet-hosting_basesetup/
+
 hosting_basesetup::mail_root_recipient: admin@foobar.de
 hosting_basesetup::mail_domain: foobar.de
 hosting_basesetup::rootpwhash: '$1$Etg2ExUZ$F9NTP7omafhKIlqaBMqng1'
@@ -12,6 +21,25 @@ hosting_basesetup::proxy_https: true
 
 hosting_basesetup::time::ntp_client_restricts:
   - 'restrict 10.10.10.0 mask 255.255.255.0 nomodify notrap'
+
+hosting_basesetup::mounts:
+  '/nfs1':
+    device: 8.8.8.8:/srv/nfs/test1
+    fstype: nfs
+    ensure: unmounted
+    options: defaults
+    pass: 2
+    atboot: false
+
+
+hosting_basesetup::mounts_override:
+  '/nfs2':
+    device: 8.8.8.8:/srv/nfs/test2
+    fstype: nfs
+    ensure: unmounted
+    options: defaults
+    pass: 2
+    atboot: false
 
 hosting_basesetup::simple_files:
   "/etc/interfaces.foo":
@@ -38,6 +66,8 @@ hosting_basesetup::kernel::sysfs::config_items:
       "queue/scheduler": "deadline"
       "queue/rotational": "0"
 
+#hosting_basesetup::monitoring::zabbix_agent: false
+
 hosting_basesetup::monitoring::additional_agent_packages: 
   - 'curl'
 hosting_basesetup::usermanagement::restriction_tag: 'bigdata'
@@ -60,6 +90,15 @@ hosting_basesetup::groups:
   webdevhipsters:
     gid: 8002
     ensure: absent
+
+
+# override default settings
+hosting_basesetup::users_override:
+  user2:
+    fullname: Karl Napf2
+    ssh_keys: 
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCf8jizyqebUQ2hXJF5tWUz3eev+uE1liHZ7bMK4pp5nlaxkNq81dOLA9TZDbF6b+LFKKPxHUME5QypcDltaan83dN5tM+VJKz5K8qam9j8RpOm7gpKkomjXSTAMmhelZMLpOwhap77QVJo4EaKLqlkdRGh4o/dBnCOgkrZVjZ0TVG+u7BtGuQtbYvTBEL/Uu3HwWh4bGt5eFqyREgs6PE7u4bSnkyp6N/lrRqArefI0g2soNzOboxW2ONkAP6epNCRDDPp0erWJ1TU1VPLG72r2nupb7bdtTcDklGQMOWMWFvLzCkpD+LJDqh344gux1R45ikQqaL61ZqoV3Pt6t3xJ foo_thefinal@bar.de"
+
 
 hosting_basesetup::users:
   user1:
@@ -105,3 +144,17 @@ hosting_basesetup::users:
     group_primary: 'devteam'
     ensure: present
     dotfile_sourcedir: "no"
+
+
+hosting_basesetup::lvm_snapshots:
+  "/dev/vg0/lv-foo":
+    ensure: present
+  "the_job":
+    ensure: present
+    cron_timespec: "0 3 * * *"
+    snap_create: true
+    snap_size:  "10G"
+    snap_delete: true
+    zabbix_notify: true
+    lvs:
+      - /dev/vg0/lv-bar

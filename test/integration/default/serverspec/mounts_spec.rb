@@ -18,30 +18,22 @@ end
 
 #  http://serverspec.org/resource_types.html
 
-#----------------------------------------------------------------------
-# testing basic service
-#----------------------------------------------------------------------
-describe package('postfix') do
-  it { should be_installed }
-end
-
-describe service('postfix') do
-  it { should be_enabled }
-end
-
-describe service('postfix') do
-  it { should be_running }
-end
-
 
 #----------------------------------------------------------------------
 # testing basic function
 #----------------------------------------------------------------------
 
-describe command('cat /etc/fstab|mail -s "TEST" devnull@256bit.org') do
-   its(:stderr) { should_not match(/..*/) }
-   its(:exit_status) { should eq 0 }
+describe command('cat /etc/fstab') do
+  its(:stdout) { should match(/^8.8.8.8:\/srv\/nfs\/test1\s+\/nfs1\s+nfs\s+defaults\s+0\s+2$/) }
+  its(:stdout) { should match(/^8.8.8.8:\/srv\/nfs\/test2\s+\/nfs2\s+nfs\s+defaults\s+0\s+2$/) }
 end
+
+
+describe command('ls -ld /nfs*') do
+   its(:stdout) { should match(/^drwxr-xr-x 2 root root .* \/nfs1$/) }
+   its(:stdout) { should match(/^drwxr-xr-x 2 root root .* \/nfs2$/) }
+end
+
 
 #----------------------------------------------------------------------
 
