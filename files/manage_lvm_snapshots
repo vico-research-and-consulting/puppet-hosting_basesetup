@@ -22,10 +22,13 @@ import re
 ###
 # HELPERS
 
-LVDISPLAY_CMD = '/sbin/lvdisplay'
-LVCREATE_CMD = '/sbin/lvcreate'
-LVREMOVE_CMD = '/sbin/lvremove'
-ZABBIX_SENDER_CMD = '/usr/bin/zabbix_sender'
+os.environ["PATH"] += os.pathsep + os.pathsep.join( ['/sbin', '/usr/bin', '/usr/bin'])
+os.environ["LANG"] = "C"
+
+LVDISPLAY_CMD = 'lvdisplay'
+LVCREATE_CMD = 'lvcreate'
+LVREMOVE_CMD = 'lvremove'
+ZABBIX_SENDER_CMD = 'zabbix_sender'
 
 
 def info(line):
@@ -117,7 +120,44 @@ def create_snapshot(lv, lv_size):
     return ret
 
 
-def delete_snaps(lv, snap_match, max_snaps):
+def check_snaps(snap_match):
+
+    exitcode_lspool, out_lvdisplay, err_lspool = execute_cmd(LVDISPLAY_CMD)
+
+    regex_lv_section = "\s+--- Logical volume ---"
+    regex_lv_path = ("\s+LV Path\s+(.+%s$)" % snap_match)
+    regex_lv_snap_alloc = "\s+Allocated to snapshot\s+([\d\.]+)%"
+
+    lv_name = None
+    lv_max_alloc = 0
+
+    for line in out_lvdisplay.splitlines():
+
+        if re.match(regex_lv_section, line):
+            lv_name = None
+            continue
+
+        m = re.match(regex_lv_path, line)
+        if m:
+            lv_name = m.group(1)
+            continue
+
+        if lv_name:
+            m = re.match(regex_lv_snap_alloc, line)
+            if m:
+                if float(m.group(1)) > args.snap_max_alloc_limit:
+                    print("CHECK FAILED: %s : %s%% > %s%%" % (lv_name, m.group(1), args.snap_max_alloc_limit))
+                if lv_max_alloc < float(m.group(1)):
+                    lv_max_alloc = float(m.group(1))
+
+    if lv_max_alloc > args.snap_max_alloc_limit:
+        return "at least one snapshot too big %s > %s" % (lv_max_alloc, args.snap_max_alloc_limit)
+    else:
+        return None
+
+
+def delete_snaps(snap_match, max_snaps):
+
     lvs = []
     exitcode_lspool, out_lvdisplay, err_lspool = execute_cmd(LVDISPLAY_CMD)
 
@@ -127,9 +167,11 @@ def delete_snaps(lv, snap_match, max_snaps):
         if m:
             lvs.append(m.group(1))
 
-    ret = True
 
     sorted_snaps = sorted(lvs)
+
+    ret = True
+
     current_number_of_snaps = len(sorted_snaps)
     info("==> CURRENT NUMBER OF SNAPSHOTS : %s" % current_number_of_snaps)
     snaps_to_delete = 0
@@ -218,6 +260,13 @@ parser.add_argument('--max_snaps',
                     default=3
                     )
 
+parser.add_argument('--snap_max_alloc_limit',
+                    type=float,
+                    nargs='?',
+                    help='maximum percentage of snapshot allocation in percent',
+                    default=90.0
+                    )
+
 args, lvs = parser.parse_known_args()
 
 if not re.match(r"^\d+(b|B|s|S|k|K|m|M|g|G|t|T|p|P|e|Ex|%)$", args.lv_size):
@@ -254,11 +303,15 @@ for lv in lvs:
 
     snap_match = "%s%s_\d{4}-\d{2}-\d{2}T\d{2}_\d{2}_\d{2}.\d+" % (args.snapshot_prefix, lv_name)
     if args.delete_snaps:
-        ret, snaps_total, snaps_deleted = delete_snaps(lv, snap_match, args.max_snaps)
+        ret, snaps_total, snaps_deleted = delete_snaps(snap_match, args.max_snaps)
         if not ret:
             stat["lvm.autosnapshot.status"].append("unable to delete snapshot for %s" % lv)
         stat["lvm.autosnapshot.snaps_total"] += snaps_total
         stat["lvm.autosnapshot.snaps_deleted"] += snaps_deleted
+
+    snap_error_status = check_snaps(snap_match)
+    if snap_error_status:
+        stat["lvm.autosnapshot.status"].append("%s - %s" % (lv, snap_error_status))
 
 if args.zabbix_notify:
 

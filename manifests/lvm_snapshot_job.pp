@@ -5,6 +5,7 @@ define hosting_basesetup::lvm_snapshot_job (
   String  $snap_size        = "10%",
   Boolean $snap_delete      = true,
   Integer $snap_generations = 3,
+  Float $snap_max_alloc_limit = 90.0,
   Boolean $zabbix_notify    = false,
   String $ensure            = present,
   Array[String] $lvs        = [],
@@ -42,7 +43,7 @@ define hosting_basesetup::lvm_snapshot_job (
     group   => 'root',
     mode    => '0644',
     content => "# created by puppet
-${cron_timespec} root /usr/local/sbin/manage_lvm_snapshots ${snap} ${purge} ${zabbix} ${lvs_real} 2>&1|logger -t lvm_snapshot
+${cron_timespec} root /usr/local/sbin/manage_lvm_snapshots ${snap} ${purge} ${zabbix} ${lvs_real} --snap_max_alloc_limit ${snap_max_alloc_limit} 2>&1|logger -t lvm_snapshot
 ",
   }
 }
