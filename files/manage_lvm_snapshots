@@ -17,12 +17,11 @@ import fcntl
 import socket
 import re
 
-
 ########################################################################################################################
 ###
 # HELPERS
 
-os.environ["PATH"] += os.pathsep + os.pathsep.join( ['/sbin', '/usr/bin', '/usr/bin'])
+os.environ["PATH"] += os.pathsep + os.pathsep.join(['/sbin', '/usr/bin', '/usr/bin'])
 os.environ["LANG"] = "C"
 
 LVDISPLAY_CMD = 'lvdisplay'
@@ -121,7 +120,6 @@ def create_snapshot(lv, lv_size):
 
 
 def check_snaps(snap_match):
-
     exitcode_lspool, out_lvdisplay, err_lspool = execute_cmd(LVDISPLAY_CMD)
 
     regex_lv_section = "\s+--- Logical volume ---"
@@ -157,7 +155,6 @@ def check_snaps(snap_match):
 
 
 def delete_snaps(snap_match, max_snaps):
-
     lvs = []
     exitcode_lspool, out_lvdisplay, err_lspool = execute_cmd(LVDISPLAY_CMD)
 
@@ -166,7 +163,6 @@ def delete_snaps(snap_match, max_snaps):
         m = re.match(regex, line)
         if m:
             lvs.append(m.group(1))
-
 
     sorted_snaps = sorted(lvs)
 

@@ -1,14 +1,14 @@
 define hosting_basesetup::lvm_snapshot_job (
-  String $lvm_snapshot_job  = $title,
-  String $cron_timespec     = "0 3 * * *",
-  Boolean $snap_create      = true,
-  String  $snap_size        = "10%",
-  Boolean $snap_delete      = true,
-  Integer $snap_generations = 3,
+  String $lvm_snapshot_job    = $title,
+  String $cron_timespec       = "0 3 * * *",
+  Boolean $snap_create        = true,
+  String  $snap_size          = "10%",
+  Boolean $snap_delete        = true,
+  Integer $snap_generations   = 3,
   Float $snap_max_alloc_limit = 90.0,
-  Boolean $zabbix_notify    = false,
-  String $ensure            = present,
-  Array[String] $lvs        = [],
+  Boolean $zabbix_notify      = false,
+  String $ensure              = present,
+  Array[String] $lvs          = [],
 ) {
 
   $title_simple = regsubst($title, '/', '_', 'G')
