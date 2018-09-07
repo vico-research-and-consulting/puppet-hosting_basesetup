@@ -72,7 +72,6 @@ Things implemented with this setup
 * grub config</BR>
   (no splash, no quiet mode)
 
-
 Currently not implemented/TODOs
 --------------------------------
 
@@ -83,6 +82,7 @@ by priority:
   because this creates a huge amount of indirect dependencies to modules which do not have a relation to the things
   perfomed by hosting_basesetup
 * SMART Daemon on non virtualized hardware systems
+  (smart values for SAS and SATA devices  are different)
 * systemd journal configuration (housekeeping, permissions)
   https://www.freedesktop.org/software/systemd/man/journald.conf.html
   /etc/systemd/journald.conf
