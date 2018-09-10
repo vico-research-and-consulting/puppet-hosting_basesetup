@@ -55,7 +55,6 @@ def execute_cmd(cmd, dryrun=False):
         if process.returncode != 0:
             sys.stderr.write("FAILED\n")
             debug_cmd(out, err, force=True)
-            sys.exit(1)
         else:
             debug_cmd(out, err)
         return process.returncode, out.decode('utf8'), err.decode('utf8')
