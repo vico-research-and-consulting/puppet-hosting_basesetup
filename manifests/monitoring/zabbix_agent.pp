@@ -1,6 +1,7 @@
 class hosting_basesetup::monitoring::zabbix_agent (
   String $version                          = '3.4',
   String $package_state                    = 'present',
+  Boolean $include_dir_purge               = true,
   Boolean $manage_repo                     = true,
   String $server                           = 'zabbix',
   String $server_active                    = 'zabbix',
@@ -11,6 +12,8 @@ class hosting_basesetup::monitoring::zabbix_agent (
   Boolean $use_agent_extensions            = false,
   String  $use_agent_extensions_pkgname    = 'zabbix-agent-extensions',
   String  $use_agent_extensions_release    = 'present',
+  String $template                         = 'hosting_basesetup/zabbix_agentd.conf.erb',
+  Hash $template_params                    = {},
 ) {
 
   if $use_agent_extensions {
@@ -28,6 +31,8 @@ class hosting_basesetup::monitoring::zabbix_agent (
       owner  => 'root',
       group  => 'root',
     }
+
+    # Include dir for specific zabbix-agent checks.
     file { '/etc/zabbix/zabbix_agentd.d/zabbix-agent-extensions':
       owner   => 'root',
       group   => 'root',
@@ -36,13 +41,14 @@ class hosting_basesetup::monitoring::zabbix_agent (
 Include=/usr/share/zabbix-agent-extensions/include.d/
  ',
       notify  => Service['zabbix-agent'],
+      require => File['/etc/zabbix/zabbix_agentd.d']
     }
   }
 
   if $manage_repo {
     class { '::hosting_basesetup::monitoring::zabbix_repo':
       zabbix_version => $version,
-      before         => [ Package['zabbix-agent'], Package['zabbix-sender'] ],
+      before         => [ Package['zabbix-agent'], Package['zabbix-sender'], Package['zabbix-get'] ],
     }
   }
   package { "zabbix-agent":
@@ -55,6 +61,16 @@ Include=/usr/share/zabbix-agent-extensions/include.d/
     ensure => $package_state,
   }
 
+
+  file { "/etc/zabbix/zabbix_agentd.d":
+    ensure  => directory,
+    owner   => 'zabbix',
+    group   => 'zabbix',
+    recurse => true,
+    purge   => $include_dir_purge,
+    notify  => Service['zabbix-agent'],
+    require => Package['zabbix-agent']
+  }
   file { '/etc/zabbix/zabbix_agentd.conf':
     ensure  => present,
     owner   => 'zabbix',
@@ -63,7 +79,7 @@ Include=/usr/share/zabbix-agent-extensions/include.d/
     notify  => Service['zabbix-agent'],
     require => Package['zabbix-agent'],
     replace => true,
-    content => template('hosting_basesetup/zabbix_agentd.conf.erb'),
+    content => template($template),
   }
 
   service { 'zabbix-agent':
