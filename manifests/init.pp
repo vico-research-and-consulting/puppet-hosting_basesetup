@@ -59,6 +59,7 @@ class hosting_basesetup (
   Boolean $proxy_https                         = true,
   Hash $simple_files                           = {},
   Hash $lvm_snapshots                          = {},
+  Boolean $zabbix_agent                        = false,
 ) {
 
   ## FILE RESSOURCES   ##################################################################
@@ -149,16 +150,18 @@ class hosting_basesetup (
   create_resources("::hosting_basesetup::mount", $mountpoints_final)
 
   ## SOFTWARE ############################################################################
-  class { '::hosting_basesetup::packages':
-  }
+
+  include ::hosting_basesetup::packages
 
   ## MONITORING ##########################################################################
-  class { '::hosting_basesetup::monitoring':
+
+  if $zabbix_agent {
+    include ::hosting_basesetup::monitoring::zabbix_agent
   }
+
   ## PUPPET AGENT ########################################################################
   if $manage_puppet {
     class { '::puppet_agent':
-
     }
   }
 
