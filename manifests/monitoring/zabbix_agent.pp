@@ -1,5 +1,6 @@
 class hosting_basesetup::monitoring::zabbix_agent (
-  String $version                          = "present",
+  String $version                          = '3.4',
+  String $package_state                    = 'present',
   Boolean $manage_repo                     = true,
   String $server                           = 'zabbix',
   String $server_active                    = 'zabbix',
@@ -40,19 +41,18 @@ Include=/usr/share/zabbix-agent-extensions/include.d/
 
   if $manage_repo {
     class { '::hosting_basesetup::monitoring::zabbix_repo':
-      zabbix_version     => $version,
-      before      => [ Package['zabbix-agent'], Package['zabbix-sender'] ],
+      zabbix_version => $version,
+      before         => [ Package['zabbix-agent'], Package['zabbix-sender'] ],
     }
   }
   package { "zabbix-agent":
-    ensure  => "$version",
+    ensure => $package_state,
   }
   package { 'zabbix-sender':
-    ensure  => "$version",
+    ensure => $package_state,
   }
-
   package { 'zabbix-get':
-    ensure  => "$version",
+    ensure => $package_state,
   }
 
   file { '/etc/zabbix/zabbix_agentd.conf':
@@ -75,7 +75,7 @@ Include=/usr/share/zabbix-agent-extensions/include.d/
   }
 
   ensure_packages(
-    $additional_agent_packages, { 'ensure'  => $additional_agent_packages_ensure, }
+    $additional_agent_packages, { 'ensure' => $additional_agent_packages_ensure, }
   )
 }
 
