@@ -28,7 +28,7 @@ class hosting_basesetup::unattended_upgrades (
         } 
     }
     'Centos' : {
-      fail("unsupported os: ${::operatingsystem}")
+      # fail("unsupported os: ${::operatingsystem}")
     }
     default  : {
       fail("unsupported os: ${::operatingsystem}")

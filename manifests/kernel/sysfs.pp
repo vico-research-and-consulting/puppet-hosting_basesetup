@@ -26,65 +26,63 @@ class hosting_basesetup::kernel::sysfs (
 
   case $::operatingsystem {
     'ubuntu', 'debian': {
-
-      ensure_packages(['sysfsutils'])
-
-      ####################################################################################
-      # see: https://bugs.launchpad.net/ubuntu/+source/sysfsutils/+bug/1754033
-      # (can be removed if this problem is solved)
-      file { '/etc/init.d/sysfsutils':
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0755',
-        source  => 'puppet:///modules/hosting_basesetup/sysfsutils',
-        require => Package['sysfsutils'],
-      }
-      exec { 'sysfs_initscript_load':
-        command     => 'systemctl daemon-reload',
-        refreshonly => true,
-        subscribe   => File['/etc/init.d/sysfsutils'],
-        path        => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-      }
-      #
-      ####################################################################################
-
-      file { "/etc/sysfs.conf":
-        alias   => 'syscfs_conf',
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0644',
-        content => template("hosting_basesetup/sysfs.conf.erb"),
-      }
-
-      service { 'sysfsutils':
-        ensure     => running,
-        enable     => true,
-        hasstatus  => false,
-        hasrestart => true,
-        subscribe  => [File['/etc/init.d/sysfsutils'], File['syscfs_conf']],
-      }
-
-      file { '/etc/sysfs.d':
-        ensure  => 'directory',
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0755',
-        backup  => false,
-        recurse => true,
-        purge   => true,
-      }
-      create_resources("hosting_basesetup::kernel::sysfs_item", $config_items)
+      ensure_packages(['sysfsutils'], { before => [ Service['sysfsutils'], Exec['sysfs_initscript_load']]})
     }
-
     'Centos': {
-      fail("unsupported os: ${::operatingsystem}")
+      ensure_packages(['redhat-lsb-core'], { before => [ Service['sysfsutils'], Exec['sysfs_initscript_load']]})
     }
     default: {
       fail("unsupported os: ${::operatingsystem}")
     }
   }
 
-  ############################################################################################################
 
+  ####################################################################################
+  # see: https://bugs.launchpad.net/ubuntu/+source/sysfsutils/+bug/1754033
+  # (can be removed if this problem is solved)
+  file { '/etc/init.d/sysfsutils':
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    source  => 'puppet:///modules/hosting_basesetup/sysfsutils',
+    require => Package['sysfsutils'],
+  }
+  exec { 'sysfs_initscript_load':
+    command     => 'systemctl daemon-reload',
+    refreshonly => true,
+    subscribe   => File['/etc/init.d/sysfsutils'],
+    path        => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+  }
+  #
+  ####################################################################################
+
+  file { "/etc/sysfs.conf":
+    alias   => 'syscfs_conf',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => template("hosting_basesetup/sysfs.conf.erb"),
+  }
+
+  service { 'sysfsutils':
+    ensure     => running,
+    enable     => true,
+    hasstatus  => false,
+    hasrestart => true,
+    subscribe  => [File['/etc/init.d/sysfsutils'], File['syscfs_conf']],
+  }
+
+  file { '/etc/sysfs.d':
+    ensure  => 'directory',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    backup  => false,
+    recurse => true,
+    purge   => true,
+  }
+  create_resources("hosting_basesetup::kernel::sysfs_item", $config_items)
+
+  ############################################################################################################
 
 }

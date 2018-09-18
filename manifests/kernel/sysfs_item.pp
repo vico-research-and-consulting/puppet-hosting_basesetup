@@ -19,7 +19,7 @@ define hosting_basesetup::kernel::sysfs_item(
   $base_arr_final = unique(any2array($base))
 
   case $::operatingsystem {
-    'ubuntu', 'debian': {
+    'ubuntu', 'debian', 'CentOS': {
       file { "/etc/sysfs.d/hosting_basesetup_sysfs_item_${title}.conf":
         owner   => 'root',
         group   => 'root',
@@ -27,9 +27,6 @@ define hosting_basesetup::kernel::sysfs_item(
         content => template("hosting_basesetup/sysfs_item.conf.erb"),
         notify => Service['sysfsutils'],
       }
-    }
-    'Centos': {
-      fail("unsupported os: ${::operatingsystem}")
     }
     default: {
       fail("unsupported os: ${::operatingsystem}")

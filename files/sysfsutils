@@ -79,13 +79,14 @@ load_conffile() {
 
 case "$1" in
     start|restart|force-reload)
-	log_begin_msg "Setting sysfs variables..."
+
+	echo "Setting sysfs variables..."
 
 	for file in $CONFFILE $CONFDIR/*.conf; do
 	    [ -r "$file" ] || continue
 	    load_conffile "$file"
 	done
-	log_end_msg $EXITCODE
+	exit $EXITCODE
 	;;
     stop)
 	;;

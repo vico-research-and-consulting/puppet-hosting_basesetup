@@ -17,18 +17,43 @@ class hosting_basesetup::time (
       $ntp_restrict_final, ])
   }
 
+
+  if $::operatingsystem == "Centos"{
+    notice("rng is currently not working on centos, the service/distribution package seems to be broken")
+  }
   # rng-tools (entropy gatherer)
-  if $::is_virtual and $install_rng {
+  if $::is_virtual and $install_rng and $::operatingsystem != "Centos"{
     ensure_packages(['rng-tools'], { ensure => present })
 
-    file { '/etc/default/rng-tools':
-      ensure  => present,
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0644',
-      source  => 'puppet:///modules/hosting_basesetup/etc.default.rng-tools',
-      require => Package['rng-tools'],
-      notify  => Service['rng-tools'];
+    case $::operatingsystem {
+      'ubuntu', 'debian': {
+        file { '/etc/default/rng-tools':
+          ensure  => present,
+          owner   => 'root',
+          group   => 'root',
+          mode    => '0644',
+          source  => 'puppet:///modules/hosting_basesetup/etc.default.rng-tools',
+          require => Package['rng-tools'],
+          notify  => Service['rng-tools'];
+        }
+      }
+      'Centos': {
+        file_line { "rng-options":
+          path   => "/etc/systemd/system/multi-user.target.wants/rngd.service",
+          line   => "ExecStart=/sbin/rngd -f -r /dev/urandom",
+          match  => '^ExecStart=/sbin/rngd',
+          notify => Exec['refresh-systemd-rngd'],
+        }
+        exec { 'refresh-systemd-rngd':
+          command     => 'systemctl daemon-reload',
+          refreshonly => true,
+          path        => '/bin:/usr/bin:/usr/local/bin',
+          notify  => Service['rng-tools']
+        }
+      }
+      default: {
+        fail("unsupported os: ${::operatingsystem}")
+      }
     }
 
     service { 'rng-tools':

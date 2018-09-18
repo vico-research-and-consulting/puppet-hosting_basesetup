@@ -171,7 +171,18 @@ class hosting_basesetup (
   include ::hosting_basesetup::proxy
 
   ## APT #################################################################################
-  include apt
+    case $::operatingsystem {
+    'ubuntu', 'debian': {
+        include apt
+    }
+    'Centos': {
+  
+    }
+    default: {
+      fail("unsupported os: ${::operatingsystem}")
+    }
+  }
+
 
   ## UNATTENDED UPGRADES #################################################################
   if (!$unattended_upgrades) {

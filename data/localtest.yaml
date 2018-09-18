@@ -11,7 +11,7 @@ hosting_basesetup::motd_documentation: https://github.com/scoopex/puppet-hosting
 hosting_basesetup::mail_root_recipient: admin@foobar.de
 hosting_basesetup::mail_domain: foobar.de
 hosting_basesetup::rootpwhash: '$1$Etg2ExUZ$F9NTP7omafhKIlqaBMqng1'
-hosting_basesetup::mosh: true
+hosting_basesetup::mosh: false
 hosting_basesetup::kernel::sysctl_enable_fastnetworking_defaults: true
 hosting_basesetup::kernel::grub_options: "foobarbaz=111"
 

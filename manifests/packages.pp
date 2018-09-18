@@ -20,7 +20,7 @@ class hosting_basesetup::packages (
       $packages = [
         'curl', 'wget', 'iptraf-ng', 'lsscsi', 'sysstat', 'xfsdump', 'xfsprogs', 'zip',
         'git-all', 'vim-enhanced', 'finger', 'traceroute', 'net-tools', 'lvm2', 'strace',
-        'sysfsutils', 'screen', 'nuttcp',
+        'sysfsutils', 'screen', 'redhat-lsb-core',
       ]
       # 'iftop', 'ncdu', 'scsitools', 'pv', 'tig', 'mailutils', 'htop',
       if(!$::is_virtual) {

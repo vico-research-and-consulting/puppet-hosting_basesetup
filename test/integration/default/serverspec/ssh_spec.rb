@@ -21,10 +21,6 @@ end
 #----------------------------------------------------------------------
 # testing basic service
 #----------------------------------------------------------------------
-describe package('mosh') do
-  it { should be_installed }
-end
-
 describe service('ssh') do
   it { should be_enabled }
 end
