@@ -6,7 +6,6 @@ def get_var(value, regex)
   if ( value =~ regex )
     return value
   else
-    puts exception.backtrace
     raise ArgumentError, ">>>#{value}<<< does not match to regex >>>#{regex}<<< : #{caller[0]}"
   end
 end
