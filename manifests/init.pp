@@ -55,7 +55,7 @@ class hosting_basesetup (
   $ssh_password_auth_string                    = 'no',
   String $sshd_config_port                     = '22',
   String $sshd_config_subsystem_sftp           = 'USE_DEFAULTS',
-  Hash $sshd_config_match                      = undef,
+  Hash $sshd_config_match                      = {},
   String $proxy_http_host                      = "",
   String $proxy_http_port                      = "",
   Boolean $proxy_https                         = true,
