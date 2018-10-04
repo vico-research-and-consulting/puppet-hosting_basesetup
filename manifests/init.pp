@@ -58,8 +58,12 @@ class hosting_basesetup (
   String $proxy_http_port                      = "",
   Boolean $proxy_https                         = true,
   Hash $simple_files                           = {},
+  Hash $simple_directories                     = {},
   Hash $lvm_snapshots                          = {},
 ) {
+
+  ## DIR RESSOURCES   ##################################################################
+  create_resources("hosting_basesetup::simple_directory", $simple_directories)
 
   ## FILE RESSOURCES   ##################################################################
   create_resources("hosting_basesetup::simple_file", $simple_files)
