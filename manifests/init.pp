@@ -54,6 +54,8 @@ class hosting_basesetup (
   Variant[String, Enum['no', 'yes']]
   $ssh_password_auth_string                    = 'no',
   String $sshd_config_port                     = '22',
+  String $sshd_config_subsystem_sftp           = 'USE_DEFAULTS',
+  Hash $sshd_config_match                      = undef,
   String $proxy_http_host                      = "",
   String $proxy_http_port                      = "",
   Boolean $proxy_https                         = true,
@@ -115,6 +117,8 @@ class hosting_basesetup (
     sshd_config_strictmodes              => 'yes',
     sshd_config_use_privilege_separation => 'sandbox',
     sshd_config_print_motd               => 'no',
+    sshd_config_subsystem_sftp           => $sshd_config_subsystem_sftp,
+    sshd_config_match                    => $sshd_config_match,
     permit_root_login                    => 'without-password',
   }
 
