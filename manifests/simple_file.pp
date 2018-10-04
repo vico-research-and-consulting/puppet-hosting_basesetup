@@ -12,7 +12,7 @@ define hosting_basesetup::simple_file (
   file { $filename:
     ensure  => $ensure,
     owner   => $owner,
-    group   => $owner,
+    group   => $group,
     mode    => $mode,
     backup  => $backup,
     content => template($template),

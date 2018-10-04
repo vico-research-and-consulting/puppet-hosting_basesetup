@@ -9,7 +9,7 @@ define hosting_basesetup::simple_directory (
   file { $filename:
     ensure => $ensure,
     owner  => $owner,
-    group  => $owner,
+    group  => $group,
     mode   => $mode,
   }
 }
