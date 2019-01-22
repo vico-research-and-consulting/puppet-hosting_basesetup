@@ -69,7 +69,7 @@ hosting_basesetup::kernel::sysfs::config_items:
 #hosting_basesetup::monitoring::zabbix_agent: false
 
 hosting_basesetup::monitoring::additional_agent_packages: 
-  - 'curl'
+  - 'nmap'
 hosting_basesetup::usermanagement::restriction_tag: 'bigdata'
 hosting_basesetup::cron_at::manage_user_scheduled_jobs: true
 hosting_basesetup::unattended_upgrades: true

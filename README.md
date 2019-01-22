@@ -17,7 +17,7 @@ This project implements a basic system setup for the following platforms:
 
 This setup can be used as a base for server systems.
 The setup ist tested by using test-kitchen and serverspec tests.
-(for Details, review the [Documentation of the test setup](README_Test_Environment.mf))
+(for Details, review the [Documentation of the test setup](README_Test_Environment.md))
 
 Things implemented with this setup
 ----------------------------------
@@ -77,6 +77,10 @@ Currently not implemented/TODOs
 
 by priority:
 
+* Set in sshd
+  ```
+  AcceptEnv GIT_*
+  ```
 * remove dependency to puppet-zabbix<BR>
   because this creates a huge amount of indirect dependencies to modules which do not have a relation to the things
   perfomed by hosting_basesetup
