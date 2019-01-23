@@ -21,7 +21,7 @@ class hosting_basesetup::monitoring::zabbix_agent (
     ensure_packages([$use_agent_extensions_pkgname],
       {
         'ensure'  => $use_agent_extensions_release,
-        'require' => Class['zabbix::agent'],
+        'require' => Package['zabbix-agent'],
         'before'  => [ File['/etc/zabbix/zabbix_agentd.conf'], Service['zabbix-agent'], ]
       }
     )
