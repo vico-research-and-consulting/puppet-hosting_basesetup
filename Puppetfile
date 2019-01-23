@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 #^syntax detection
 
-forge "https://forgeapi.puppetlabs.com"
+forge 'https://forgeapi.puppetlabs.com'
 
 # do not forget to update the dependencies at metadata.json on updates here
 
