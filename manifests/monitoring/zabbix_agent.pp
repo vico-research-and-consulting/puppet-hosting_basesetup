@@ -30,6 +30,7 @@ class hosting_basesetup::monitoring::zabbix_agent (
       mode   => '0440',
       owner  => 'root',
       group  => 'root',
+      require => Package[$use_agent_extensions_pkgname],
     }
 
     # Include dir for specific zabbix-agent checks.
