@@ -30,6 +30,7 @@
 
 class hosting_basesetup (
   Boolean $manage_puppet                       = true,
+  Boolean $manage_puppet_set_evironment        = true,
   String $rootpwhash,
   Hash $users                                  = {},
   Hash $users_override                         = {},
@@ -83,7 +84,7 @@ class hosting_basesetup (
     mode    => '0644',
   }
   if $facts['os']['name'] == "Ubuntu" {
-    file { [ '/etc/update-motd.d/10-help-text', '/etc/update-motd.d/50-motd-news', 
+    file { [ '/etc/update-motd.d/10-help-text', '/etc/update-motd.d/50-motd-news',
       '/etc/update-motd.d/51-cloudguest', '/etc/update-motd.d/00-header',
       '/etc/update-motd.d/80-livepatch', '/etc/update-motd.d/50-landscape-sysinfo' ]:
       ensure => absent,
@@ -106,20 +107,20 @@ class hosting_basesetup (
     sshd_config_challenge_resp_auth      => 'no',
     sshd_use_pam                         => 'yes',
     sshd_config_ciphers                  => [ 'aes256-ctr',
-                                              'aes192-ctr',
-                                              'aes128-ctr' ],
+      'aes192-ctr',
+      'aes128-ctr' ],
     sshd_ignoreuserknownhosts            => 'no',
     sshd_kerberos_authentication         => 'no',
     sshd_config_kexalgorithms            => [ 'diffie-hellman-group-exchange-sha256',
-                                              'ecdh-sha2-nistp256',
-                                              'ecdh-sha2-nistp384',
-                                              'ecdh-sha2-nistp521'],
+      'ecdh-sha2-nistp256',
+      'ecdh-sha2-nistp384',
+      'ecdh-sha2-nistp521'],
     sshd_config_loglevel                 => 'VERBOSE',
     sshd_config_login_grace_time         => '30s',
-    sshd_config_macs                     => [ 'hmac-sha2-512', 
-                                              'hmac-sha2-256',
-                                              'hmac-sha2-256-etm@openssh.com', 
-                                              'hmac-sha2-512-etm@openssh.com'],
+    sshd_config_macs                     => [ 'hmac-sha2-512',
+      'hmac-sha2-256',
+      'hmac-sha2-256-etm@openssh.com',
+      'hmac-sha2-512-etm@openssh.com'],
     sshd_config_maxauthtries             => 2,
     sshd_config_maxsessions              => 10,
     sshd_config_maxstartups              => '10:30:100',
@@ -178,6 +179,30 @@ class hosting_basesetup (
   ## PUPPET AGENT ########################################################################
   if $manage_puppet {
     class { '::puppet_agent':
+    }
+
+    if $manage_puppet_set_evironment {
+
+      file_line { 'set_puppet_environment':
+       path    => '/etc/puppetlabs/puppet/puppet.conf',
+       line    => "environment = ${::environment}",
+       match   => '^\s*environment\s*=\s*.+',
+       require => Class['::puppet_agent'],
+      }
+      # augeas { "set_puppet_environment":
+      #   lens    => "Puppet.lns",
+      #   incl    => "/files/etc/puppetlabs/puppet/puppet.conf",
+      #   changes => [
+      #     "rm main/directive/environment",
+      #     "set main/directive/environment \"${::environment}\"",
+      #     ],
+      # }
+      exec { 'restart_agent_set_puppet_environment':
+        command     => 'systemctl restart puppet',
+        refreshonly => true,
+        subscribe   => File_line['set_puppet_environment'],
+        path        => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      }
     }
   }
 
