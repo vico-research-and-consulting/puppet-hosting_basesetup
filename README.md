@@ -79,6 +79,10 @@ by priority:
 
 * install and configure puppet final agent config<BR>
   (provide capability to switch environment)
+* Set in sshd
+  ```
+  AcceptEnv GIT_*
+  ```
 * SMART Daemon on non virtualized hardware systems
   (smart values for SAS and SATA devices  are different)
 * systemd journal configuration (housekeeping, permissions)

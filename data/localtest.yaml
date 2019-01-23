@@ -69,7 +69,6 @@ hosting_basesetup::kernel::sysfs::config_items:
 hosting_basesetup::zabbix_agent: true
 
 hosting_basesetup::monitoring::zabbix_agent::additional_agent_packages:
-  - 'curl'
   - 'jq'
 
 hosting_basesetup::usermanagement::restriction_tag: 'bigdata'
