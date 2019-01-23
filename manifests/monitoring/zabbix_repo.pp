@@ -113,17 +113,19 @@ class hosting_basesetup::monitoring::zabbix_repo (
           apt::key { 'zabbix-FBABD5F':
             id     => 'FBABD5FB20255ECAB22EE194D13D58E479EA5ED4',
             source => 'https://repo.zabbix.com/zabbix-official-repo.key',
-            before => Apt::Source['zabbix'],
           }
           apt::key { 'zabbix-A1848F5':
             id     => 'A1848F5352D022B9471D83D0082AB56BA14FE591',
             source => 'https://repo.zabbix.com/zabbix-official-repo.key',
-            before => Apt::Source['zabbix'],
           }
           apt::source { 'zabbix':
             location => "http://repo.zabbix.com/zabbix/${zabbix_version}/${operatingsystem}/",
             repos    => 'main',
             release  => $releasename,
+            require  => [
+              Apt_key['zabbix-FBABD5F'],
+              Apt_key['zabbix-A1848F5'],
+            ],
           }
         }
         Apt::Source['zabbix'] -> Package<|tag == 'zabbix'|>
