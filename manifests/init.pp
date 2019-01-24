@@ -64,6 +64,7 @@ class hosting_basesetup (
   Hash $simple_directories                     = {},
   Hash $lvm_snapshots                          = {},
   Boolean $zabbix_agent                        = false,
+  String $puppet_envionment                    = $::environment,
 ) {
 
   ## DIR RESSOURCES   ##################################################################
@@ -182,21 +183,12 @@ class hosting_basesetup (
     }
 
     if $manage_puppet_set_evironment {
-
       file_line { 'set_puppet_environment':
-       path    => '/etc/puppetlabs/puppet/puppet.conf',
-       line    => "environment = ${::environment}",
-       match   => '^\s*environment\s*=\s*.+',
-       require => Class['::puppet_agent'],
+        path    => '/etc/puppetlabs/puppet/puppet.conf',
+        line    => "environment = ${puppet_envionment}",
+        match   => '^\s*environment\s*=\s*.+',
+        require => Class['::puppet_agent'],
       }
-      # augeas { "set_puppet_environment":
-      #   lens    => "Puppet.lns",
-      #   incl    => "/files/etc/puppetlabs/puppet/puppet.conf",
-      #   changes => [
-      #     "rm main/directive/environment",
-      #     "set main/directive/environment \"${::environment}\"",
-      #     ],
-      # }
       exec { 'restart_agent_set_puppet_environment':
         command     => 'systemctl restart puppet',
         refreshonly => true,
