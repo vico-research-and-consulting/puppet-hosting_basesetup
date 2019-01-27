@@ -85,7 +85,8 @@ class hosting_basesetup (
     mode    => '0644',
   }
   if $facts['os']['name'] == "Ubuntu" {
-    file { [ '/etc/update-motd.d/10-help-text', '/etc/update-motd.d/50-motd-news',
+    file { [ '/etc/cron.weekly/update-notifier-common', 
+      '/etc/update-motd.d/10-help-text', '/etc/update-motd.d/50-motd-news',
       '/etc/update-motd.d/51-cloudguest', '/etc/update-motd.d/00-header',
       '/etc/update-motd.d/80-livepatch', '/etc/update-motd.d/50-landscape-sysinfo' ]:
       ensure => absent,
