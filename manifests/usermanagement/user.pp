@@ -55,7 +55,7 @@ define hosting_basesetup::usermanagement::user (
     }
 
     if $dotfile_sourcedir != "no" {
-      file { "/home/${username}/":
+      file { "${homedir_base}/${username}/":
         path    => "${homedir_base}/${username}/",
         ensure  => 'directory',
         owner   => $username,
