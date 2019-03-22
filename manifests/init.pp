@@ -85,7 +85,7 @@ class hosting_basesetup (
     mode    => '0644',
   }
   if $facts['os']['name'] == "Ubuntu" {
-    file { [ '/etc/cron.weekly/update-notifier-common', 
+    file { [ '/etc/cron.weekly/update-notifier-common',
       '/etc/update-motd.d/10-help-text', '/etc/update-motd.d/50-motd-news',
       '/etc/update-motd.d/51-cloudguest', '/etc/update-motd.d/00-header',
       '/etc/update-motd.d/80-livepatch', '/etc/update-motd.d/50-landscape-sysinfo' ]:
@@ -93,8 +93,7 @@ class hosting_basesetup (
     }
   }
 
-  ## DNS RESOLVER SETUP ##################################################################
-  include hosting_basesetup::dns
+
 
   ## SSH #################################################################################
   # TODO: create secure client settings
@@ -171,6 +170,14 @@ class hosting_basesetup (
   ## SOFTWARE ############################################################################
 
   include ::hosting_basesetup::packages
+
+  ## NETWORKING ##########################################################################
+
+  class { '::hosting_basesetup::networking':
+    before => Class['::hosting_basesetup::dns']
+  }
+  class { '::hosting_basesetup::dns':
+  }
 
   ## MONITORING ##########################################################################
 
