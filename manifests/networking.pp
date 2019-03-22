@@ -4,10 +4,10 @@ class hosting_basesetup::networking (
 
   if ($disable_netplan) {
     if ($facts['os']['name'] == 'Ubuntu') and ($facts['os']['release']['full'] == "18.04" ) {
-      ensure_packages(['ifupdown', 'resolvconf'], { ensure => present })
+      ensure_packages(['ifupdown', 'resolvconf' , 'vlan', 'ifenslave'], { ensure => present })
       service { 'networkd-dispatcher':
         ensure => stopped,
-        enable => false,
+        enable => mask,
       }
       ensure_packages(['netplan.io'], { ensure => absent })
     }else {
