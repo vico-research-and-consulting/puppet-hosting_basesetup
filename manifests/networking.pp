@@ -4,7 +4,7 @@ class hosting_basesetup::networking (
 
   if ($disable_netplan) {
     if ($facts['os']['name'] == 'Ubuntu') and ($facts['os']['release']['full'] == "18.04" ) {
-      ensure_packages(['install', 'ifupdown', 'resolvconf'], { ensure => present })
+      ensure_packages(['ifupdown', 'resolvconf'], { ensure => present })
       service { 'networkd-dispatcher':
         ensure => stopped,
         enable => false,
