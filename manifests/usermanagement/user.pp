@@ -15,10 +15,10 @@ define hosting_basesetup::usermanagement::user (
 ) {
 
 
-  if ($ensure == "present" and length($restriction_tags) > 0)
+  if (length($restriction_tags) > 0 and $::hosting_basesetup::usermanagement::restriction_tag)
     {
     if $::hosting_basesetup::usermanagement::restriction_tag in $restriction_tags {
-      $ensure_final = 'present'
+      $ensure_final = $ensure
     } else {
       $ensure_final = 'absent'
     }
