@@ -15,7 +15,7 @@ define hosting_basesetup::usermanagement::user (
 ) {
 
 
-  if (length($restriction_tags) > 0 and $::hosting_basesetup::usermanagement::restriction_tag)
+  if (length($restriction_tags) > 0 and $::hosting_basesetup::usermanagement::restriction_tag != '')
     {
     if $::hosting_basesetup::usermanagement::restriction_tag in $restriction_tags {
       $ensure_final = $ensure
