@@ -1,22 +1,23 @@
 define hosting_basesetup::usermanagement::user (
-  String $username                = $title,
+  String $username                  = $title,
   String $group_primary,
   Integer $uid,
   String $fullname,
-  String $homedir_base            = "/home",
-  Array[String] $groups           = [],
-  Array[String] $ssh_keys         = [],
-  Array[String] $restriction_tags = [],
-  String $ensure                  = 'present',
-  String $passwordhash            = '*',
-  String $mail                    = 'Mailadress not specified',
-  String $shell                   = '/bin/bash',
-  String $dotfile_sourcedir       = $::hosting_basesetup::usermanagement::user_dotfile_default_sourcedir,
+  String $homedir_base              = "/home",
+  Array[String] $groups             = [],
+  Array[String] $ssh_keys           = [],
+  Array[String] $restriction_tags   = [],
+  Boolean $restriction_tags_enforce = false,
+  String $ensure                    = 'present',
+  String $passwordhash              = '*',
+  String $mail                      = 'Mailadress not specified',
+  String $shell                     = '/bin/bash',
+  String $dotfile_sourcedir         = $::hosting_basesetup::usermanagement::user_dotfile_default_sourcedir,
 ) {
 
 
-  if (length($restriction_tags) > 0 and $::hosting_basesetup::usermanagement::restriction_tag != '')
-    {
+  if ($restriction_tags_enforce or (length($restriction_tags) > 0 and $::hosting_basesetup::usermanagement::restriction_tag != ''))
+  {
     if $::hosting_basesetup::usermanagement::restriction_tag in $restriction_tags {
       $ensure_final = $ensure
     } else {
@@ -66,9 +67,9 @@ define hosting_basesetup::usermanagement::user (
         recurse => remote,
       }
     }
-  }else{
+  }else {
     file { "${homedir_base}/${username}/.ssh/authorized_keys":
-      ensure  => 'absent',
+      ensure => 'absent',
     }
     -> user { $username:
       ensure => 'absent',
