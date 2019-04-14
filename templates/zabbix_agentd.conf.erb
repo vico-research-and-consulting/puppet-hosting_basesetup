@@ -223,7 +223,7 @@ UnsafeUserParameters=0
 #	Full path to location of agent modules.
 #	Default depends on compilation options.
 #
-LoadModulePath=/usr/lib/modules
+LoadModulePath=<%= get_var(@load_module_path, /.+/) %>
 
 
 ### Option: LoadModule
