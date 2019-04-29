@@ -93,7 +93,9 @@ class hosting_basesetup (
     }
   }
 
+  ## CRASH-MANAGEMENT ####################################################################
 
+  include hosting_basesetup::crash_management
 
   ## SSH #################################################################################
   # TODO: create secure client settings
