@@ -190,6 +190,13 @@ class hosting_basesetup (
   ## PUPPET AGENT ########################################################################
   if $manage_puppet {
     class { '::puppet_agent':
+      service_names => 'puppet',
+    }
+    service { 'mcollective':
+        ensure     => stopped,
+        enable     => false,
+        hasstatus  => true,
+        hasrestart => true,
     }
 
     if $manage_puppet_set_evironment {
