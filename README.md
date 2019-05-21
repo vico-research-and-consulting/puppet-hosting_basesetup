@@ -71,6 +71,8 @@ Things implemented with this setup
 * ulimits
 * grub config</BR>
   (no splash, no quiet mode)
+* execute fstrim at random time i.e. to prevent load spikes on the storage system 
+  (sunday, between 11AM and 4PM)
 
 Currently not implemented/open TODOs
 --------------------------------

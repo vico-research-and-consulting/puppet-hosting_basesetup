@@ -76,6 +76,7 @@ class hosting_basesetup (
   ## KERNEL ##############################################################################
   include ::hosting_basesetup::kernel
 
+
   ## MOTD ################################################################################
   file { '/etc/motd':
     ensure  => file,
@@ -239,5 +240,6 @@ class hosting_basesetup (
   }
 
   ## CRON AND AT #########################################################################
-  include hosting_basesetup::cron_at
+  include ::hosting_basesetup::cron_at
+  include ::hosting_basesetup::filesystems
 }
