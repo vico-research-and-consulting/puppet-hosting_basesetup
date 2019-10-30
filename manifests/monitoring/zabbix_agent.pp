@@ -53,10 +53,23 @@ Include=/usr/share/zabbix-agent-extensions/include.d/
     class { '::hosting_basesetup::monitoring::zabbix_repo':
       zabbix_version => $version,
     }
-    -> package { $zabbix_packages:
-      ensure => $package_state,
-      require => Class['apt::update'],
+    
+    case $facts['os']['family'] {
+      'Debian': {
+        package { $zabbix_packages:
+          ensure => $package_state,
+          require => [Class['::hosting_basesetup::monitoring::zabbix_repo'], Class['apt::update']],
+        }
+      }
+      'RedHat': {
+        package { $zabbix_packages:
+          ensure => $package_state,
+          require => Class['::hosting_basesetup::monitoring::zabbix_repo']
+        }
+      }
+      default: { notify { "The OS family ${facts['os']['family']} is not supported by this module": } }
     }
+
   }else {
     package { $zabbix_packages:
       ensure => $package_state,
