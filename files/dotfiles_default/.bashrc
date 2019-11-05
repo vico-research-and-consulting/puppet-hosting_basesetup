@@ -44,6 +44,7 @@ alias ll="ls -l" ;
 alias lf="ls -Fa";
 alias sl="ls";
 alias lt="ls -latr";
+alias dfr="df -x overlay -x shm -x tmpfs -x udev"
 #alias mysql="mysql --pager='less -niSFX'";
 
 export MYSQL_PS1="mysql://\u@\h:/\d - \R:\m:\s > ";
