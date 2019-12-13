@@ -3,6 +3,15 @@ class hosting_basesetup::filesystems (
   Integer $fstrim_randomize_seconds = 14400,
   Boolean $fstrim_enable            = true,
 ) {
+
+  file { '/usr/local/bin/nextcloud_public_folder_upload':
+    ensure => present,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+    source => 'puppet:///modules/hosting_basesetup/nextcloud_public_folder_upload',
+  }
+
   if $facts['os']['name'] == "Ubuntu" and $facts['os']['release']['full'] == "18.04" {
     service { 'fstrim.timer':
       ensure => stopped,
