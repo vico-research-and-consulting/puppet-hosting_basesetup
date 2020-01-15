@@ -66,6 +66,8 @@ class hosting_basesetup::usermanagement (
     $groups_final = deep_merge($groups, $groups_override)
     $users_final = deep_merge($users, $users_override)
 
+
+
     create_resources("hosting_basesetup::usermanagement::group", $groups_final)
     create_resources("hosting_basesetup::usermanagement::user", $users_final)
   }
