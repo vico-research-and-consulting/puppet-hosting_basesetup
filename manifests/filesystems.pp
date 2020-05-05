@@ -2,8 +2,8 @@ class hosting_basesetup::filesystems (
   String $fstrim_cron_pattern       = "0 11 * * 0",
   Integer $fstrim_randomize_seconds = 14400,
   Boolean $fstrim_enable            = true,
+  Hash $federal_admin_reserve_banks = {},
 ) {
-
   file { '/usr/local/bin/nextcloud_public_folder_upload':
     ensure => present,
     owner  => 'root',
@@ -51,4 +51,6 @@ ${fstrim_cron_pattern} root /usr/local/sbin/fstrim_cron ${fstrim_randomize_secon
       ensure => absent,
     }
   }
+
+  create_resources("hosting_basesetup::federal_admin_reserve_bank", $federal_admin_reserve_banks)
 }
