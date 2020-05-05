@@ -2,6 +2,7 @@ define hosting_basesetup::federal_admin_reserve_bank (
   Enum['present', 'absent'] $ensure = present,
   String $path                      = $title,
   Integer $size_mb                  = 1024,
+  Integer $timeout                  = 900,
 ) {
   if $ensure == "present" {
     $federal_res = "$path/FEDERAL_ADMIN_RESERVE_BANK"
@@ -11,6 +12,7 @@ define hosting_basesetup::federal_admin_reserve_bank (
       path    => '/usr/bin:/usr/sbin:/bin',
       unless  => "test -f ${federal_res}",
       require => Class["hosting_basesetup::lvm"],
+      timeout => $timeout,
     }
     -> file { $federal_res:
       owner => 'root',
