@@ -6,6 +6,8 @@ hosting_basesetup::motd_announcement: |
   The world and the universe are far more wonderful if there's not a puppet master.
   Dave Matthews
 
+
+hosting_basesetup::usermanagement::sudo_ssh_env_pass: true
 hosting_basesetup::motd_documentation: https://github.com/scoopex/puppet-hosting_basesetup/
 
 hosting_basesetup::mail_root_recipient: admin@foobar.de

@@ -82,5 +82,13 @@ describe command('su -c "sudo -l" - user1') do
    its(:stdout) { should match(/NOPASSWD: ALL/)}
 end
 
+describe command('su -c "SSH_AUTH_SOCK=foo sudo env" user1') do
+   its(:stdout) { should match(/SSH_AUTH_SOCK/)}
+end
+describe command('su -c "SSH_AUTH_SOCK_FOO=foo sudo env" user1') do
+   its(:stdout) { should_not match(/SSH_AUTH_SOCK_FOO/)}
+end
+
+
 #----------------------------------------------------------------------
 
