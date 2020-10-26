@@ -13,7 +13,11 @@ unset LC_COLLATE
 unset LC_CTYPE
 export LANG=en_US.UTF-8
 
-export HISTCONTROL=ignorespace
+export HISTSIZE=200000
+export HISTFILESIZE=200000
+# don't put duplicate lines in the history.
+export HISTCONTROL=ignoreboth
+shopt -s histappend
 
 alias DATE='date "+%Y-%m-%d_%H-%M-%S"';
 alias puppetrun="puppet agent --test";
