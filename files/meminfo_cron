@@ -3,10 +3,12 @@
 FILE="/var/log/meminfo"
 FILE_LIMIT=$((10*1024*1024))
 
-FILESIZE=$(wc -c "$FILE" | awk '{print $1}')
-if [ $FILESIZE -ge $FILE_LIMIT ]; then
-    cp $FILE $FILE.1
-    : > $FILE
+if [ -f "$FILE" ]; then
+    FILESIZE=$(wc -c "$FILE" | awk '{print $1}')
+    if [ $FILESIZE -ge $FILE_LIMIT ]; then
+        cp $FILE $FILE.1
+        : > $FILE
+    fi
 fi
 
 echo "\n\n------------------------------" >> $FILE

@@ -54,6 +54,7 @@ class hosting_basesetup::kernel (
     group   => 'root',
     mode    => '0644',
     content => "# created by puppet
-*/10 * * * * root /usr/local/sbin/meminfo",
+0,10,20,30,40,50 * * * * root /usr/local/sbin/meminfo
+",
     }
 }
