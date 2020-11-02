@@ -12,7 +12,7 @@ if [ -f "$FILE" ]; then
 fi
 
 echo "\n\n------------------------------" >> $FILE
-date +"%m-%d-%Y %H:%M:%S" >> $FILE
+date +"%d.%m.%Y %H:%M:%S" >> $FILE
 echo "------------------------------" >> $FILE
 ps -eo pmem,pcpu,vsize,pid,cmd | sort -k 1 -nr | head -10 >> $FILE
 echo "------------------------------\n" >> $FILE
