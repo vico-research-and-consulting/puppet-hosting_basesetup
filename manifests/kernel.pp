@@ -40,4 +40,20 @@ class hosting_basesetup::kernel (
     mode    => '0644',
     content => template("hosting_basesetup/limits.conf.erb"),
   }
+
+  file { '/usr/local/sbin/meminfo':
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    source  => 'puppet:///modules/hosting_basesetup/meminfo_cron',
+  }
+
+  file { "/etc/cron.d/vico_meminfo":
+    ensure  => 'present',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => "# created by puppet
+*/10 * * * * root /usr/local/sbin/meminfo",
+    }
 }
