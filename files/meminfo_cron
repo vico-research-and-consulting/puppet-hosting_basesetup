@@ -11,8 +11,10 @@ if [ -f "$FILE" ]; then
     fi
 fi
 
-echo "\n\n------------------------------" >> $FILE
-date +"%d.%m.%Y %H:%M:%S" >> $FILE
-echo "------------------------------" >> $FILE
-ps -eo pmem,pcpu,vsize,pid,cmd | sort -k 1 -nr | head -10 >> $FILE
-echo "------------------------------\n" >> $FILE
+{
+    echo -e "\n\n------------------------------"
+    date +"%d.%m.%Y %H:%M:%S"
+    echo -e "------------------------------"
+    ps -eo pmem,pcpu,vsize,rss,pid,cmd | sort -k 1 -nr | head -10
+    echo -e "------------------------------\n"
+} >> $FILE
