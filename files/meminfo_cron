@@ -13,8 +13,9 @@ fi
 
 {
     echo -e "\n\n------------------------------"
-    date +"%d.%m.%Y %H:%M:%S"
+    date -Iseconds
     echo -e "------------------------------"
+    free -h
     ps -eo pmem,pcpu,vsize,rss,pid,cmd | sort -k 1 -nr | head -10
     echo -e "------------------------------\n"
 } >> $FILE
