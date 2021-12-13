@@ -7,7 +7,6 @@ forge 'https://forgeapi.puppetlabs.com'
 
 mod 'puppetlabs-apt', '< 7.1.0'
 mod 'puppetlabs-stdlib', '>=4.24.0 <7.0.0'
-
 mod 'puppetlabs-ntp', '>=7.1.0'
 mod 'camptocamp-postfix', '>=1.6.0'
 mod 'puppetlabs-puppet_agent', '>=2.0.1'
