@@ -14,7 +14,7 @@ mod 'puppetlabs-puppet_agent', '>=1.5.0'
 mod 'puppetlabs-lvm', '>=1.0.0'
 mod 'puppet-unattended_upgrades', '>=3.2.0'
 mod 'ghoneycutt-ssh', '>=3.56.1'
-mod 'mailalias_core'
+mod 'puppetlabs-mailalias_core', '1.1.0'
 
 #mod 'test_repo',
 #  :git => 'git@foobar.de/foobar_foo.git'
