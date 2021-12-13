@@ -30,6 +30,7 @@
 
 class hosting_basesetup (
   Boolean $manage_puppet                       = true,
+  Boolean $manage_puppet_set_evironment        = true,
   String $rootpwhash,
   Hash $users                                  = {},
   Hash $users_override                         = {},
@@ -62,6 +63,8 @@ class hosting_basesetup (
   Hash $simple_files                           = {},
   Hash $simple_directories                     = {},
   Hash $lvm_snapshots                          = {},
+  Boolean $zabbix_agent                        = false,
+  String $puppet_envionment                    = $::environment,
 ) {
 
   ## DIR RESSOURCES   ##################################################################
@@ -73,6 +76,7 @@ class hosting_basesetup (
   ## KERNEL ##############################################################################
   include ::hosting_basesetup::kernel
 
+
   ## MOTD ################################################################################
   file { '/etc/motd':
     ensure  => file,
@@ -82,15 +86,17 @@ class hosting_basesetup (
     mode    => '0644',
   }
   if $facts['os']['name'] == "Ubuntu" {
-    file { [ '/etc/update-motd.d/10-help-text', '/etc/update-motd.d/50-motd-news', 
+    file { [ '/etc/cron.weekly/update-notifier-common',
+      '/etc/update-motd.d/10-help-text', '/etc/update-motd.d/50-motd-news',
       '/etc/update-motd.d/51-cloudguest', '/etc/update-motd.d/00-header',
       '/etc/update-motd.d/80-livepatch', '/etc/update-motd.d/50-landscape-sysinfo' ]:
       ensure => absent,
     }
   }
 
-  ## DNS RESOLVER SETUP ##################################################################
-  include hosting_basesetup::dns
+  ## CRASH-MANAGEMENT ####################################################################
+
+  include hosting_basesetup::crash_management
 
   ## SSH #################################################################################
   # TODO: create secure client settings
@@ -105,29 +111,29 @@ class hosting_basesetup (
     sshd_config_challenge_resp_auth      => 'no',
     sshd_use_pam                         => 'yes',
     sshd_config_ciphers                  => [ 'aes256-ctr',
-                                              'aes192-ctr',
-                                              'aes128-ctr' ],
+      'aes192-ctr',
+      'aes128-ctr' ],
     sshd_ignoreuserknownhosts            => 'no',
     sshd_kerberos_authentication         => 'no',
     sshd_config_kexalgorithms            => [ 'diffie-hellman-group-exchange-sha256',
-                                              'ecdh-sha2-nistp256',
-                                              'ecdh-sha2-nistp384',
-                                              'ecdh-sha2-nistp521'],
+      'ecdh-sha2-nistp256',
+      'ecdh-sha2-nistp384',
+      'ecdh-sha2-nistp521'],
     sshd_config_loglevel                 => 'VERBOSE',
     sshd_config_login_grace_time         => '30s',
-    sshd_config_macs                     => [ 'hmac-sha2-512', 
-                                              'hmac-sha2-256',
-                                              'hmac-sha2-256-etm@openssh.com', 
-                                              'hmac-sha2-512-etm@openssh.com'],
+    sshd_config_macs                     => [ 'hmac-sha2-512',
+      'hmac-sha2-256',
+      'hmac-sha2-256-etm@openssh.com',
+      'hmac-sha2-512-etm@openssh.com'],
     sshd_config_maxauthtries             => 2,
     sshd_config_maxsessions              => 10,
     sshd_config_maxstartups              => '10:30:100',
     sshd_config_strictmodes              => 'yes',
-    sshd_config_use_privilege_separation => 'sandbox',
     sshd_config_print_motd               => 'no',
     sshd_config_subsystem_sftp           => $sshd_config_subsystem_sftp,
     sshd_config_match                    => $sshd_config_match,
     permit_root_login                    => 'without-password',
+    sshd_config_serverkeybits            => undef,
   }
 
   if $mosh {
@@ -165,16 +171,48 @@ class hosting_basesetup (
   create_resources("::hosting_basesetup::mount", $mountpoints_final)
 
   ## SOFTWARE ############################################################################
-  class { '::hosting_basesetup::packages':
+
+  include ::hosting_basesetup::packages
+
+  ## NETWORKING ##########################################################################
+
+  class { '::hosting_basesetup::networking':
+    before => Class['::hosting_basesetup::dns']
+  }
+  class { '::hosting_basesetup::dns':
   }
 
   ## MONITORING ##########################################################################
-  class { '::hosting_basesetup::monitoring':
+
+  if $zabbix_agent {
+    include ::hosting_basesetup::monitoring::zabbix_agent
   }
+
   ## PUPPET AGENT ########################################################################
   if $manage_puppet {
     class { '::puppet_agent':
+      service_names => 'puppet',
+    }
+    service { 'mcollective':
+        ensure     => stopped,
+        enable     => false,
+        hasstatus  => true,
+        hasrestart => true,
+    }
 
+    if $manage_puppet_set_evironment {
+      file_line { 'set_puppet_environment':
+        path    => '/etc/puppetlabs/puppet/puppet.conf',
+        line    => "environment = ${puppet_envionment}",
+        match   => '^\s*environment\s*=\s*.+',
+        require => Class['::puppet_agent'],
+      }
+      exec { 'restart_agent_set_puppet_environment':
+        command     => 'systemctl restart puppet',
+        refreshonly => true,
+        subscribe   => File_line['set_puppet_environment'],
+        path        => "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+      }
     }
   }
 
@@ -182,6 +220,7 @@ class hosting_basesetup (
   class { '::hosting_basesetup::lvm':
     snapshots => $lvm_snapshots,
   }
+  include ::hosting_basesetup::filesystems
 
   ## PROXY ###############################################################################
   include ::hosting_basesetup::proxy
@@ -202,5 +241,6 @@ class hosting_basesetup (
   }
 
   ## CRON AND AT #########################################################################
-  include hosting_basesetup::cron_at
+  include ::hosting_basesetup::cron_at
+
 }

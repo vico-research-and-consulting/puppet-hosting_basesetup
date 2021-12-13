@@ -6,10 +6,10 @@ class hosting_basesetup::packages (
   case $::operatingsystem {
     'ubuntu', 'debian': {
       $packages = [
-        'apt-transport-https', 'bash-completion', 'curl', 'wget', 'htop', 'iftop',
+        'apt-transport-https', 'bash-completion', 'curl', 'wget', 'htop', 'iftop', 'at', 
         'iptraf-ng', 'pv', 'lsscsi', 'dialog', 'ncdu', 'scsitools', 'sysstat', 'xfsdump',
-        'xfsprogs', 'zip', 'git', 'tig', 'vim', 'finger', 'mailutils', 'traceroute',
-        'net-tools', 'lvm2', 'strace', 'sysfsutils', 'screen', 'nuttcp', 'gnupg', 'nethogs',
+        'xfsprogs', 'zip', 'git', 'tig', 'vim', 'finger', 'mailutils', 'traceroute', 'multitail',
+        'net-tools', 'lvm2', 'strace', 'sysfsutils', 'screen', 'nuttcp', 'gnupg', 'nethogs', "pigz",
       ]
       if (!$::is_virtual) {
         ensure_packages(['smartmontools'], { ensure => present })
