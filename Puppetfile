@@ -6,10 +6,10 @@ forge 'https://forgeapi.puppetlabs.com'
 # do not forget to update the dependencies at metadata.json on updates here
 
 mod 'puppetlabs-apt', '< 7.1.0'
-mod 'puppetlabs-stdlib', '>=4.24.0 <7.0.0'
+mod 'puppetlabs-stdlib', '>=4.24.0 <9.0.0'
 mod 'puppetlabs-ntp', '>=7.1.0'
-mod 'camptocamp-postfix', '>=1.6.0'
-mod 'puppetlabs-puppet_agent', '>=2.0.1'
+mod 'camptocamp-postfix', '>=1.12.0'
+mod 'puppetlabs-puppet_agent', '>=4.9.0'
 mod 'puppetlabs-lvm', '>=1.0.0'
 
 #mod 'puppet-unattended_upgrades', '>=3.2.0 <=3.2.1'

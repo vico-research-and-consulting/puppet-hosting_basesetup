@@ -147,10 +147,8 @@ class hosting_basesetup (
 
   ## POSTFIX #############################################################################
   class { 'postfix':
-    inet_interfaces     => '127.0.0.1',
-    smtp_listen         => '127.0.0.1',
-    # inet_interfaces => '127.0.0.1, [::1]',
-    # smtp_listen => '127.0.0.1, [::1]',
+    inet_interfaces     => '127.0.0.1, [::1]',
+    smtp_listen         => '127.0.0.1, [::1]',
     myorigin            => $mail_domain,
     root_mail_recipient => $mail_root_recipient,
     relayhost           => $mail_relayhost,
