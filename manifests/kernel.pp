@@ -3,6 +3,7 @@ class hosting_basesetup::kernel (
   String  $grub_options                                      = '',
   Hash    $sysctl_config                                     = {},
   Boolean $sysctl_enable_fastnetworking_defaults             = false,
+  Boolean $sysctl_enable_lowlatencynetworking_defaults       = false,
   Boolean $sysctl_enable_tcp_timeout_optimzation             = false,
   Boolean $sysctl_enable_automatic_reboot_on_kernel_problems = false,
   Boolean $sysctl_ignore_defaults                            = false,
@@ -10,6 +11,7 @@ class hosting_basesetup::kernel (
   Boolean $sysfs_ignore_defaults                             = false,
   Boolean       $ulimit_ignore_defaults                      = false,
   Array[String] $ulimit_config                               = [],
+  Array[String] $packages                                    = [],
 ) {
   include hosting_basesetup::kernel::sysfs
   include hosting_basesetup::kernel::sysctl
@@ -24,6 +26,8 @@ class hosting_basesetup::kernel (
     '*                hard    nproc      10240       # Prevent fork-bombs from taking out the system.',
   ]
 
+  ensure_packages($packages, { ensure => 'installed' })
+
   if $ulimit_ignore_defaults {
     $ulimit_config_final = $ulimit_config
   } else {
@@ -36,4 +40,21 @@ class hosting_basesetup::kernel (
     mode    => '0644',
     content => template("hosting_basesetup/limits.conf.erb"),
   }
+
+  file { '/usr/local/sbin/meminfo':
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    source  => 'puppet:///modules/hosting_basesetup/meminfo_cron',
+  }
+
+  file { "/etc/cron.d/vico_meminfo":
+    ensure  => 'present',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => "# created by puppet
+0,10,20,30,40,50 * * * * root /usr/local/sbin/meminfo
+",
+    }
 }

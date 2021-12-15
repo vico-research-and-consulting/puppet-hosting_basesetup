@@ -1,17 +1,15 @@
 ##############################################################################
 ####
 #### FILE CREATED BY PUPPET, MODIFICATIONS WILL BE OVERWRITTEN
-
 <%
 def get_var(value, regex)
   if ( value =~ regex )
     return value
   else
-    raise ArgumentError, "#{value} does not match to #{regex}"
+    raise ArgumentError, ">>>#{value}<<< does not match to regex >>>#{regex}<<< : #{caller[0]}"
   end
 end
-%>
-
+-%>
 source /etc/network/interfaces.d/*
 
 # The loopback network interface
@@ -31,8 +29,8 @@ iface <%= get_var(interface, /.+\d+/) %> inet manual
 ###########################################################################
 # Bonding/LACP Interfaces
 
-auto bond0
-iface bond0 inet static
+auto bond0<% if @config['vlan_tag'] -%>.<%= @config['vlan_tag'] %><% end %>
+iface bond0<% if @config['vlan_tag'] -%>.<%= @config['vlan_tag'] %><% end %> inet static
    bond-mode 802.3ad
    bond-slaves none
    # fast lacp rate, every second

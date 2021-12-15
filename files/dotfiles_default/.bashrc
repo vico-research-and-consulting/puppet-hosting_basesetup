@@ -13,7 +13,11 @@ unset LC_COLLATE
 unset LC_CTYPE
 export LANG=en_US.UTF-8
 
-export HISTCONTROL=ignorespace
+export HISTSIZE=200000
+export HISTFILESIZE=200000
+# don't put duplicate lines in the history.
+export HISTCONTROL=ignoreboth
+shopt -s histappend
 
 alias DATE='date "+%Y-%m-%d_%H-%M-%S"';
 alias puppetrun="puppet agent --test";
@@ -44,6 +48,7 @@ alias ll="ls -l" ;
 alias lf="ls -Fa";
 alias sl="ls";
 alias lt="ls -latr";
+alias dfr="df -x overlay -x shm -x tmpfs -x udev"
 #alias mysql="mysql --pager='less -niSFX'";
 
 export MYSQL_PS1="mysql://\u@\h:/\d - \R:\m:\s > ";
@@ -52,7 +57,8 @@ export LS_COLORS='no=00:fi=00:di=06;36:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40
 
 case $TERM in
     xterm*|linux)
-       export PS1='$(EXC=$?;if [ $EXC != 0 ] ;then echo \[\e[31m\]ERR "$EXC : " ; fi)\[\e]0;\w\a\]\[\e[32m\]\u@\H(\D{%Y-%m-%d} \t) \[\e[31m\][PUPPET]\[\e[0m\] \[\e[33m\]\w\[\e[0m\] \n\$ \[\e]2;\H \w\a\]'
+       #export PS1='$(EXC=$?;if [ $EXC != 0 ] ;then echo \[\e[31m\]ERR "$EXC : " ; fi)\[\e]0;\w\a\]\[\e[32m\]\u@\H(\D{%Y-%m-%d} \t) \[\e[31m\][PUPPET]\[\e[0m\] \[\e[33m\]\w\[\e[0m\] \n\$ \[\e]2;\H \w\a\]'
+       export PS1='$(EXC=$?;if [ $EXC != 0 ] ;then echo \[\e[31m\]ERR "$EXC : " ; fi)\[\e]0;\w\a\]\[\e[32m\]\u@\H(\D{%Y-%m-%d} \t) \[\e[93m\][PUPPET]\[\e[0m\]\[\e[31m\]$(KXC=$(kubectl config current-context 2>/dev/null); if [ -n "$KXC" ];then echo " $KXC "; else echo " " ; fi)\[\e[33m\]\w\[\e[0m\]$(GT=$(git branch 2>/dev/null|grep "*"); if [ -n "$GT" ];then echo -e -n "\E[3m [${GT#* }] \E[23m "; fi) \n\$ \[\e]2;\H \w\a\]'
     ;;
 esac
 
