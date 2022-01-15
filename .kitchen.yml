@@ -51,6 +51,19 @@ platforms:
       #network:
       #- ['private_network', {ip: '192.168.33.33'}]
       #- ["forwarded_port", {guest: 8080, host: 8080}]
+  - name: ubuntu20-hosting_basesetup
+    driver_plugin: vagrant
+    driver:
+      vagrantfile_erb: vagrantfiles/Vagrantfile-debianoid.erb
+      box: ubuntu/focal64
+      box_url: https://app.vagrantup.com/ubuntu/boxes/focal64
+      synced_folders:
+        - ['./files', '/tmp/files']
+      #box: bento/ubuntu-17.10
+      #box_url: https://app.vagrantup.com/bento/boxes/ubuntu-17.10
+      #network:
+      #- ['private_network', {ip: '192.168.33.33'}]
+      #- ["forwarded_port", {guest: 8080, host: 8080}]
 
   - name: debian-hosting_basesetup
     driver_plugin: vagrant
