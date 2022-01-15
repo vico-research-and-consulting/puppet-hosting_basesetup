@@ -86,7 +86,7 @@ How to start:
        source ~/.rvm/scripts/rvm
        exec bash
        # asks for root password and installs packages like libyaml-dev, libsqlite3-dev, libgdbm-dev, libncurses5-dev, bison, libreadline6-dev
-       rvm install "ruby-2.4.1"
+       rvm install "ruby-2.6.1"
        ```
      * Configuration of RVM<br>
        After the rvm installtion a configuration file (~/.rvmrc) should be created with the following content:
@@ -105,13 +105,13 @@ How to start:
        ```
        source 'https://rubygems.org'
 
-       #ruby=2.0.0-p645
+       #ruby=2.6.1
        #ruby-gemset=puppet-testing
 
        (...)
        ```
        The entries with the leading hashes (#) are not disabled entries. You have to install the configured ruby release in a manual procedure.
-       You will get a notification "Required ruby-2.4.1 is not installed." if this step is missing.
+       You will get a notification "Required ruby-2.6.1 is not installed." if this step is missing.
 
        "test-kitchen": Serverspec Test mit Vagrant/Virtualbox/Docker
 
