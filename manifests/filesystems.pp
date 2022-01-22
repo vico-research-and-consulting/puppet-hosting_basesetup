@@ -25,6 +25,8 @@ class hosting_basesetup::filesystems (
       match => '.*/sbin/fstrim',
     }
   }
+  elsif $facts['os']['name'] == "Ubuntu" and $facts['os']['release']['full'] == "20.04" {
+  }
   else {
     fail("unsupported os: ${::operatingsystem}")
   }
