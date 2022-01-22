@@ -24,7 +24,6 @@ busser:
   ruby_bindir: /usr/bin
 
 platforms:
-  #- name: ubuntu-16.04-hosting_basesetup
   - name: ubuntu16-hosting_basesetup
     driver_plugin: vagrant
     driver:
@@ -33,8 +32,6 @@ platforms:
       box_url: https://app.vagrantup.com/ubuntu/boxes/xenial64
       synced_folders:
         - ['./files', '/tmp/files']
-      #box: bento/ubuntu-17.10
-      #box_url: https://app.vagrantup.com/bento/boxes/ubuntu-17.10
       #network:
       #- ['private_network', {ip: '192.168.33.33'}]
       #- ["forwarded_port", {guest: 8080, host: 8080}]
@@ -46,8 +43,6 @@ platforms:
       box_url: https://app.vagrantup.com/ubuntu/boxes/bionic64
       synced_folders:
         - ['./files', '/tmp/files']
-      #box: bento/ubuntu-17.10
-      #box_url: https://app.vagrantup.com/bento/boxes/ubuntu-17.10
       #network:
       #- ['private_network', {ip: '192.168.33.33'}]
       #- ["forwarded_port", {guest: 8080, host: 8080}]
@@ -59,8 +54,6 @@ platforms:
       box_url: https://app.vagrantup.com/ubuntu/boxes/focal64
       synced_folders:
         - ['./files', '/tmp/files']
-      #box: bento/ubuntu-17.10
-      #box_url: https://app.vagrantup.com/bento/boxes/ubuntu-17.10
       #network:
       #- ['private_network', {ip: '192.168.33.33'}]
       #- ["forwarded_port", {guest: 8080, host: 8080}]
