@@ -118,8 +118,13 @@ class hosting_basesetup::monitoring::zabbix_repo (
             id     => 'A1848F5352D022B9471D83D0082AB56BA14FE591',
             source => 'https://repo.zabbix.com/zabbix-official-repo.key',
           }
+	  if $facts['os']['name'] == "Ubuntu" and $facts['os']['release']['full'] == "20.04"{
+		$zabbix_version_override = "4.4"
+	  } else {
+		$zabbix_version_override = $zabbix_version
+	  }
           apt::source { 'zabbix':
-            location => "http://repo.zabbix.com/zabbix/${zabbix_version}/${operatingsystem}/",
+            location => "http://repo.zabbix.com/zabbix/${zabbix_version_override}/${operatingsystem}/",
             repos    => 'main',
             release  => $releasename,
             require  => [
