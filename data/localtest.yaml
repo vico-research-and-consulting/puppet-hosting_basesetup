@@ -7,8 +7,9 @@ hosting_basesetup::motd_announcement: |
   Dave Matthews
 
 hosting_basesetup::networking::netplanconfig:
-  ip: 10.23.22.9
-  gateway: 10.23.22.1
+  en0s3:
+    ip: 192.168.99.99
+    gateway: 192.168.99.1
 
 
 
@@ -26,7 +27,7 @@ hosting_basesetup::proxy_http_host: "8.8.8.8"
 hosting_basesetup::proxy_http_port: "8888"
 hosting_basesetup::proxy_https: true
 
-hosting_basesetup::networking::disable_netplan: true
+hosting_basesetup::networking::disable_netplan: false
 
 hosting_basesetup::time::ntp_client_restricts:
   - 'restrict 10.10.10.0 mask 255.255.255.0 nomodify notrap'

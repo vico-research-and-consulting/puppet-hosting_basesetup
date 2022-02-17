@@ -14,7 +14,7 @@ network:
     version: 2
     renderer: networkd
     ethernets:
-      <%= interface %>:
+      <%= @interface %>:
          optional: true
          dhcp4: no
          addresses: [ "<%= get_var(@ip, /^\d+\.\d+\.\d+\.\d+$/)%>/24" ]
