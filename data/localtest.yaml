@@ -6,6 +6,11 @@ hosting_basesetup::motd_announcement: |
   The world and the universe are far more wonderful if there's not a puppet master.
   Dave Matthews
 
+hosting_basesetup::networking::nameserver_searchdomain: vicosrv.de
+hosting_basesetup::networking::nameservers:
+  - 10.23.28.111
+  - 8.8.8.8
+
 hosting_basesetup::networking::netplanconfig:
   enp0s3:
     ip: 192.168.99.99
