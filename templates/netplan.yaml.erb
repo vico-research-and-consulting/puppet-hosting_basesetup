@@ -1,0 +1,26 @@
+##############################################################################
+####
+#### FILE CREATED BY PUPPET, MODIFICATIONS WILL BE OVERWRITTEN
+<%
+def get_var(value, regex)
+  if ( value =~ regex )
+    return value
+  else
+    raise ArgumentError, ">>>#{value}<<< does not match to regex >>>#{regex}<<< : #{caller[0]}"
+  end
+end
+%>
+network:
+    version: 2
+    renderer: networkd
+    ethernets:
+      <%= interface %>:
+         optional: true
+         dhcp4: no
+         addresses: [ "<%= get_var(@ip, /^\d+\.\d+\.\d+\.\d+$/)%>/24" ]
+         gateway4: <%= get_var(@gateway, /^\d+\.\d+\.\d+\.\d+$/)%>
+         nameservers:
+           search: [vicosrv.de]
+           addresses:
+              - 10.23.28.111
+              - 8.8.8.8

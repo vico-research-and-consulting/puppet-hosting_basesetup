@@ -1,0 +1,61 @@
+##############################################################################
+####
+#### FILE CREATED BY PUPPET, MODIFICATIONS WILL BE OVERWRITTEN
+<%
+def get_var(value, regex)
+  if ( value =~ regex )
+    return value
+  else
+    raise ArgumentError, ">>>#{value}<<< does not match to regex >>>#{regex}<<< : #{caller[0]}"
+  end
+end
+%>
+network:
+    version: 2
+    renderer: networkd
+    ethernets:
+<% @interface_associations.each do |interface, bond| -%>
+      <%= interface %>:
+         optional: true
+         dhcp4: no
+<% end -%>
+    bonds:
+        bond0:
+            interfaces:
+<% @interface_associations.select{ |interface, bond| /^bond0$/.match(bond.to_s) }.each do |interface, bond| -%>
+              - <%= get_var(interface, /.+\d+$/) %>
+<% end -%>
+            parameters:
+                mode: 802.3ad
+                transmit-hash-policy: layer3+4
+                mii-monitor-interval: 100
+                lacp-rate: fast
+                up-delay: 200
+                down-delay: 200
+            dhcp4: false
+            optional: true
+        bond1:
+            interfaces:
+<% @interface_associations.select{ |interface, bond| /^bond1$/.match(bond.to_s) }.each do |interface, bond| -%>
+              - <%= get_var(interface, /.+\d+$/) %>
+<% end -%>
+            parameters:
+                mode: 802.3ad
+                transmit-hash-policy: layer3+4
+                mii-monitor-interval: 100
+                lacp-rate: fast
+                up-delay: 200
+                down-delay: 200
+            dhcp4: false
+            optional: true
+    vlans:
+         bond0.2200:
+           id: 2200
+           link: bond0
+           addresses: [ "<%= get_var(@ip, /^\d+\.\d+\.\d+\.\d+$/)%>/24" ]
+           gateway4: <%= get_var(@gateway, /^\d+\.\d+\.\d+\.\d+$/)%>
+           nameservers:
+             search: [vicosrv.de]
+             addresses:
+                - 10.23.28.111
+                - 8.8.8.8

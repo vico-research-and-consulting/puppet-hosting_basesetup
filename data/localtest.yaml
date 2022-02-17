@@ -6,6 +6,11 @@ hosting_basesetup::motd_announcement: |
   The world and the universe are far more wonderful if there's not a puppet master.
   Dave Matthews
 
+hosting_basesetup::networking::netplanconfig:
+  ip: 10.23.22.9
+  gateway: 10.23.22.1
+
+
 
 hosting_basesetup::usermanagement::sudo_ssh_env_pass: true
 hosting_basesetup::motd_documentation: https://github.com/scoopex/puppet-hosting_basesetup/
@@ -107,7 +112,7 @@ hosting_basesetup::groups:
 hosting_basesetup::users_override:
   user2:
     fullname: Karl Napf2
-    ssh_keys: 
+    ssh_keys:
       - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCf8jizyqebUQ2hXJF5tWUz3eev+uE1liHZ7bMK4pp5nlaxkNq81dOLA9TZDbF6b+LFKKPxHUME5QypcDltaan83dN5tM+VJKz5K8qam9j8RpOm7gpKkomjXSTAMmhelZMLpOwhap77QVJo4EaKLqlkdRGh4o/dBnCOgkrZVjZ0TVG+u7BtGuQtbYvTBEL/Uu3HwWh4bGt5eFqyREgs6PE7u4bSnkyp6N/lrRqArefI0g2soNzOboxW2ONkAP6epNCRDDPp0erWJ1TU1VPLG72r2nupb7bdtTcDklGQMOWMWFvLzCkpD+LJDqh344gux1R45ikQqaL61ZqoV3Pt6t3xJ foo_thefinal@bar.de"
 
 
@@ -116,11 +121,11 @@ hosting_basesetup::users:
     uid: 5000
     fullname: Karl Napf
     mail: karl@napf.foobar.de
-    ssh_keys: 
+    ssh_keys:
       - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCf8jizyqebUQ2hXJF5tWUz3eev+uE1liHZ7bMK4pp5nlaxkNq81dOLA9TZDbF6b+LFKKPxHUME5QypcDltaan83dN5tM+VJKz5K8qam9j8RpOm7gpKkomjXSTAMmhelZMLpOwhap77QVJo4EaKLqlkdRGh4o/dBnCOgkrZVjZ0TVG+u7BtGuQtbYvTBEL/Uu3HwWh4bGt5eFqyREgs6PE7u4bSnkyp6N/lrRqArefI0g2soNzOboxW2ONkAP6epNCRDDPp0erWJ1TU1VPLG72r2nupb7bdtTcDklGQMOWMWFvLzCkpD+LJDqh344gux1R45ikQqaL61ZqoV3Pt6t3xJ foo@bar.de"
       - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCf8jizyqebUQ2hXJF5tWUz3eev+uE1liHZ7bMK4pp5nlaxkNq81dOLA9TZDbF6b+LFKKPxHUME5QypcDltaan83dN5tM+VJKz5K8qam9j8RpOm7gpKkomjXSTAMmhelZMLpOwhap77QVJo4EaKLqlkdRGh4o/dBnCOgkrZVjZ0TVG+u7BtGuQtbYvTBEL/Uu3HwWh4bGt5eFqyREgs6PE7u4bSnkyp6N/lrRqArefI0g2soNzOboxW2ONkAP6epNCRDDPp0erWJ1TU1VPLG72r2nupb7bdtTcDklGQMOWMWFvLzCkpD+LJDqh344gux1R45ikQqaL61ZqoV3Pt6t3xJ foo2@bar.de"
     group_primary: 'devteam'
-    groups: 
+    groups:
       - 'devteam'
     dotfile_sourcedir: 'puppet:///modules/hosting_basesetup/dotfiles_default/'
     ensure: present
@@ -128,7 +133,7 @@ hosting_basesetup::users:
     uid: 5001
     fullname: Karl Napf2
     mail: karl2l@napf.foobar.de
-    ssh_keys: 
+    ssh_keys:
       - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCf8jizyqebUQ2hXJF5tWUz3eev+uE1liHZ7bMK4pp5nlaxkNq81dOLA9TZDbF6b+LFKKPxHUME5QypcDltaan83dN5tM+VJKz5K8qam9j8RpOm7gpKkomjXSTAMmhelZMLpOwhap77QVJo4EaKLqlkdRGh4o/dBnCOgkrZVjZ0TVG+u7BtGuQtbYvTBEL/Uu3HwWh4bGt5eFqyREgs6PE7u4bSnkyp6N/lrRqArefI0g2soNzOboxW2ONkAP6epNCRDDPp0erWJ1TU1VPLG72r2nupb7bdtTcDklGQMOWMWFvLzCkpD+LJDqh344gux1R45ikQqaL61ZqoV3Pt6t3xJ foo@bar.de"
     group_primary: 'devteam'
     ensure: present
