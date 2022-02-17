@@ -4,7 +4,7 @@ define hosting_basesetup::netplanconfigbuilder (
   String $ip,
   String $gateway,
   Hash $interface_associations = {},
-  Hash $nameservers =  $::hosting_basesetup::networking::nameservers,
+  Array[String] $nameservers =  $::hosting_basesetup::networking::nameservers,
   String $nameserver_searchdomain =  $::hosting_basesetup::networking::nameserver_searchdomain,
 ) {
 

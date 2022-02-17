@@ -2,7 +2,7 @@ class hosting_basesetup::networking (
   Boolean $disable_netplan = false,
   String $nameserver_searchdomain = "",
   Hash $netplanconfig = {},
-  Hash $nameservers = {},
+  Array[String] $nameservers = [],
 ) {
   if ($disable_netplan) {
     if ($facts['os']['name'] == 'Ubuntu') and ($facts['os']['release']['full'] == "18.04" ) {
