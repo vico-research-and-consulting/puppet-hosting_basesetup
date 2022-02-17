@@ -1,6 +1,6 @@
 class hosting_basesetup::networking (
   Boolean $disable_netplan = false,
-  Hash $netplanconfig,
+  Hash $netplanconfig = {},
 ) {
   if ($disable_netplan) {
     if ($facts['os']['name'] == 'Ubuntu') and ($facts['os']['release']['full'] == "18.04" ) {
@@ -15,7 +15,9 @@ class hosting_basesetup::networking (
     }
   }
   else {
-    create_resources('hosting_basesetup::netplanconfigbuilder', $netplanconfig)
+    if ($netplanconfig != {}) {
+      create_resources('hosting_basesetup::netplanconfigbuilder', $netplanconfig)
+    }
   }
 
 }
