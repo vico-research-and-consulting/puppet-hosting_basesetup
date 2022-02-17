@@ -7,7 +7,7 @@ hosting_basesetup::motd_announcement: |
   Dave Matthews
 
 hosting_basesetup::networking::netplanconfig:
-  en0s3:
+  enp0s3:
     ip: 192.168.99.99
     gateway: 192.168.99.1
 
