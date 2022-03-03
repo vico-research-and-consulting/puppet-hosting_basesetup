@@ -18,10 +18,10 @@
 # [ntp_server]
 #   A array of ntp servers, specify at least 3 servers
 #   (if you have two watches, which one displays the correct time ? :-))
-# 
+#
 # [mosh]
 #   decide to install the mosh shell or not (true/false)
-# 
+#
 # [mail_relayhost]
 #   a relayhost for the local postfix installation.
 #   locally queued mail will be deliver to this host, if this variable is not specified
@@ -43,6 +43,8 @@ class hosting_basesetup (
   String $mail_relayhost                       = '',
   String $mail_root_recipient,
   String $mail_domain,
+  String $mail_smtp_interfaces                 = '127.0.0.1',
+  String $mail_smtp_listen                     = '127.0.0.1',
   Boolean $unattended_upgrades                 = false,
   Boolean $unattended_upgrades_reboot          = false,
   String $unattended_upgrades_reboot_time      = 'now',
@@ -149,8 +151,8 @@ class hosting_basesetup (
   class { 'postfix':
     # inet_interfaces     => '127.0.0.1, [::1]',
     # smtp_listen         => '127.0.0.1, [::1]',
-    inet_interfaces     => '127.0.0.1',
-    smtp_listen         => '127.0.0.1',
+    inet_interfaces     => $mail_smtp_interfaces,
+    smtp_listen         => $mail_smtp_listen,
     myorigin            => $mail_domain,
     root_mail_recipient => $mail_root_recipient,
     relayhost           => $mail_relayhost,
