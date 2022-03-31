@@ -24,6 +24,7 @@ class hosting_basesetup::monitoring::zabbix_agent2 (
     $zabbix_agent_service    = 'zabbix-agent2'
     $zabbix_agent_conffile   = '/etc/zabbix/zabbix_agent2.conf'
     $zabbix_agent_confdir    = '/etc/zabbix/zabbix_agent2.d'
+    $template                = 'hosting_basesetup/zabbix_agent2.conf.erb'
   }elsif $zabbix_agent_version == '1' {
     $zabbix_agent_pkgname             = 'zabbix-agent'
     $zabbix_agent_service             = 'zabbix-agent'
@@ -60,13 +61,13 @@ Include=/usr/share/zabbix-agent-extensions/include.d/
       require => File[$zabbix_agent_confdir]
     }
   }
-  
+
   $zabbix_packages = [$zabbix_agent_pkgname, 'zabbix-sender']
   if $manage_repo {
     class { '::hosting_basesetup::monitoring::zabbix_repo':
       zabbix_version => $version,
     }
-    
+
     case $facts['os']['family'] {
       'Debian': {
         package { $zabbix_packages:
