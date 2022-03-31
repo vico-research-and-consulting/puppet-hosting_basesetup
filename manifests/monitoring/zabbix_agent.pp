@@ -29,7 +29,7 @@ class hosting_basesetup::monitoring::zabbix_agent2 (
     $zabbix_agent_service             = 'zabbix-agent'
     $zabbix_agent_conffile            = '/etc/zabbix/zabbix_agentd.conf'
     $zabbix_agent_confdir             = '/etc/zabbix/zabbix_agentd.d'
-    $template                         = 'hosting_basesetup/zabbix_agentd.conf.erb',
+    $template                         = 'hosting_basesetup/zabbix_agentd.conf.erb'
   }
 
   if $use_agent_extensions {
