@@ -1,4 +1,4 @@
-class hosting_basesetup::monitoring::zabbix_agent2 (
+class hosting_basesetup::monitoring::zabbix_agent (
   String $version                          = '3.4',
   String $package_state                    = 'present',
   Boolean $include_dir_purge               = true,
