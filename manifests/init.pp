@@ -66,6 +66,7 @@ class hosting_basesetup (
   Hash $simple_directories                     = {},
   Hash $lvm_snapshots                          = {},
   Boolean $zabbix_agent                        = false,
+  String $zabbix_agent_version                 = '1',
   String $puppet_envionment                    = $::environment,
 ) {
 
@@ -187,7 +188,11 @@ class hosting_basesetup (
   ## MONITORING ##########################################################################
 
   if $zabbix_agent {
-    include ::hosting_basesetup::monitoring::zabbix_agent
+    if $zabbix_agent_version == '2' {
+      include ::hosting_basesetup::monitoring::zabbix_agent2
+    }else{
+      include ::hosting_basesetup::monitoring::zabbix_agent
+    }
   }
 
   ## PUPPET AGENT ########################################################################
