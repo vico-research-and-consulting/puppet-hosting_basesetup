@@ -1,7 +1,6 @@
 class hosting_basesetup::monitoring::zabbix_agent (
   String $version                          = '3.4',
   String $package_state                    = 'present',
-  Boolean $include_dir_purge               = true,
   Boolean $manage_repo                     = true,
   String $server                           = 'zabbix',
   String $server_active                    = 'zabbix',
@@ -24,12 +23,14 @@ class hosting_basesetup::monitoring::zabbix_agent (
     $zabbix_agent_conffile   = '/etc/zabbix/zabbix_agent2.conf'
     $zabbix_agent_confdir    = '/etc/zabbix/zabbix_agent2.d'
     $template                = 'hosting_basesetup/zabbix_agent2.conf.erb'
+    $include_dir_purge       = false
   }elsif $zabbix_agent_version == '1' {
-    $zabbix_agent_pkgname             = 'zabbix-agent'
-    $zabbix_agent_service             = 'zabbix-agent'
-    $zabbix_agent_conffile            = '/etc/zabbix/zabbix_agentd.conf'
-    $zabbix_agent_confdir             = '/etc/zabbix/zabbix_agentd.d'
-    $template                         = 'hosting_basesetup/zabbix_agentd.conf.erb'
+    $zabbix_agent_pkgname    = 'zabbix-agent'
+    $zabbix_agent_service    = 'zabbix-agent'
+    $zabbix_agent_conffile   = '/etc/zabbix/zabbix_agentd.conf'
+    $zabbix_agent_confdir    = '/etc/zabbix/zabbix_agentd.d'
+    $template                = 'hosting_basesetup/zabbix_agentd.conf.erb'
+    $include_dir_purge       = true
   }
 
   if $use_agent_extensions {
