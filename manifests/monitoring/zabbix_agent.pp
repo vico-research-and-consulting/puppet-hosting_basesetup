@@ -14,7 +14,7 @@ class hosting_basesetup::monitoring::zabbix_agent (
   String  $use_agent_extensions_pkgname    = 'zabbix-agent-extensions',
   String  $use_agent_extensions_release    = 'present',
   String $load_module_path                 = '/usr/lib/zabbix/modules',
-  String $zabbix_agent_version             = '1',
+  String $zabbix_agent_version             = $hosting_basesetup::zabbix_agent_version,
   Hash $template_params                    = {},
 ) {
 
