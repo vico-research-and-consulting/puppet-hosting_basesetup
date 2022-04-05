@@ -50,7 +50,7 @@ class hosting_basesetup::monitoring::zabbix_agent (
     }
 
     # Include dir for specific zabbix-agent checks.
-    file { '/etc/zabbix/zabbix_agentd.d/zabbix-agent-extensions':
+    file { "$zabbix_agent_confdir/zabbix-agent-extensions.conf":
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
@@ -90,7 +90,7 @@ Include=/usr/share/zabbix-agent-extensions/include.d/
     }
   }
 
-  file { "/etc/zabbix/zabbix_agentd.d":
+  file { zabbix_agent_confdir:
     ensure  => directory,
     owner   => 'zabbix',
     group   => 'zabbix',
