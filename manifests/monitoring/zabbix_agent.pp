@@ -90,7 +90,7 @@ Include=/usr/share/zabbix-agent-extensions/include.d/
     }
   }
 
-  file { zabbix_agent_confdir:
+  file { $zabbix_agent_confdir:
     ensure  => directory,
     owner   => 'zabbix',
     group   => 'zabbix',
