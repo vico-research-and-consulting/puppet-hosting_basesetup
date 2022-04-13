@@ -66,6 +66,7 @@ class hosting_basesetup (
   Hash $simple_directories                     = {},
   Hash $lvm_snapshots                          = {},
   Boolean $zabbix_agent                        = false,
+  String $zabbix_agent_version                 = '1',
   String $puppet_envionment                    = $::environment,
 ) {
 
