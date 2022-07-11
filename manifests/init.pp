@@ -203,6 +203,13 @@ class hosting_basesetup (
         hasrestart => true,
     }
 
+    file_line { 'set_puppet_agent_home':
+        path    => '/etc/default/puppet',
+        line    => "HOME=/root",
+        match   => '^HOME=.+',
+        require => Class['::puppet_agent'],
+      }
+
     if $manage_puppet_set_evironment {
       file_line { 'set_puppet_environment':
         path    => '/etc/puppetlabs/puppet/puppet.conf',
