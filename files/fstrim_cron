@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export PATH="$PATH:/sbin:/usr/sbin"
+
 SLEEP="${1:-0}"
 if [ "$SLEEP" != "0" ];then
   RANDOM_SLEEP=$(( ( $RANDOM % $SLEEP )  + 1 ))
