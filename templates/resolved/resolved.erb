@@ -13,8 +13,8 @@
 # See resolved.conf(5) for details
 
 [Resolve]
-DNS=<%= @nameservers.0 %>
-FallbackDNS=<%= @nameservers.1 %>
+DNS=<%= @nameservers.fetch(0) %>
+FallbackDNS=<%= @nameservers.fetch(1, '') %>
 Domains=<%= @nameserver_searchdomain %>
 #LLMNR=no
 #MulticastDNS=no
