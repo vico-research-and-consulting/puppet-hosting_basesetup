@@ -1,4 +1,7 @@
-class hosting_basesetup::dns () {
+class hosting_basesetup::dns (
+  String $nameserver_searchdomain = $::hosting_basesetup::networking::nameserver_searchdomain,
+  Array[String] $nameservers      = $::hosting_basesetup::networking::nameservers,
+) {
 
   if $facts['os']['name'] == "Ubuntu" and $facts['os']['release']['full'] == "16.04" {
     # Make the os dns resolver more reliable
@@ -28,7 +31,6 @@ options timeout:1 attempts:1 rotate
       group  => 'root',
       mode   => '0644',
       content => template("hosting_basesetup/resolved/resolved.erb"),
-  }
     }
   }
 }
