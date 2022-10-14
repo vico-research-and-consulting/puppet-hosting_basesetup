@@ -65,6 +65,7 @@ define hosting_basesetup::usermanagement::user (
         backup  => false,
         require => User[$username],
         recurse => remote,
+        replace => false,
       }
     }
     anchor { "hosting_basesetup_user_uid_${uid}": } # prevents duplicate allocation of uids
