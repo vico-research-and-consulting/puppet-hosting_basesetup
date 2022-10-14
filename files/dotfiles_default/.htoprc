@@ -33,6 +33,6 @@ right_meters=Tasks LoadAverage Uptime Hostname
 right_meter_modes=2 2 2 2
 
 ###
-### ATTENTION: THIS FILE IS MANAGED BY PUPPET
+### ATTENTION: THIS FILE IS PROVIDED BY PUPPET
 ###
 ###################################################################################
