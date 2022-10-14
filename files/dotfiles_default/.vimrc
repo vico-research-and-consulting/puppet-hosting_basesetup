@@ -1,8 +1,9 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """
-""" ATTENTION: THIS FILE IS MANAGED BY PUPPET
+""" ATTENTION: THIS FILE IS PROVIDED BY PUPPET
 """
-""" ANY CHANGE WILL BE REVERTED AUTOMATICALLY ON NEXT PUPPET RUN
+""" Change as needed. To restore original content, delete file:
+""" Next puppetrun will replace it.
 """
 """ If you want to run your own dotfiles, specify another configuration directory
 """ source for hosting_basesetup::usermanagement::user => dotfile_sourcedir
@@ -55,7 +56,6 @@ syntax on
 color delek
 
 """
-""" ATTENTION: THIS FILE IS MANAGED BY PUPPET
+""" ATTENTION: THIS FILE IS PROVIDED BY PUPPET
 """
-""" ANY CHANGE WILL BE REVERTED AUTOMATICALLY ON NEXT PUPPET RUN
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
