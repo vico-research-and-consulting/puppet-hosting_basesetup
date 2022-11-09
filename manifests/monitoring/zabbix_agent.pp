@@ -100,6 +100,12 @@ Include=/usr/share/zabbix-agent-extensions/include.d/
     notify  => Service[$zabbix_agent_service],
     require => Package[$zabbix_agent_pkgname]
   }
+  -> file { "$zabbix_agent_confdir/plugins.d":
+      ensure => directory,
+      mode   => '0755',
+      owner => 'zabbix',
+      group => 'zabbix',
+  }
   file { $zabbix_agent_conffile:
     ensure  => present,
     owner   => 'zabbix',
