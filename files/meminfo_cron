@@ -1,13 +1,13 @@
 #!/bin/bash
 
 FILE="/var/log/meminfo"
-FILE_LIMIT=$((10*1024*1024))
+FILE_LIMIT=$((10 * 1024 * 1024))
 
 if [ -f "$FILE" ]; then
     FILESIZE=$(wc -c "$FILE" | awk '{print $1}')
     if [ $FILESIZE -ge $FILE_LIMIT ]; then
         cp $FILE $FILE.1
-        : > $FILE
+        : >$FILE
     fi
 fi
 
@@ -18,4 +18,4 @@ fi
     free -h
     ps -eo pmem,pcpu,vsize,rss,pid,cmd | sort -k 1 -nr | head -10
     echo -e "------------------------------\n"
-} >> $FILE
+} >>$FILE
