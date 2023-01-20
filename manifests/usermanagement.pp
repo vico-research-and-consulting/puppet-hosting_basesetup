@@ -9,6 +9,7 @@ class hosting_basesetup::usermanagement (
   Array[String] $ssh_keys_root            = [],
   Array[String] $ssh_keys_root_additional = [],
   String $restriction_tag                 = '',
+  String $restriction_tag_sudo            = '',
   String $root_dotfile_sourcedir          = 'puppet:///modules/hosting_basesetup/dotfiles_default/',
   String $user_dotfile_default_sourcedir  = 'puppet:///modules/hosting_basesetup/dotfiles_default/',
   Integer $minimal_gid                    = 12000,

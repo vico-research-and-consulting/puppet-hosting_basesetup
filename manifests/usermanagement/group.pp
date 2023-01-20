@@ -19,7 +19,7 @@ define hosting_basesetup::usermanagement::group (
     if $sudo_template != "" {
       if ($restriction_tags_enforce or (length($restriction_tags) > 0 and $::hosting_basesetup::usermanagement::restriction_tag != ''))
       {
-        if $::hosting_basesetup::usermanagement::restriction_tag in $restriction_tags {
+        if $::hosting_basesetup::usermanagement::restriction_tag_sudo in $restriction_tags {
           $ensure_final = 'present'
         } else {
           $ensure_final = 'absent'
