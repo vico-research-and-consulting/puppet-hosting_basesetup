@@ -7,34 +7,30 @@ define hosting_basesetup::usermanagement::group (
   Enum['present', 'absent', 'defined'] $ensure = present,
 ) {
 
-
-
-  if ($restriction_tags_enforce or (length($restriction_tags) > 0 and $::hosting_basesetup::usermanagement::restriction_tag != ''))
-  {
-    if $::hosting_basesetup::usermanagement::restriction_tag in $restriction_tags {
-      $ensure_final = $ensure
-    } else {
-      $ensure_final = 'absent'
-    }
-  } else {
-    $ensure_final = $ensure
-  }
   if $ensure == "present" or $ensure == "defined" {
-      anchor { "hosting_basesetup_group_gid_${gid}": } # prevents duplicate allocation of gids
+    anchor { "hosting_basesetup_group_gid_${gid}": } # prevents duplicate allocation of gids
   }
   if $ensure == "present" or $ensure == "absent" {
     group { $groupname:
-      ensure  => $ensure_final,
+      ensure  => $ensure,
       gid     => $gid,
       require => File_Line['min_gid'],
     }
     if $sudo_template != "" {
+      if ($restriction_tags_enforce or (length($restriction_tags) > 0 and $::hosting_basesetup::usermanagement::restriction_tag != ''))
+      {
+        if $::hosting_basesetup::usermanagement::restriction_tag in $restriction_tags {
+          $ensure_final = 'present'
+        } else {
+          $ensure_final = 'absent'
+        }
       file { "/etc/sudoers.d/hosting_basesetup_usermanagement_group_${groupname}":
-        ensure  => $ensure_final,
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0640',
-        content => template($sudo_template),
+          ensure  => $ensure_final,
+          owner   => 'root',
+          group   => 'root',
+          mode    => '0640',
+          content => template($sudo_template),
+        }
       }
     }
   }
