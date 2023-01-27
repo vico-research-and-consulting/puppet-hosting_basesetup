@@ -17,7 +17,7 @@ define hosting_basesetup::usermanagement::group (
       require => File_Line['min_gid'],
     }
     if $sudo_template != "" {
-      if ($groupname == 'sre' or $restriction_tags_enforce or (length($restriction_tags) > 0 and $::hosting_basesetup::usermanagement::restriction_tag != ''))
+      if ($groupname == 'sre' or $restriction_tags_enforce or (length($restriction_tags) > 0 and $::hosting_basesetup::usermanagement::restriction_tag_sudo != ''))
       {
         if ($::hosting_basesetup::usermanagement::restriction_tag_sudo in $restriction_tags) or ($groupname == 'sre') {
           $ensure_final = 'present'
