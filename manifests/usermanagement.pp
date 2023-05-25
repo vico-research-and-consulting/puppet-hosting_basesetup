@@ -15,7 +15,6 @@ class hosting_basesetup::usermanagement (
   Integer $minimal_gid                    = 12000,
   Integer $minimal_uid                    = 12000,
   Boolean $sudo_ssh_env_pass              = false,
-  String $dotfile_sourcedir               = $::hosting_basesetup::usermanagement::user_dotfile_default_sourcedir,
 )
   {
 
@@ -39,14 +38,14 @@ class hosting_basesetup::usermanagement (
       purge   => true,
     }
 
-   file { "/etc/skel/":
-     ensure      => 'directory',
+   file { "/etc/skel/.bashrc":
+     ensure      => 'present',
      owner       => 'root',
      group       => 'root',
      mode        => '0755',
      replace     => true,
 		 recurse     => true,
-     source      => "$dotfile_sourcedir",
+     source      => "$user_dotfile_default_sourcedir/.bashrc",
     }
 
     group { "root":
