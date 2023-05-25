@@ -38,14 +38,14 @@ class hosting_basesetup::usermanagement (
       purge   => true,
     }
 
-   file { "/etc/skel/.bashrc":
-     ensure      => 'present',
-     owner       => 'root',
-     group       => 'root',
-     mode        => '0755',
-     replace     => true,
-		 recurse     => true,
-     source      => "$user_dotfile_default_sourcedir/.bashrc",
+    file { "/etc/skel/.bashrc":
+      ensure      => 'present',
+      owner       => 'root',
+      group       => 'root',
+      mode        => '0755',
+      replace     => true,
+      recurse     => true,
+      source      => "$user_dotfile_default_sourcedir/.bashrc",
     }
 
     group { "root":
