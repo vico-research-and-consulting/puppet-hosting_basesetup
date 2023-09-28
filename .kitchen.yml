@@ -8,7 +8,7 @@ provisioner:
   manifest: local.pp
   modules_path: modules
   hiera_data_path: data
-  hiera_deep_merge: true
+  hiera_deep_merge: false
   puppet_verbose: true
   puppet_debug: false
   require_chef_for_busser: false
