@@ -56,9 +56,10 @@ class hosting_basesetup (
   String $motd_documentation                   = "",
   Variant[String, Enum['no', 'yes']]
   $ssh_password_auth_string                    = 'no',
-  String $sshd_config_port                     = '22',
+  #Integer $sshd_config_port                    = 22,
+  Stdlib::Port $sshd_config_port               = 22,
   String $sshd_config_subsystem_sftp           = 'USE_DEFAULTS',
-  Hash $sshd_config_match                      = {},
+  #Hash $sshd_config_match                      = {},
   String $proxy_http_host                      = "",
   String $proxy_http_port                      = "",
   Boolean $proxy_https                         = true,
@@ -103,41 +104,47 @@ class hosting_basesetup (
 
   ## SSH #################################################################################
   # TODO: create secure client settings
-  class { '::ssh':
-    ssh_config_forward_agent             => 'no',
-    sshd_config_permitemptypasswords     => 'no',
-    sshd_password_authentication         => $ssh_password_auth_string,
-    sshd_config_port                     => $sshd_config_port,
-    sshd_allow_tcp_forwarding            => 'no',
-    sshd_x11_forwarding                  => 'no',
-    sshd_config_use_dns                  => 'no',
-    sshd_config_challenge_resp_auth      => 'no',
-    sshd_use_pam                         => 'yes',
-    sshd_config_ciphers                  => [ 'aes256-ctr',
-      'aes192-ctr',
-      'aes128-ctr' ],
-    sshd_ignoreuserknownhosts            => 'no',
-    sshd_kerberos_authentication         => 'no',
-    sshd_config_kexalgorithms            => [ 'diffie-hellman-group-exchange-sha256',
-      'ecdh-sha2-nistp256',
-      'ecdh-sha2-nistp384',
-      'ecdh-sha2-nistp521'],
-    sshd_config_loglevel                 => 'VERBOSE',
-    sshd_config_login_grace_time         => '30s',
-    sshd_config_macs                     => [ 'hmac-sha2-512',
-      'hmac-sha2-256',
-      'hmac-sha2-256-etm@openssh.com',
-      'hmac-sha2-512-etm@openssh.com'],
-    sshd_config_maxauthtries             => 2,
-    sshd_config_maxsessions              => 10,
-    sshd_config_maxstartups              => '10:30:100',
-    sshd_config_strictmodes              => 'yes',
-    sshd_config_print_motd               => 'no',
-    sshd_config_subsystem_sftp           => $sshd_config_subsystem_sftp,
-    sshd_config_match                    => $sshd_config_match,
-    permit_root_login                    => 'without-password',
-    sshd_config_serverkeybits            => undef,
-  }
+  include ::ssh
+
+  #class { '::ssh':
+  #  forward_agent                        => 'no',
+  #  manage_server                        => false,
+  #}
+
+  #class { '::ssh::server':
+  #  permit_empty_passwords               => 'no',
+  #  password_authentication              => $ssh_password_auth_string,
+  #  #port                                 => $sshd_config_port,
+  #  allow_tcp_forwarding                 => 'no',
+  #  x11_forwarding                       => 'no',
+  #  use_dns                              => 'no',
+  #  kbd_interactive_authentication       => 'no',
+  #  use_pam                              => 'yes',
+  #  ciphers                              => [ 'aes256-ctr',
+  #    'aes192-ctr',
+  #    'aes128-ctr' ],
+  #  ignore_user_known_hosts              => 'no',
+  #  kerberos_authentication              => 'no',
+  #  kex_algorithms                       => [ 'diffie-hellman-group-exchange-sha256',
+  #    'ecdh-sha2-nistp256',
+  #    'ecdh-sha2-nistp384',
+  #    'ecdh-sha2-nistp521'],
+  #  log_level                            => 'VERBOSE',
+  #  login_grace_time                     => 30,
+  #  macs                                 => [ 'hmac-sha2-512',
+  #    'hmac-sha2-256',
+  #    'hmac-sha2-256-etm@openssh.com',
+  #    'hmac-sha2-512-etm@openssh.com'],
+  #  max_auth_tries                       => 2,
+  #  max_sessions                         => 10,
+  #  max_startups                         => '10:30:100',
+  #  strict_modes                         => 'yes',
+  #  print_motd                           => 'no',
+  #  subsystem                            => $sshd_config_subsystem_sftp,
+  #  #sshd_config_match                    => $sshd_config_match,
+  #  permit_root_login                    => 'without-password',
+  #  #sshd_config_serverkeybits            => undef,
+  #}
 
   if $mosh {
     ensure_packages(['mosh', ], { 'ensure' => 'present' })
@@ -194,7 +201,7 @@ class hosting_basesetup (
   ## PUPPET AGENT ########################################################################
   if $manage_puppet {
     class { '::puppet_agent':
-      service_names => 'puppet',
+      service_names => ['puppet'],
     }
     service { 'mcollective':
         ensure     => stopped,

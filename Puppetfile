@@ -9,7 +9,7 @@ mod 'puppetlabs-apt', '<=8.5.0'
 mod 'puppetlabs-stdlib', '>=8.0.0 <9.0.0'
 mod 'puppetlabs-ntp', '>=7.1.0'
 mod 'puppet-postfix', '>=4.0.0'
-mod 'puppetlabs-puppet_agent', '>=4.9.0'
+mod 'puppetlabs-puppet_agent', '>=4.15.0'
 mod 'puppetlabs-lvm', '>=2.0.0'
 
 #mod 'puppet-unattended_upgrades', '>=3.2.0 <=3.2.1'

@@ -114,6 +114,8 @@ How to start:
        You will get a notification "Required ruby-2.6.1 is not installed." if this step is missing.
 
        "test-kitchen": Serverspec Test mit Vagrant/Virtualbox/Docker
+  * Busser
+    * test/integration/default/serverspec_chefdk30/ <- This gem will be installed and used for busser verify by kitchen
 
 Cheat Sheet
 -----------
