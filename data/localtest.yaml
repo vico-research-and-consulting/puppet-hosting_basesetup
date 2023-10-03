@@ -2,7 +2,7 @@
 ssh::forward_agent: 'no'
 ssh::server::permit_empty_passwords: 'no'
 #ssh::server::port: 22
-ssh::server::pubkey_accepted_algorithms: ['ssh-rsa']
+ssh::server::pubkey_accepted_algorithms: ['+ssh-rsa']
 ssh::server::password_authentication: 'no'
 ssh::server::allow_tcp_forwarding: 'no'
 ssh::server::allow_x11_forwarding: 'no'
