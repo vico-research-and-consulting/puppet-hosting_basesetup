@@ -17,7 +17,7 @@ mod 'puppetlabs-lvm', '>=1.0.0'
 mod 'puppet-unattended_upgrades',
   :git => 'https://github.com/vico-research-and-consulting/puppet-unattended_upgrades.git'
 
-mod 'ghoneycutt-ssh', '3.62.0'
+mod 'ghoneycutt-ssh', '5.1.1'
 
 #mod 'test_repo',
 #  :git => 'git@foobar.de/foobar_foo.git'
