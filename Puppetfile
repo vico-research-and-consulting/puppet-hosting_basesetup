@@ -6,7 +6,7 @@ forge 'https://forgeapi.puppetlabs.com'
 # do not forget to update the dependencies at metadata.json on updates here
 
 mod 'puppetlabs-apt'
-mod 'puppetlabs-stdlib', '>=9.1.0'
+mod 'puppetlabs-stdlib', '>=8.0.0'
 mod 'puppetlabs-ntp', '>=7.1.0'
 mod 'puppet-postfix', '5.0.0'
 mod 'puppetlabs-puppet_agent', '>=4.9.0'
